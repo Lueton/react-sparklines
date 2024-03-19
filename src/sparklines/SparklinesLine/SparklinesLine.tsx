@@ -2,7 +2,7 @@ import { Line } from "../../cartesian"
 import { LineShapeProps, SparklinesComposedProps, SparklinesLineProps } from "../../utils/types.ts"
 import { SparklinesComposed } from "../SparklinesComposed"
 
-export const SparklinesLine = ({
+export const SparklinesLine = <TData,> ({
   height,
   max,
   width,
@@ -28,8 +28,8 @@ export const SparklinesLine = ({
   onMouseLeave,
   onClick,
   ...rest
-}: SparklinesLineProps) => {
-  const composedProps: SparklinesComposedProps = {
+}: SparklinesLineProps<TData>) => {
+  const composedProps: SparklinesComposedProps<TData> = {
     clip,
     label,
     color,

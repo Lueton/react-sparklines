@@ -2,7 +2,7 @@ import { Bar } from "../../cartesian"
 import { BarShapeProps, SparklinesBarProps, SparklinesComposedProps } from "../../utils/types.ts"
 import { SparklinesComposed } from "../SparklinesComposed"
 
-export const SparklinesBar = ({
+export const SparklinesBar = <TData,> ({
   height,
   activeBar,
   barWidth,
@@ -28,8 +28,8 @@ export const SparklinesBar = ({
   onMouseLeave,
   onClick,
   ...rest
-}: SparklinesBarProps) => {
-  const composedProps: SparklinesComposedProps = {
+}: SparklinesBarProps<TData>) => {
+  const composedProps: SparklinesComposedProps<TData> = {
     clip,
     label,
     color,

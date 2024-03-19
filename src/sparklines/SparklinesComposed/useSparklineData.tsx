@@ -2,27 +2,27 @@ import { isNumber } from "lodash";
 
 import { getDataPoints } from "../../utils/data-utils.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
+import { Bar,Line } from "./../../cartesian";
 import { DataKey, Points, SparklinesMargin } from "./../../utils/types.ts";
-import { Line, Bar } from "./../../cartesian";
 
-export interface SparklineChildDataEntry {
+export interface SparklineChildDataEntry<TData> {
   dataKey: DataKey;
   x: number;
   y: number;
   value: number;
   index: number;
-  entry: any;
+  entry: TData;
 }
 
-interface SparklineChildData {
+interface SparklineChildData<TData> {
   dataKey: DataKey;
-  childData: SparklineChildDataEntry[];
-  points: Points;
+  childData: SparklineChildDataEntry<TData>[];
+  points: Points<TData>;
 }
 
-export interface UseSparklineData {
+export interface UseSparklineData<TData> {
   originalData: any[];
-  sparklineData: SparklineChildData[];
+  sparklineData: SparklineChildData<TData>[];
   dataKeys: DataKey[];
 }
 
@@ -38,7 +38,7 @@ export interface UseSparklineDataProps {
   disableBarAdjustment?: boolean;
 }
 
-export const useSparklineData = ({
+export const useSparklineData = <TData,>({
   data,
   children,
   max,
@@ -48,7 +48,7 @@ export const useSparklineData = ({
   width,
   height,
   limit,
-}: UseSparklineDataProps): UseSparklineData => {
+}: UseSparklineDataProps): UseSparklineData<TData> => {
   const sparklineChildren = findAllByType(children, [Line, Bar]);
 
   if (!data.length)
@@ -62,7 +62,7 @@ export const useSparklineData = ({
   const objectifiedData = isSingleNumericData ? data.map((value) => ({ value: value })) : data;
   const dataKeys = sparklineChildren.map((child) => child.props.dataKey || "value");
 
-  const sparklineData: SparklineChildData[] = sparklineChildren.map((_child, childIndex) => {
+  const sparklineData: SparklineChildData<TData>[] = sparklineChildren.map((_child, childIndex) => {
     const childPoints = getDataPoints({
       data: objectifiedData,
       dataKey: dataKeys[childIndex],

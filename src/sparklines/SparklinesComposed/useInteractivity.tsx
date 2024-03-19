@@ -1,27 +1,27 @@
 import { RefObject, useCallback, useEffect, useState } from "react";
-import { EventData, Point } from "./../../utils/types.ts";
 
+import { EventData, Point } from "./../../utils/types.ts";
 import { SparklineChildDataEntry, UseSparklineData } from "./useSparklineData.tsx";
 
-export interface UseInteractivityProps {
+export interface UseInteractivityProps<TData> {
   ref: RefObject<SVGRectElement>;
-  data: UseSparklineData;
-  onMouseMove?: (event: MouseEvent, data: EventData) => void;
-  onMouseLeave?: (event: MouseEvent, data: EventData) => void;
-  onMouseEnter?: (event: MouseEvent, data: EventData) => void;
-  onClick?: (event: MouseEvent, data: EventData) => void;
+  data: UseSparklineData<TData>;
+  onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
+  onClick?: (event: MouseEvent, data: EventData<TData>) => void;
 }
 
-export const useInteractivity = ({
+export const useInteractivity = <TData,>({
   ref,
   data,
   onMouseEnter,
   onMouseLeave,
   onMouseMove,
   onClick,
-}: UseInteractivityProps) => {
+}: UseInteractivityProps<TData>) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [activeEntry, setActiveEntry] = useState<null | SparklineChildDataEntry[]>(null);
+  const [activeEntry, setActiveEntry] = useState<null | SparklineChildDataEntry<TData>[]>(null);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const calculateCoords = useCallback(
@@ -42,7 +42,7 @@ export const useInteractivity = ({
       }
 
       const previousDataPoint = sparklineDataPoints[sparklineDataPoints.indexOf(nextDataPoint) - 1];
-      let currentDataPoint: Point;
+      let currentDataPoint: Point<TData>;
       let halfway;
 
       if (previousDataPoint) {
@@ -67,28 +67,28 @@ export const useInteractivity = ({
 
   const mouseMove = useCallback(
     (event: MouseEvent) => {
-      if (onMouseMove) onMouseMove(event, { activeIndex, activeEntry });
+      if (onMouseMove && activeEntry) onMouseMove(event, { activeIndex, activeEntry });
     },
     [onMouseMove],
   );
 
   const mouseEnter = useCallback(
     (event: MouseEvent) => {
-      if (onMouseEnter) onMouseEnter(event, { activeIndex, activeEntry });
+      if (onMouseEnter && activeEntry) onMouseEnter(event, { activeIndex, activeEntry });
     },
     [onMouseEnter],
   );
 
   const mouseLeave = useCallback(
     (event: MouseEvent) => {
-      if (onMouseLeave) onMouseLeave(event, { activeIndex, activeEntry });
+      if (onMouseLeave && activeEntry) onMouseLeave(event, { activeIndex, activeEntry });
     },
     [onMouseLeave],
   );
 
   const click = useCallback(
     (event: MouseEvent) => {
-      if (onClick) onClick(event, { activeIndex, activeEntry });
+      if (onClick && activeEntry) onClick(event, { activeIndex, activeEntry });
     },
     [onClick],
   );
