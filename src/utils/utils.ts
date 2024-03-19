@@ -1,5 +1,6 @@
 import { get, isNil, isNumber, isString } from "lodash"
 
+import { SparklineChildDataEntry } from "../sparklines/SparklinesComposed/useSparklineData.tsx";
 import { DataKey, Margin, ShapeProps, SparklinesMargin, SparklinesRadius } from "./types.ts"
 
 export const getMargin = (margin: number | SparklinesMargin): Margin => {
@@ -85,7 +86,7 @@ export const getRectanglePath = (
   return path
 }
 
-export function getValueByDataKey(obj: any, dataKey?: DataKey, defaultValue?: any) {
+export function getValueByDataKey(obj: any, dataKey: DataKey = "value", defaultValue?: any) {
   if (isNil(obj) || isNil(dataKey)) {
     return defaultValue
   }
@@ -97,13 +98,12 @@ export function getValueByDataKey(obj: any, dataKey?: DataKey, defaultValue?: an
   return defaultValue
 }
 
-export const getTooltipPayload = (props: ShapeProps, activeEntry: any, childrenCount: number) => {
+export const getTooltipPayload = (props: ShapeProps, activeEntry: SparklineChildDataEntry | null, childrenCount: number) => {
   const { dataKey = "value", name, color, style } = props
-  const value = get(activeEntry, dataKey)
   const finalName = name || (childrenCount > 1 ? dataKey : undefined)
   return {
-    value,
+    value : activeEntry?.value || 0,
     name: finalName,
-    color: color || style?.stroke || style?.fill || "blue",
+    color: color || style?.stroke || style?.fill,
   }
 }

@@ -47,7 +47,7 @@ export const Line = ({
     stroke: color || style?.stroke || "none",
     strokeWidth: "0",
     fillOpacity: style?.fillOpacity || ".1",
-    fill: style?.fill || color || "slategray",
+    fill: style?.fill || color || style?.stroke || "slategray",
     pointerEvents: "auto",
   }
 

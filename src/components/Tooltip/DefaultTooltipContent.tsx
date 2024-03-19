@@ -25,6 +25,7 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
 
   const finalLabelStyle = {
     margin: 0,
+    color: "black",
     ...labelStyle,
   }
 
@@ -37,7 +38,7 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
           display: "block",
           paddingTop: 4,
           paddingBottom: 4,
-          color: entry.color || "#000",
+          color: entry.color || "slategray",
           ...itemStyle,
         }
 

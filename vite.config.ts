@@ -16,6 +16,7 @@ export default defineConfig((configEnv) => ({
       linters: [new EsLinter({ configEnv })],
     }),
     dts({
+      rollupTypes: true,
       include: ["src/index.ts"],
     }),
   ],
@@ -31,6 +32,7 @@ export default defineConfig((configEnv) => ({
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM"
         },
       },
     },

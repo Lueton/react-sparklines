@@ -25,7 +25,7 @@ function App() {
           <h2>SparklinesLine</h2>
           <h3>Simple</h3>
           <div className="demo-section">
-            <SparklinesLine height={60} width={300} data={demoData} />
+            <SparklinesLine height={60} width={300} data={demoData} ><Tooltip /></SparklinesLine>
             <SparklinesLine
               name="MyData"
               color="#b91c1c"

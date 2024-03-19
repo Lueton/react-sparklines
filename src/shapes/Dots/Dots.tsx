@@ -69,7 +69,7 @@ const Dot = (props: DotProps) => {
         cx={cx}
         cy={cy}
         r={r}
-        style={{ fill: "slategray", ...style }}
+        style={{ fill: "lightgray", ...style }}
         {...rest}
       />
     )

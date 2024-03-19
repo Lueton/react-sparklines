@@ -24,8 +24,7 @@ export const getDataPoints = ({
   disableBarAdjustment?: boolean
   dataKey?: DataKey
 }): Points => {
-  const dataForSeries = data.map((d) => getValueByDataKey(d, dataKey))
-
+  const dataForSeries = data.map((d) => getValueByDataKey(d, dataKey) || 0)
   return getDataPointsForSeries({
     data: dataForSeries,
     limit,

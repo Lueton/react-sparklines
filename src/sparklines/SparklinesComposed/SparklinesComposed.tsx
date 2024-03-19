@@ -12,11 +12,11 @@ import {
 
 import { Bar, Line } from "../../cartesian";
 import { Tooltip } from "../../components";
-import { getDataPoints } from "../../utils/data-utils.ts";
 import { filterSvgElements, findAllByType, findChildByType } from "../../utils/react-utils.ts";
 import { InternalShapeProps, SparklinesComposedProps } from "../../utils/types.ts";
 import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
+import { useSparklineData } from "./useSparklineData.tsx";
 
 export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedProps>(
   (
@@ -45,6 +45,9 @@ export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedP
   ) => {
     const tooltip = findChildByType(children, Tooltip);
     const sparklineChildren = findAllByType(children, [Line, Bar]);
+
+    const sparklineData = useSparklineData({data, limit, width,disableBarAdjustment,max,min,margin,height,children})
+
     const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
     const ref = useRef<SVGRectElement>(null);
     const svgProps = {
@@ -55,29 +58,16 @@ export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedP
       height,
       ...rest,
     };
-    const sparklineData =
-      typeof data[0] === "number" ? data.map((value) => ({ value: value })) : data;
-
-    const somePoints = getDataPoints({
-      data: sparklineData.map(() => ({ value: 0 })),
-      limit,
-      width,
-      height,
-      margin,
-      max,
-      min,
-      disableBarAdjustment,
-      dataKey: "value",
-    });
     useImperativeHandle(forwardedRef, () => ref.current as SVGRectElement);
     const { coords, activeIndex, activeEntry } = useInteractivity({
       ref,
-      data: somePoints,
+      data: sparklineData,
       onMouseMove,
       onMouseEnter,
       onMouseLeave,
       onClick,
     });
+
     const {
       top: marginTop,
       right: marginRight,
@@ -90,8 +80,8 @@ export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedP
 
     const renderTooltip = () => {
       if (!tooltip || !sparklineChildren.length || activeIndex == null) return null;
-      const payload = sparklineChildren.map((child) =>
-        getTooltipPayload(child.props, activeEntry, sparklineChildren.length),
+      const payload = sparklineChildren.map((child, i) =>
+        getTooltipPayload(child.props, activeEntry?.[i] || null, sparklineChildren.length),
       );
       return cloneElement(tooltip, { ...tooltip.props, payload, coords, label });
     };
@@ -104,19 +94,7 @@ export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedP
         sparklineChildren.map((child, i) => {
           if (isValidElement(child)) {
             const childProps = child.props;
-            const { dataKey = "value" } = childProps;
-
-            const points = getDataPoints({
-              data: sparklineData,
-              limit,
-              width,
-              height,
-              margin,
-              max,
-              min,
-              disableBarAdjustment,
-              dataKey,
-            });
+            const points = sparklineData.sparklineData[i].points;
             const internalShapeProps: InternalShapeProps = {
               height,
               width,
@@ -126,6 +104,7 @@ export const SparklinesComposed = forwardRef<SVGRectElement, SparklinesComposedP
               activeIndex,
               tooltip: !!tooltip,
             };
+
             return cloneElement(child, {
               ...childProps,
               ...internalShapeProps,

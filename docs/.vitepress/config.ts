@@ -24,11 +24,12 @@ export default defineConfig({
           { text: "SparklinesComposed", link: "/sparklines/sparklines-composed" },
         ],
       },
-      { text: "API Reference", link: "/markdown-examples" },
+      { text: "API", link: "/markdown-examples" },
       {
         text: `v${version}`,
         items: [
           { text: "Release Notes", link: "https://github.com/Luetonize/react-sparklines/releases" },
+          { text: "Roadmap", link: "/roadmap"}
         ],
       },
     ],
@@ -78,7 +79,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "API Reference",
+        text: "API",
         items: [
           {
             text: "Sparklines",
