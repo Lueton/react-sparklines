@@ -3,7 +3,7 @@ import { DataKey, Points, SparklinesMargin } from "react-sparklines"
 import { getMargin, getValueByDataKey } from "./utils.ts"
 
 //TODO We add 0 to max min to make smallest value not 0
-export const getDataPoints = ({
+export const getDataPoints = <TData> ({
   data,
   limit,
   width,
@@ -23,7 +23,7 @@ export const getDataPoints = ({
   margin?: SparklinesMargin
   disableBarAdjustment?: boolean
   dataKey?: DataKey
-}): Points => {
+}): Points<TData> => {
   const dataForSeries = data.map((d) => getValueByDataKey(d, dataKey) || 0)
   return getDataPointsForSeries({
     data: dataForSeries,

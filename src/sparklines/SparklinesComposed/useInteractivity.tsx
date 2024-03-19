@@ -1,16 +1,11 @@
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { EventData, Point } from "./../../utils/types.ts";
-import { SparklineChildDataEntry, UseSparklineData } from "./useSparklineData.tsx";
+import {
+  Point,
+  SparklineChildDataEntry,
+  UseInteractivityProps,
+} from "./../../utils/types.ts";
 
-export interface UseInteractivityProps<TData> {
-  ref: RefObject<SVGRectElement>;
-  data: UseSparklineData<TData>;
-  onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
-  onClick?: (event: MouseEvent, data: EventData<TData>) => void;
-}
 
 export const useInteractivity = <TData,>({
   ref,

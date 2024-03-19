@@ -1,6 +1,4 @@
-import { CSSProperties, ReactElement, SVGProps } from "react";
-
-import { SparklineChildDataEntry } from "../sparklines/SparklinesComposed/useSparklineData.tsx";
+import { CSSProperties, ReactElement, RefObject, SVGProps } from "react";
 
 export type Margin = { top: number; right: number; bottom: number; left: number };
 export type SparklinesMargin =
@@ -22,6 +20,15 @@ export interface Point<TData> {
   y: number;
   value: number;
   entry: TData;
+}
+
+export interface UseInteractivityProps<TData> {
+  ref: RefObject<SVGRectElement>;
+  data: UseSparklineData<TData>;
+  onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
+  onClick?: (event: MouseEvent, data: EventData<TData>) => void;
 }
 
 export interface LinePoint {
@@ -129,3 +136,36 @@ export interface BarShapeProps extends ShapeProps {
 export type LineProps<TData> = LineShapeProps & InternalShapeProps<TData>;
 
 export type BarProps<TData> = BarShapeProps & InternalShapeProps<TData>;
+
+export interface SparklineChildDataEntry<TData> {
+  dataKey: DataKey;
+  x: number;
+  y: number;
+  value: number;
+  index: number;
+  entry: TData;
+}
+
+export interface SparklineChildData<TData> {
+  dataKey: DataKey;
+  childData: SparklineChildDataEntry<TData>[];
+  points: Points<TData>;
+}
+
+export interface UseSparklineData<TData> {
+  originalData: any[];
+  sparklineData: SparklineChildData<TData>[];
+  dataKeys: DataKey[];
+}
+
+export interface UseSparklineDataProps {
+  data: any[];
+  children: any;
+  limit?: number;
+  width: number;
+  height: number;
+  min?: number;
+  max?: number;
+  margin?: SparklinesMargin;
+  disableBarAdjustment?: boolean;
+}

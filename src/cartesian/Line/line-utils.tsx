@@ -14,12 +14,12 @@ const getCurvePoint = (point: { x: number; y: number }, divisor: number) => {
   return res
 }
 
-const getCurvePoints = (points: Point[], divisor: number) => {
+const getCurvePoints =<TData,> (points: Point<TData>[], divisor: number) => {
   prev = null
   return points.map((p) => getCurvePoint(p, divisor)).reduce((a, b) => a.concat(b))
 }
 
-export const getLinePoints = (points: Point[], curved?: boolean | number) => {
+export const getLinePoints = <TData,> (points: Point<TData>[], curved?: boolean | number) => {
   if (curved) {
     const divisor = isNumber(curved) ? curved : 0.4
     return getCurvePoints(points, divisor)

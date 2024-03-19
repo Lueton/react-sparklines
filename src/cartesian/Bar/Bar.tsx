@@ -3,7 +3,7 @@ import { isObject } from "lodash"
 import { BarProps } from "../../utils/types.ts"
 import { getMargin, getRectanglePath } from "../../utils/utils.ts"
 
-export const Bar = ({
+export const Bar = <TData,> ({
   margin = 0,
   height = 0,
   style,
@@ -15,7 +15,7 @@ export const Bar = ({
   activeIndex,
   clipPathId,
   activeBar,
-}: BarProps) => {
+}: BarProps<TData>) => {
   if (!points?.length) return null
 
   const enrichedMargin = getMargin(margin)

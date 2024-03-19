@@ -16,7 +16,6 @@ export default defineConfig((configEnv) => ({
       linters: [new EsLinter({ configEnv })],
     }),
     dts({
-      rollupTypes: true,
       include: ["src/index.ts"],
     }),
   ],
