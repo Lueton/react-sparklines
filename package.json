@@ -101,5 +101,8 @@
     "url": "https://github.com/Lueton/react-sparklines/issues"
   },
   "homepage": "https://github.com/Lueton/react-sparklines#readme",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
