@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
+# React Sparklines
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![GitHub release](https://img.shields.io/github/release/Lueton/https://github.com/Lueton/react-sparklines?include_prereleases=&sort=semver&color=blue)](https://github.com/Lueton/https://github.com/Lueton/react-sparklines/releases/)
+![NPM Version](https://img.shields.io/npm/v/%40lueton%2Freact-sparklines)
+[![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
-Currently, two official plugins are available:
+### [**Documentation**](docs) • [**Installation**](docs/getting-started/installation) • [**Quckstart**](docs/getting-started/quick-start)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![React Sparklines Header Image](react-sparklines-header.png)
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash [npm]
+npm install @lueton/react-sparklines
 
-- Configure the top-level `parserOptions` property like this:
+pnpm add @lueton/react-sparklines
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+yarn add @lueton/react-sparklines
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Quickstart
+
+```jsx
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+<SparklinesLine data={data} />
+```
+
+## License
+
+Released under [MIT](/LICENSE) by [@Lueton](https://github.com/Lueton).

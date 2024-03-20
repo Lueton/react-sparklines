@@ -1,5 +1,6 @@
 {
   "name": "react-sparklines",
+  "description": "Awesome Sparklines for React",
   "private": false,
   "version": "0.0.0-development",
   "type": "module",

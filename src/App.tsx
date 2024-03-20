@@ -5,7 +5,11 @@ import { Tooltip } from "./components";
 import { SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines";
 
 const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
-const composedData = demoData.map((d, i) => ({ name: "Label-" + i, a: d, b: demoData[demoData.length - 1 - i] }));
+const composedData = demoData.map((d, i) => ({
+  name: "Label-" + i,
+  a: d,
+  b: demoData[demoData.length - 1 - i],
+}));
 
 function App() {
   /*  const [data, setData] = useState([...demoData])
@@ -19,6 +23,93 @@ function App() {
 
   return (
     <div>
+      <div style={{ padding: 10 }}>
+        <div style={{ display: "flex" }}>
+          <SparklinesLine data={demoData} />
+          <SparklinesLine
+            name="MyData"
+            color="#b91c1c"
+            data={demoData}
+            curved
+            limit={demoData.length}
+          >
+            <Tooltip />
+          </SparklinesLine>
+          <SparklinesLine color="#047857" data={demoData} style={{ strokeWidth: 4 }} margin={4} />
+          <SparklinesLine
+            color="#1d4ed8"
+            data={demoData}
+            curved={0.6}
+            style={{ fill: "transparent" }}
+          />
+        </div>
+        <div style={{ display: "flex" }}>
+          <SparklinesLine data={demoData} style={{ fill: "url(#my-gradient-x)" }}>
+            <defs>
+              <linearGradient id="my-gradient-x" x1="0%" x2="100%" y1="0%" y2="0%">
+                <stop offset="0%" stopColor="#7c3aed" />
+                <stop offset="100%" stopColor="#d97706" />
+              </linearGradient>
+            </defs>
+          </SparklinesLine>
+          <SparklinesBar data={demoData} />
+          <SparklinesBar
+            data={demoData}
+            style={{ strokeWidth: 2, stroke: "#db2777" }}
+            radius={5}
+            barWidth={10}
+            color={"#9d174d"}
+          />
+          <SparklinesBar
+            data={demoData}
+            style={{ strokeWidth: 2, stroke: "#059669", fill: "#065f46" }}
+            radius={{ topLeft: 5, topRight: 5 }}
+            maxBarWidth={20}
+          />
+        </div>
+        <div style={{display: "flex"}}>
+          <SparklinesComposed data={demoData}>
+            <Line />
+            <Bar />
+          </SparklinesComposed>
+          <SparklinesComposed data={demoData}>
+            <Bar color={"orange"} />
+            <Line color="red" style={{ fillOpacity: ".5" }} />
+          </SparklinesComposed>
+          <SparklinesComposed data={demoData}>
+            <defs>
+              <linearGradient id="my-gradient-2" x1="0%" x2="100%" y1="0%" y2="0%">
+                <stop offset="0%" stopColor="red" />
+                <stop offset="70%" stopColor="orange" />
+                <stop offset="100%" stopColor="yellow" />
+              </linearGradient>
+            </defs>
+            <defs>
+              <linearGradient id="my-gradient-3" x1="0%" x2="100%" y1="0%" y2="0%">
+                <stop offset="0%" stopColor="red" />
+                <stop offset="70%" stopColor="orange" />
+                <stop offset="100%" stopColor="yellow" />
+              </linearGradient>
+            </defs>
+            <Bar style={{ fill: "url(#my-gradient)" }} />
+            <Line dots={true} style={{ fill: "url(#my-gradient-3)", fillOpacity: ".5" }} />
+          </SparklinesComposed>
+          <SparklinesBar
+            data={demoData}
+            color={"#ee9ca7"}
+            style={{ fill: "url(#my-gradient-y)" }}
+            radius={{topLeft: 4, topRight: 4}}
+          >
+            <defs>
+              <linearGradient id="my-gradient-y" x1="0%" x2="100%" y1="0%" y2="0%">
+                <stop offset="0%" stopColor="#ee9ca7" />
+                <stop offset="100%" stopColor="#ffdde1" />
+              </linearGradient>
+            </defs>
+          </SparklinesBar>
+        </div>
+      </div>
+
       <div className="demo-section">
         <h1>React Sparklines</h1>
         <div className="demo-section">
