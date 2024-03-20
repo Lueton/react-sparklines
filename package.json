@@ -1,7 +1,7 @@
 {
   "name": "react-sparklines",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "type": "module",
   "scripts": {
     "prepare": "husky install",
@@ -90,14 +90,14 @@
     "sparklines",
     "typescript"
   ],
-  "author": "Lueton",
+  "author": "Leon Lüttger",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Luetonize/react-sparklines"
+    "url": "https://github.com/Lueton/react-sparklines"
   },
   "bugs": {
-    "url": "https://github.com/Luetonize/react-sparklines/issues"
+    "url": "https://github.com/Lueton/react-sparklines/issues"
   },
-  "homepage": "https://github.com/Luetonize/react-sparklines#readme",
+  "homepage": "https://github.com/Lueton/react-sparklines#readme",
   "license": "MIT"
 }
