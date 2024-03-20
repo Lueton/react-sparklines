@@ -62,6 +62,7 @@
     "prettier": "^3.2.5",
     "react-hooks": "^1.0.1",
     "react-test-renderer": "^18.2.0",
+    "semantic-release": "^23.0.5",
     "typescript": "^5.4.2",
     "vite": "^5.1.6",
     "vite-plugin-dts": "^3.7.3",
