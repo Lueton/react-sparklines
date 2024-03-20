@@ -27,6 +27,7 @@
       "require": "./dist/react-sparklines.umd.js"
     }
   },
+  "source": "./src/index.js",
   "main": "./dist/react-sparklines.umd.js",
   "module": "./dist/react-sparklines.es.js",
   "types": "./dist/index.d.ts",

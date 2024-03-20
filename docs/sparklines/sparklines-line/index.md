@@ -17,7 +17,7 @@ const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
 
 ## Customization
 
-React Sparklines comes with flexible customization options. Build sparklines which fit your needs! 
+SparklinesLine comes with flexible customization options. Build sparklines which fit your needs! 
 
 <SparklinesLineCustomization />
 

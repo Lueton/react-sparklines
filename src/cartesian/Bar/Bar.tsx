@@ -14,7 +14,8 @@ export const Bar = <TData,> ({
   maxBarWidth,
   activeIndex,
   clipPathId,
-  activeBar,
+  activeBar = {fill: "white"},
+  tooltip
 }: BarProps<TData>) => {
   if (!points?.length) return null
 
@@ -57,17 +58,20 @@ export const Bar = <TData,> ({
   }
 
   const activeFillStyle = {
-    fill: "red",
     ...(isObject(activeBar) ? { ...activeBar } : {}),
   }
+
+  const showActiveBar: boolean = !!tooltip && !!activeBar;
 
   return (
     <g clipPath={clipPathId}>
       {rectanglePoints.map((p, i) => {
-        if (activeIndex === i && activeBar)
+        if (activeIndex === i && showActiveBar)
           return <path key={i} d={p} style={{ ...fillStyle, ...activeFillStyle }} />
         return <path key={i} d={p} style={fillStyle} />
       })}
     </g>
   )
 }
+
+Bar.displayName = "Bar";

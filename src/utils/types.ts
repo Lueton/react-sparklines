@@ -40,6 +40,7 @@ export interface LinePoint {
 export interface DotsProps {
   dots: LineDot;
   points: LinePoint[];
+  color: string
 }
 
 export interface DotProps extends SVGProps<SVGCircleElement> {
@@ -49,13 +50,16 @@ export interface DotProps extends SVGProps<SVGCircleElement> {
   r?: number;
   dot?: ReactElement<SVGElement> | ((props: DotProps) => ReactElement<SVGElement>);
   show?: LineDotsVisibility;
+  color?: string
 }
 
 export type LineDot =
   | ReactElement<SVGElement>
   | ((props: DotProps) => ReactElement<SVGElement>)
   | DotProps
-  | boolean;
+  | boolean
+  | undefined
+  | null
 
 export type ActiveBar = CSSProperties | boolean;
 
@@ -144,18 +148,21 @@ export interface SparklineChildDataEntry<TData> {
   value: number;
   index: number;
   entry: TData;
+  color: string
 }
 
 export interface SparklineChildData<TData> {
   dataKey: DataKey;
   childData: SparklineChildDataEntry<TData>[];
   points: Points<TData>;
+  color: string
 }
 
 export interface UseSparklineData<TData> {
   originalData: any[];
   sparklineData: SparklineChildData<TData>[];
   dataKeys: DataKey[];
+  labels: any[]
 }
 
 export interface UseSparklineDataProps {

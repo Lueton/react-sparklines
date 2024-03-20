@@ -29,6 +29,8 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 - Handling null values
 - Multi color sparklines
 - Providing a simply way to render custom components
+- More interpolation options
+- Better Tooltip positioning
 
 
 ## More ideas

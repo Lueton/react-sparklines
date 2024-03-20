@@ -389,6 +389,7 @@ export const SVGElementPropKeys = [
   "strokeMiterlimit",
   "strokeOpacity",
   "strokeWidth",
+  "style",
   "surfaceScale",
   "systemLanguage",
   "tableValues",

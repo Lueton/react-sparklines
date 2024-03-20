@@ -102,11 +102,11 @@ export const getTooltipPayload = <TData>(
   activeEntry: SparklineChildDataEntry<TData> | null,
   childrenCount: number,
 ) => {
-  const { dataKey = "value", name, color, style } = props;
+  const { dataKey = "value", name } = props;
   const finalName = name || (childrenCount > 1 ? dataKey : undefined);
   return {
     value: activeEntry?.value || 0,
     name: finalName,
-    color: color || style?.stroke || style?.fill,
+    color: activeEntry?.color
   };
 };

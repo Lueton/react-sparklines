@@ -1,11 +1,11 @@
-import "./App.css"
+import "./App.css";
 
-import { Bar, Line } from "./cartesian"
-import { Tooltip } from "./components"
-import { SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines"
+import { Bar, Line } from "./cartesian";
+import { Tooltip } from "./components";
+import { SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines";
 
-const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4]
-const composedData = demoData.map((d, i) => ({ a: d, b: demoData[demoData.length - 1 - i] }))
+const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+const composedData = demoData.map((d, i) => ({ name: "Label-" + i, a: d, b: demoData[demoData.length - 1 - i] }));
 
 function App() {
   /*  const [data, setData] = useState([...demoData])
@@ -25,7 +25,9 @@ function App() {
           <h2>SparklinesLine</h2>
           <h3>Simple</h3>
           <div className="demo-section">
-            <SparklinesLine height={60} width={300} data={demoData} ><Tooltip /></SparklinesLine>
+            <SparklinesLine height={60} width={300} data={demoData} dots>
+              <Tooltip />
+            </SparklinesLine>
             <SparklinesLine
               name="MyData"
               color="#b91c1c"
@@ -271,15 +273,15 @@ function App() {
               disableBarAdjustment
               max={7}
             >
-              <Line dataKey="a" color={"green"} dots={{ style: { fill: "green" } }} name="MyData" />
-              <Line dataKey="b" color={"blue"} dots={{ style: { fill: "blue" } }} />
+              <Line dataKey="a" color={"green"} dots name="MyData" />
+              <Line dataKey="b" color={"blue"} dots />
               <Tooltip />
             </SparklinesComposed>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,5 +1,5 @@
 import { isNil, isNumber, isString } from "lodash"
-import { isValidElement, ReactNode } from "react"
+import { CSSProperties, isValidElement, ReactNode } from "react"
 
 import { TooltipProps } from "./Tooltip.tsx"
 
@@ -34,11 +34,13 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
       const listStyle = { padding: 0, margin: 0 }
 
       const items = payload.map((entry, i) => {
-        const finalItemStyle = {
+        const finalItemStyle : CSSProperties = {
           display: "block",
           paddingTop: 4,
           paddingBottom: 4,
           color: entry.color || "slategray",
+          margin: 0,
+          lineHeight: "normal",
           ...itemStyle,
         }
 

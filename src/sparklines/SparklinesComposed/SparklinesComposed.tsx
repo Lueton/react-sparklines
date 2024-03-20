@@ -102,7 +102,8 @@ export const SparklinesComposed = <TData,>(
     const payload = sparklineChildren.map((child, i) =>
       getTooltipPayload<TData>(child.props, activeEntry?.[i] || null, sparklineChildren.length),
     );
-    return cloneElement(tooltip, { ...tooltip.props, payload, coords, label });
+    const finalLabel = sparklineData.labels[activeIndex] || label;
+    return cloneElement(tooltip, { ...tooltip.props, payload, coords, label: finalLabel });
   };
 
   const renderChildren = () => {
