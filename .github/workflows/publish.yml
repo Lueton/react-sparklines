@@ -24,7 +24,7 @@ jobs:
       - name: Run tests
         run: npm test
       - name: Lint
-        run: npm runt lint
+        run: npm run lint
 
   publish-npm:
     needs: test
