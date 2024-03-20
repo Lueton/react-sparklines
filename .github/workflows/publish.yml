@@ -9,6 +9,13 @@ on:
     branches:
       - main
 
+permissions:
+  packages: write
+  pull-requests: write
+  contents: write
+  issues: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
