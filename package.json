@@ -38,6 +38,7 @@
     "react-is": "^18.2.0"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/react": "^14.2.1",
     "@types/lodash": "^4.17.0",
