@@ -27,6 +27,7 @@ function fixedForwardRef<T, P = unknown>(
 ): (props: P & RefAttributes<T>) => ReactNode {
   return forwardRef(render) as any;
 }
+
 export const SparklinesComposed = <TData,>(
   {
     data = [],
