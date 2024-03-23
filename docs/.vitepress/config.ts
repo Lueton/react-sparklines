@@ -6,6 +6,7 @@ export default defineConfig({
   vite: {
     plugins: [react()],
   },
+  base: "/react-sparklines/",
   lang: "en-US",
   title: "React Sparklines",
   titleTemplate: "React Sparklines",
