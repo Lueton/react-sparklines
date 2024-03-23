@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { isNumber } from "lodash";
-import { DotProps } from "react-sparklines";
 
 import { filterProps } from "../../utils/react-utils.ts";
+import { DotProps } from "../../utils/types.ts";
 
 export const Dot = (props: DotProps) => {
   const { cx, cy, r, className, style } = props;

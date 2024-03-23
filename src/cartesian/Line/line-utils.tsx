@@ -1,5 +1,6 @@
 import { isNumber } from "lodash"
-import { Point } from "react-sparklines"
+
+import { Point } from "../../utils/types.ts";
 
 let prev: null | { x: number; y: number }
 const getCurvePoint = (point: { x: number; y: number }, divisor: number) => {

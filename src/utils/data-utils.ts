@@ -1,5 +1,4 @@
-import { DataKey, Points, SparklinesMargin } from "react-sparklines"
-
+import { DataKey, Points, SparklinesMargin } from "./types.ts";
 import { getMargin, getValueByDataKey } from "./utils.ts"
 
 //TODO We add 0 to max min to make smallest value not 0

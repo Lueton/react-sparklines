@@ -25,7 +25,8 @@
   "exports": {
     ".": {
       "import": "./dist/react-sparklines.es.js",
-      "require": "./dist/react-sparklines.umd.js"
+      "require": "./dist/react-sparklines.umd.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "source": "./src/index.js",

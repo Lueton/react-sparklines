@@ -12,7 +12,8 @@ import {
   ReactNode,
 } from "react"
 import { isFragment } from "react-is"
-import { FilteredSvgElementType } from "react-sparklines"
+
+import { FilteredSvgElementType } from "./types.ts";
 
 export const getDisplayName = (Comp: ComponentType | string) => {
   if (typeof Comp === "string") {
