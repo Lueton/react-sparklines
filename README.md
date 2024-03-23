@@ -1,6 +1,6 @@
 # React Sparklines
 
-![GitHub Release](https://img.shields.io/github/v/release/Lueton/react-sparklines)
+[![GitHub release](https://img.shields.io/github/release/Lueton/https://github.com/Lueton/react-sparklines?include_prereleases=&sort=semver&color=blue)](https://github.com/Lueton/https://github.com/Lueton/react-sparklines/releases/)
 ![NPM Version](https://img.shields.io/npm/v/%40lueton%2Freact-sparklines)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
