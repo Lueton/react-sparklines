@@ -19,7 +19,6 @@ export const SparklinesLine = <TData,> ({
   dots,
   curved,
   activeDot,
-  connectNulls,
   name,
   label,
   clip,
@@ -51,7 +50,6 @@ export const SparklinesLine = <TData,> ({
 
   const lineProps: LineShapeProps = {
     name,
-    connectNulls,
     style,
     color,
     activeDot,

@@ -35,8 +35,6 @@ const complexData = [
 </SparklinesComposed>
 ```
 
-## Customization
-
 ## Tooltip
 
 <SparklinesComposedTooltip/>

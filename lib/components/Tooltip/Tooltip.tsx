@@ -12,10 +12,6 @@ import { DataKey } from "../../utils/types.ts"
 import { DefaultTooltipContent } from "./DefaultTooltipContent.tsx"
 import { TooltipWrapper } from "./TooltipWrapper.tsx"
 
-export interface InternalTooltipProps {
-  coords?: { x: number; y: number }
-}
-
 export type TooltipContent = ReactElement | ((props: TooltipProps) => ReactNode) | undefined
 
 export interface TooltipPayload {
@@ -25,15 +21,16 @@ export interface TooltipPayload {
   color?: string
 }
 
-export interface TooltipProps extends InternalTooltipProps {
-  separator?: string
-  itemStyle?: CSSProperties
-  wrapperStyle?: CSSProperties
-  contentStyle?: CSSProperties
-  labelStyle?: CSSProperties
+export interface TooltipProps {
   content?: TooltipContent
+  contentStyle?: CSSProperties
+  coords?: { x: number; y: number }
+  itemStyle?: CSSProperties
   label?: string | number
+  labelStyle?: CSSProperties
   payload?: Array<TooltipPayload>
+  separator?: string
+  wrapperStyle?: CSSProperties
 }
 
 const renderContent = (content: TooltipContent, props: TooltipProps) => {

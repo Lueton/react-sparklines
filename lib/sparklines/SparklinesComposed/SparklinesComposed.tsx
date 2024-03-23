@@ -33,7 +33,7 @@ export const SparklinesComposed = <TData,>(
     data = [],
     width = 240,
     height = 60,
-    margin = 2,
+    margin = 4,
     children,
     color,
     max,

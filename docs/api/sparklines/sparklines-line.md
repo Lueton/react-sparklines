@@ -47,7 +47,7 @@ drawn curved with the provided divisor.
 ### data
 
 - **Optional**
-- **Type:** `number[] | any[]`
+- **Type:** `number[] | TData[]`
 
 Data of the sparkline. Can be an array of numbers or an array of objects. If the array consists of objects and there is
 no `"value"` key available you need the pass a specific `dataKey` to the component to make the value accessible.
@@ -107,16 +107,16 @@ Name of the data. Will be used as headline in `<Tooltip/>`.
 - **Optional**
 - **Type:** `number`
 
-Limits the displayed data to last `limit` entries of the provided `data`. This is usually used to display a maximum
+Limits the displayed data to last `limit`'s entries of the provided `data`. This is usually used to display a maximum
 number of entries while constantly adding new entries to the `data` array.
 
 ### margin
 
 - **Optional**
 - **Type:** `number | { top?: number; right?: number; bottom?: number; left?: number }`
-- **Default:** `2`
+- **Default:** `3`
 
-The sizes of whitespace around the container.
+The sizes of whitespace around the `<svg/>` element.
 
 ### min
 
@@ -170,3 +170,31 @@ Width of the component.
 - **Default:** `60`
 
 Height of the component.
+
+### onMouseMove
+
+- **Optional**
+- **Type:** `(event: MouseEvent, data: EventData<TData>) => void`
+
+Event listener for `mousemove` events.
+
+### onMouseLeave
+
+- **Optional**
+- **Type:** `(event: MouseEvent, data: EventData<TData>) => void`
+
+Event listener for `mouseleave` events.
+
+### onMouseEnter
+
+- **Optional**
+- **Type:** `(event: MouseEvent, data: EventData<TData>) => void`
+
+Event listener for `mouseenter` events.
+
+### onClick
+
+- **Optional**
+- **Type:** `(event: MouseEvent, data: EventData<TData>) => void`
+
+Event listener for `click` events.

@@ -97,7 +97,7 @@ export const Line = <TData,>({
       const point = points[index];
       const dotProps = {
         key: `dot-${index}`,
-        r: 1,
+        r: 2,
         stroke: finalColor,
         fill: "#ffffff",
         strokeWidth: 1,
@@ -117,7 +117,7 @@ export const Line = <TData,>({
     const activePoint = points[activeIndex];
     const dotProps = {
       key: `active-dot-${activeIndex}`,
-      r: 1,
+      r: 2,
       cx: activePoint.x,
       cy: activePoint.y,
       index: activeIndex,

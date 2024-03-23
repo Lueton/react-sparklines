@@ -37,12 +37,6 @@ export interface LinePoint {
   y: number;
 }
 
-export interface DotsProps {
-  dots: LineDot;
-  points: LinePoint[];
-  color: string
-}
-
 export interface DotProps extends SVGProps<SVGCircleElement> {
   className?: string;
   cx?: number;
@@ -123,14 +117,10 @@ export interface ShapeProps {
 export interface LineShapeProps extends ShapeProps {
   dots?: LineDot;
   activeDot?: LineDot;
-  connectNulls?: boolean;
   curved?: boolean | number;
 }
 
 export interface BarShapeProps extends ShapeProps {
-  /**
-   * radius: Radius of the bar corners
-   */
   radius?: SparklinesRadius;
   activeBar?: ActiveBar;
   barWidth?: number;

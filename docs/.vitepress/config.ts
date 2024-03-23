@@ -1,8 +1,7 @@
-import { defineConfig } from "vitepress"
-import { version } from "../../package.json"
-import react from "@vitejs/plugin-react"
+import { defineConfig } from "vitepress";
+import { version } from "../../package.json";
+import react from "@vitejs/plugin-react";
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   vite: {
     plugins: [react()],
@@ -29,7 +28,7 @@ export default defineConfig({
         text: `v${version}`,
         items: [
           { text: "Release Notes", link: "https://github.com/Luetonize/react-sparklines/releases" },
-          { text: "Roadmap", link: "/roadmap"}
+          { text: "Roadmap", link: "/roadmap" },
         ],
       },
     ],
@@ -53,30 +52,13 @@ export default defineConfig({
       {
         text: "Sparkline Components",
         items: [
-          { text: "Line", link: "/api-examples" },
-          { text: "Bar", link: "/api-examples" },
+          { text: "Line", link: "/sparkline-components/line" },
+          { text: "Bar", link: "/sparkline-components/bar" },
         ],
       },
       {
         text: "General Components",
-        items: [{ text: "Tooltip", link: "/api-examples" }],
-      },
-      {
-        text: "Recipes",
-        items: [
-          {
-            text: "SparklinesLine",
-            items: [],
-          },
-          {
-            text: "SparklinesBar",
-            items: [],
-          },
-          {
-            text: "SparklinesComposed",
-            items: [],
-          },
-        ],
+        items: [{ text: "Tooltip", link: "/general-components/tooltip" }],
       },
       {
         text: "API",
@@ -101,7 +83,7 @@ export default defineConfig({
           },
           {
             text: "General Components",
-            items: [{ text: "Tooltip", link: "/api-examples" }],
+            items: [{ text: "Tooltip", link: "/api/general-components/tooltip" }],
           },
         ],
       },
@@ -114,4 +96,4 @@ export default defineConfig({
       copyright: "Copyright © 2024-PRESENT Leon Lüttger",
     },
   },
-})
+});
