@@ -22,14 +22,11 @@
     "esModuleInterop": true ,
     "declarationMap": true,
     "baseUrl": ".",
-    "paths": {
-      "react-sparklines": [ "src/index.ts" ]
-    },
     "typeRoots": [
       "node_modules/@types",
       "dist/index.d.ts"
     ]
 },
-  "include": ["src"],
+  "include": ["lib"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -8,13 +8,13 @@
     "prepare": "husky install",
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint src/**/*.{jsx,ts,tsx} --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint lib/**/*.{jsx,ts,tsx} --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "watch": "vitest",
     "preview": "vite preview",
-    "lint:fix": "eslint src/**/*.{jsx,ts,tsx} --fix",
-    "format": "prettier --write src//**/*.{ts,tsx} --config ./.prettierrc",
+    "lint:fix": "eslint lib/**/*.{jsx,ts,tsx} --fix",
+    "format": "prettier --write lib//**/*.{ts,tsx} --config ./.prettierrc",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
@@ -29,7 +29,7 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "source": "./src/index.js",
+  "source": "./lib/index.js",
   "main": "./dist/react-sparklines.umd.js",
   "module": "./dist/react-sparklines.es.js",
   "types": "./dist/index.d.ts",
@@ -43,7 +43,6 @@
     "@testing-library/dom": "^9.3.4",
     "@testing-library/react": "^14.2.1",
     "@types/lodash": "^4.17.0",
-    "@types/node": "^20.11.29",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
     "@types/react-is": "^18.2.4",
@@ -84,7 +83,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
+    "lib/**/*.{js,jsx,ts,tsx}": [
       "npm eslint",
       "npm format"
     ]

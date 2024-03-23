@@ -6,30 +6,40 @@ import { EsLinter, linterPlugin } from "vite-plugin-linter"
 import tsConfigPaths from "vite-tsconfig-paths"
 
 import * as packageJson from "./package.json"
+import { name } from './package.json'
+
+const formattedName = name.match(/[^/]+$/)?.[0] ?? name
 
 export default defineConfig((configEnv) => ({
   plugins: [
     react(),
     tsConfigPaths(),
     linterPlugin({
-      include: ["./src/**/*.{ts,tsx}"],
+      include: ["./lib/**/*.{ts,tsx}"],
       linters: [new EsLinter({ configEnv })],
     }),
-    dts(),
+    dts({
+   /*   include: ["lib"],
+      insertTypesEntry: true,*/
+   /*   insertTypesEntry: true*/
+      include: ["lib"],
+      rollupTypes: true
+    }),
   ],
   build: {
     lib: {
-      entry: resolve("src", "index.ts"),
-      name: "ReactSparklines",
+      entry: resolve(__dirname, 'lib/index.ts'),
       formats: ["es", "umd"],
+      name: formattedName,
       fileName: (format) => `react-sparklines.${format}.js`,
     },
     rollupOptions: {
-      external: [...Object.keys(packageJson.peerDependencies)],
+      external: ['react', 'react/jsx-runtime', 'react-dom', ],
       output: {
         globals: {
-          react: "React",
-          "react-dom": "ReactDOM"
+          react: 'React',
+          'react/jsx-runtime': 'react/jsx-runtime',
+          'react-dom': 'ReactDOM',
         },
       },
     },

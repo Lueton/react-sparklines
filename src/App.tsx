@@ -1,8 +1,5 @@
 import "./App.css";
-
-import { Bar, Line } from "./cartesian";
-import { Tooltip } from "./components";
-import { SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines";
+import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip } from "../lib";
 
 const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({

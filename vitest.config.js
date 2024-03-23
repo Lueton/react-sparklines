@@ -5,7 +5,7 @@ export default defineConfig({
     globals: false,
     environment: 'jsdom',
     coverage: {
-      include: ['src/sparklines/**/*.tsx'],
+      include: ['lib/sparklines/**/*.tsx'],
     }
   }
 })
