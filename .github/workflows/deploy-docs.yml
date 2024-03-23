@@ -1,8 +1,12 @@
 name: Deploy Docs
 
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: [Release]
+    types:
+      - completed
+    branches:
+      - master
 
   workflow_dispatch:
 

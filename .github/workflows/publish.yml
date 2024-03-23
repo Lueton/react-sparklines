@@ -1,8 +1,4 @@
-name: Publish package
-
-#on:
-#  release:
-#    types: [published]
+name: Release
 
 on:
   push:
