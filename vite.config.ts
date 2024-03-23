@@ -19,9 +19,6 @@ export default defineConfig((configEnv) => ({
       linters: [new EsLinter({ configEnv })],
     }),
     dts({
-   /*   include: ["lib"],
-      insertTypesEntry: true,*/
-   /*   insertTypesEntry: true*/
       include: ["lib"],
       rollupTypes: true
     }),
