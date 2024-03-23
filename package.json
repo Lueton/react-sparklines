@@ -2,7 +2,7 @@
   "name": "@lueton/react-sparklines",
   "description": "Awesome Sparklines for React",
   "private": false,
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "prepare": "husky install",
