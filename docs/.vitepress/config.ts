@@ -28,7 +28,7 @@ export default defineConfig({
       {
         text: `v${version}`,
         items: [
-          { text: "Release Notes", link: "https://github.com/Luetonize/react-sparklines/releases" },
+          { text: "Release Notes", link: "https://github.com/Lueton/react-sparklines/releases" },
           { text: "Roadmap", link: "/roadmap" },
         ],
       },
