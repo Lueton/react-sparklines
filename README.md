@@ -8,6 +8,10 @@
 
 ![React Sparklines Header Image](react-sparklines-header.png)
 
+## Note on stage of Development
+
+React Sparklines is in early development. Several parts of the API might change until v2.0.0.
+
 ## Installation
 
 ```bash [npm]
