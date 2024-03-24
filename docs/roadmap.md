@@ -10,17 +10,17 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 
 ## v0.x.x
 
-- Finish initial implementation for basic components
-- Provide basic documentation
-- Win the war against Typescript :sweat_smile:
+- :white_check_mark: Finish initial implementation for basic components
+- :white_check_mark: Provide basic documentation
+- :white_check_mark: Win the war against Typescript :sweat_smile:
 
-## v1.0.0
+## v1.x.x
 
 - General improvements, Bug fixes
 - Improve Documentation
 - Improve typings
 
-## v1.x.x
+## v2.x.x
 
 - Add more components
   - Reference lines
@@ -28,7 +28,7 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 - Extend and improve configuration options for components
 - Handling null values
 - Multi color sparklines
-- Providing a simply way to render custom components
+- Providing a simple way to render custom components
 - More interpolation options
 - Better Tooltip positioning
 
