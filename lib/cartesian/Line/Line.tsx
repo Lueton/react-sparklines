@@ -130,11 +130,13 @@ export const Line = <TData,>({
   };
 
   return (
-    <g clipPath={clipPathId}>
+    <g className="react-sparklines-layer react-sparklines-line" clipPath={clipPathId}>
       <path d={"M" + fillPoints.join(" ")} style={fillStyle} />
       <path d={"M" + linePoints.join(" ")} style={lineStyle} />
-      {showDots && <g>{renderDots()}</g>}
-      {showActiveDot && <g>{renderActiveDot()}</g>}
+      {showDots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
+      {showActiveDot && (
+        <g className="react-sparklines-layer react-sparklines-active-dot">{renderActiveDot()}</g>
+      )}
     </g>
   );
 };

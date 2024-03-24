@@ -64,7 +64,7 @@ export const Bar = <TData,> ({
   const showActiveBar: boolean = !!tooltip && !!activeBar;
 
   return (
-    <g clipPath={clipPathId}>
+    <g className="react-sparklines-layer react-sparklines-bar" clipPath={clipPathId}>
       {rectanglePoints.map((p, i) => {
         if (activeIndex === i && showActiveBar)
           return <path key={i} d={p} style={{ ...fillStyle, ...activeFillStyle }} />

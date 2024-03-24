@@ -159,6 +159,7 @@ export const SparklinesComposed = <TData,>(
 
     return (
       <rect
+        className="react-sparklines-interactive-layer"
         ref={ref}
         height={interactiveHeight}
         width={interactiveWidth}
@@ -170,8 +171,8 @@ export const SparklinesComposed = <TData,>(
   };
 
   return (
-    <div {...wrapperProps}>
-      <svg {...svgProps}>
+    <div className="react-sparklines-wrapper" {...wrapperProps}>
+      <svg className="react-sparklines-surface" {...svgProps}>
         {renderClip()}
         {renderChildren()}
         {renderInteractiveLayer()}

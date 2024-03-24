@@ -19,7 +19,7 @@ export const TooltipWrapper = (props: TooltipWrapperProps) => {
   }
 
   return (
-    <span tabIndex={-1} className={"react-sparklines-tooltip-wrapper"} style={wrapperStyle}>
+    <span tabIndex={-1} className="react-sparklines-tooltip-wrapper" style={wrapperStyle}>
       {children}
     </span>
   )
