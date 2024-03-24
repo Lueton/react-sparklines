@@ -8,15 +8,15 @@ and [pnpm](https://pnpm.io/).
 ::: code-group
 
   ```bash [npm]
-  npm install @luetonize/react-sparklines
+  npm install @lueton/react-sparklines
   ```
 
   ```bash [pnpm]
-  pnpm add @luetonize/react-sparklines
+  pnpm add @lueton/react-sparklines
   ```
 
   ```bash [yarn]
-  yarn add @luetonize/react-sparklines
+  yarn add @lueton/react-sparklines
   ```
 :::
 
