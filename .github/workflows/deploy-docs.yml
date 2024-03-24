@@ -1,13 +1,6 @@
 name: Deploy Docs
 
 on:
-  workflow_run:
-    workflows: [Release]
-    types:
-      - completed
-    branches:
-      - master
-
   workflow_dispatch:
 
 permissions:
