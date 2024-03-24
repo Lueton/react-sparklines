@@ -11,17 +11,27 @@ hero:
       link: /getting-started/quick-start
     - theme: alt
       text: Sparklines
-      link: /api-examples
+      link: /sparklines/sparklines-line/
     - theme: alt
-      text: API Reference
-      link: /api-examples
+      text: API
+      link: /api/sparklines/sparklines-line
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: SparklinesLine
+    details: Build beautiful graphs wich fit your needs.
+    link: /sparklines/sparklines-line/
+  - title: SparklinesBar
+    details: Graphs are not your type? It also has Bars!
+    link: /sparklines/sparklines-bar/
+  - title: SparklinesComposed
+    details: Display multiple data series without a headache.
+    link: /sparklines/sparklines-composed/
+  - title: Tooltip
+    details: Yes, it has tooltips.
+    link: /general-components/tooltip
+  - title: Beautiful
+    details: Build customizable sparklines matching your design.
+  - title: Lightweight
+    details: Build sparklines without the need of a big chart library
 ---
 

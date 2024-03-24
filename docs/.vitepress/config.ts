@@ -24,7 +24,7 @@ export default defineConfig({
           { text: "SparklinesComposed", link: "/sparklines/sparklines-composed" },
         ],
       },
-      { text: "API", link: "/markdown-examples" },
+      { text: "API", link: "/api/sparklines/sparklines-line" },
       {
         text: `v${version}`,
         items: [
