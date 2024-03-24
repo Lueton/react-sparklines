@@ -13,6 +13,9 @@ export default defineConfig({
   description: "Awesome Sparklines for React",
   cleanUrls: true,
   themeConfig: {
+    search: {
+      provider: 'local'
+    },
     nav: [
       { text: "Home", link: "/" },
       { text: "Guide", link: "/getting-started/quick-start" },
