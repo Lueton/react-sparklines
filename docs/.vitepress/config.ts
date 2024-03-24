@@ -90,7 +90,10 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: "github", link: "https://github.com/Luetonize/react-sparklines" }],
+    socialLinks: [
+      { icon: "github", link: "https://github.com/Luetonize/react-sparklines" },
+      { icon: "npm", link: "https://www.npmjs.com/package/@lueton/react-sparklines" }
+    ],
 
     footer: {
       message: "Released under the MIT License.",
