@@ -4,7 +4,7 @@
 ![NPM Version](https://img.shields.io/npm/v/%40lueton%2Freact-sparklines)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
 
-### [**Documentation**](docs) • [**Installation**](docs/getting-started/installation) • [**Quckstart**](docs/getting-started/quick-start)
+### [**Documentation**](https://lueton.github.io/react-sparklines/) • [**Installation**](https://lueton.github.io/react-sparklines/getting-started/installation) • [**Quckstart**](https://lueton.github.io/react-sparklines//getting-started/quick-start)
 
 ![React Sparklines Header Image](react-sparklines-header.png)
 
