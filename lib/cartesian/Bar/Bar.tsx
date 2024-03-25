@@ -1,3 +1,4 @@
+import { DEFAULT_COLOR, DEFAULT_SECONDARY_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { BarProps } from "../../utils/types.ts";
 import { getMargin, getRectanglePath } from "../../utils/utils.ts";
@@ -50,13 +51,13 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
   const showActiveBar: boolean = !!tooltip && activeBar !== false;
   const barProps = {
     stroke: "none",
-    fill: "slategray",
+    fill: DEFAULT_COLOR,
     ...filterProps(props, false),
   };
 
   const activeBarProps = {
     ...barProps,
-    fill: "white",
+    fill: DEFAULT_SECONDARY_COLOR,
     ...filterProps(activeBar, false),
   };
 

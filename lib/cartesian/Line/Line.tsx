@@ -3,6 +3,7 @@ import isFunction from "lodash/isFunction";
 import { cloneElement, isValidElement } from "react";
 
 import { Dot } from "../../shapes/Dot/Dot.tsx";
+import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { DotProps, LineDot, LineDotsVisibility, LineProps } from "../../utils/types.ts";
 import { getMargin } from "../../utils/utils.ts";
@@ -82,7 +83,7 @@ export const Line = <TData,>(props: LineProps<TData>) => {
       const dotProps = {
         key: `dot-${index}`,
         r: 2,
-        stroke: "slategray",
+        stroke: DEFAULT_COLOR,
         fill: "#ffffff",
         strokeWidth: 1,
         ...filterProps(dots, false),
@@ -109,14 +110,14 @@ export const Line = <TData,>(props: LineProps<TData>) => {
       index: activeIndex,
       value: activePoint.value,
       stroke: "#ffffff",
-      fill: stroke || "slategray",
+      fill: stroke || DEFAULT_COLOR,
       ...filterProps(activeDot, false),
     };
     return renderDot(activeDot, dotProps);
   };
 
   const fillProps = {
-    fill: "slategray",
+    fill: DEFAULT_COLOR,
     fillOpacity: ".4",
     strokeWidth: "0",
     ...filterProps(props, false),
@@ -126,7 +127,7 @@ export const Line = <TData,>(props: LineProps<TData>) => {
   };
 
   const lineProps = {
-    stroke: "slategray",
+    stroke: DEFAULT_COLOR,
     strokeWidth: "1",
     ...filterProps(props, false),
     fill: "none",

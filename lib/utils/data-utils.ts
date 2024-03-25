@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 
+import { DEFAULT_COLOR } from "./defaults.ts";
 import { DataKey, Points, SparklinesMargin } from "./types.ts";
 import { getMargin, getValueByDataKey } from "./utils.ts";
 
@@ -13,12 +14,12 @@ export const getMainColorByElement = (element: ReactElement) => {
     case "Line":
       if (stroke && stroke !== "none" && stroke !== "transparent") return stroke;
       if (fill && fill[0] !== "u") return fill;
-      return "slategray";
+      return DEFAULT_COLOR;
     case "Bar":
       if (fill && fill !== "none" && fill !== "transparent" && fill[0] !== "u") return fill;
-      return stroke || "slategray";
+      return stroke || DEFAULT_COLOR;
     default:
-      return "slategray";
+      return DEFAULT_COLOR;
   }
 };
 

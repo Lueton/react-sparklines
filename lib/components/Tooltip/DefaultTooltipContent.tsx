@@ -1,6 +1,7 @@
 import { isNil, isNumber, isString } from "lodash"
 import { CSSProperties, isValidElement, ReactNode } from "react"
 
+import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { TooltipProps } from "./Tooltip.tsx"
 
 const isNumOrStr = (value: unknown): value is number | string =>
@@ -16,7 +17,7 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
     margin: 0,
     padding: 10,
     backgroundColor: "white",
-    border: "1px solid slategray",
+    border: "1px solid " + DEFAULT_COLOR,
     whiteSpace: "nowrap",
     borderRadius: 5,
     fontSize: 12,
@@ -38,7 +39,7 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
           display: "block",
           paddingTop: 4,
           paddingBottom: 4,
-          color: entry.color || "slategray",
+          color: entry.color || DEFAULT_COLOR,
           margin: 0,
           lineHeight: "normal",
           ...itemStyle,

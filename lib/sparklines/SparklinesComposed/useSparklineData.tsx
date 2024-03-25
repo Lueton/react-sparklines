@@ -1,6 +1,7 @@
 import { get, isNumber } from "lodash";
 
 import { getDataPoints, getMainColorByElement } from "../../utils/data-utils.ts";
+import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
 import { Bar, Line } from "./../../cartesian";
 import {
@@ -29,7 +30,7 @@ export const useSparklineData = <TData,>({
         childData: [],
         dataKey: "value",
         points: [],
-        color: "slategray",
+        color: DEFAULT_COLOR,
       })),
       dataKeys: sparklineChildren.map(() => "value"),
       labels: [],
