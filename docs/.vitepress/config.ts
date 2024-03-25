@@ -94,7 +94,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/Luetonize/react-sparklines" },
+      { icon: "github", link: "https://github.com/Lueton/react-sparklines" },
       { icon: "npm", link: "https://www.npmjs.com/package/@lueton/react-sparklines" }
     ],
 
