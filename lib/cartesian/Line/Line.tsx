@@ -1,13 +1,11 @@
-import { isBoolean, isNil, isObject } from "lodash";
+import { isBoolean, isNil } from "lodash";
 import isFunction from "lodash/isFunction";
-import { cloneElement, isValidElement } from "react";
+import { isValidElement } from "react";
 
-import { Dot } from "../../shapes/Dot/Dot.tsx";
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
-import { DotProps, LineDot, LineDotsVisibility, LineProps } from "../../utils/types.ts";
-import { getMargin } from "../../utils/utils.ts";
-import { getLinePoints } from "./line-utils.tsx";
+import { LineDot, LineDotsVisibility, LineProps } from "../../utils/types.ts";
+import { getLinePoints, renderDot } from "./line-utils.tsx";
 
 export const Line = <TData,>(props: LineProps<TData>) => {
   const {
@@ -25,22 +23,13 @@ export const Line = <TData,>(props: LineProps<TData>) => {
 
   if (!points?.length) return null;
 
-  const linePoints = getLinePoints<TData>(points, curved);
-  const enrichedMargin = getMargin(margin);
-
-  const closePolyPoints = [
-    (curved ? "L" : "") + points[points.length - 1].x,
-    height - enrichedMargin.bottom,
-    disableBarAdjustment ? enrichedMargin.left : points[0].x,
-    height - enrichedMargin.bottom,
-    disableBarAdjustment ? enrichedMargin.left : points[0].x,
-    points[0].y,
-  ];
-
-  const fillPoints = linePoints.concat(closePolyPoints);
-
-  const showDots: boolean = !!dots;
-  const showActiveDot: boolean = !!tooltip && activeDot != false && activeIndex != null;
+  const { linePoints, fillPoints } = getLinePoints<TData>(
+    points,
+    height,
+    margin,
+    disableBarAdjustment,
+    curved,
+  );
 
   const getVisibility = (dots: LineDot): LineDotsVisibility => {
     if (isValidElement(dots) || isFunction(dots)) return true;
@@ -48,23 +37,6 @@ export const Line = <TData,>(props: LineProps<TData>) => {
     if (!isNil(dots?.show)) return dots.show;
     if (!isNil(dots?.dot)) return true;
     return Boolean(dots);
-  };
-
-  const renderDot = (option: LineDot, props: any) => {
-    let dotItem;
-    if (isValidElement(option)) {
-      dotItem = cloneElement(option, props);
-    } else if (isFunction(option)) {
-      dotItem = option(props);
-    } else if (isObject(option) && isValidElement(option.dot)) {
-      dotItem = cloneElement(option.dot, props);
-    } else if (isObject(option) && isFunction(option.dot)) {
-      dotItem = option.dot(props);
-    } else {
-      const className = option ? (option as DotProps).className : "";
-      dotItem = <Dot {...props} className={className} color={props.color} />;
-    }
-    return dotItem;
   };
 
   const renderDots = () => {
@@ -135,11 +107,13 @@ export const Line = <TData,>(props: LineProps<TData>) => {
     className: "react-sparklines-line-line",
   };
 
+  const showActiveDot: boolean = !!tooltip && activeDot != false && activeIndex != null;
+
   return (
     <g className="react-sparklines-layer react-sparklines-line" clipPath={clipPathId}>
       <path {...fillProps} />
       <path {...lineProps} />
-      {showDots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
+      {dots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
       {showActiveDot && (
         <g className="react-sparklines-layer react-sparklines-active-dot">{renderActiveDot()}</g>
       )}
