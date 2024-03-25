@@ -5,21 +5,21 @@ export default function Example() {
   return (
     <>
       <div style={{ display: "inline-block", padding: "10px" }}>
-        <SparklinesLine color="#b91c1c" data={data} curved />
+        <SparklinesLine stroke="#b91c1c" fill="#b91c1c" data={data} curved />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
-        <SparklinesLine color="#047857" data={data} style={{ strokeWidth: 4 }} margin={4} />
+        <SparklinesLine stroke="#047857" fill="#047857" strokeWidth={4} data={data} margin={4} />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesLine
-          color="#1d4ed8"
+          stroke="#1d4ed8"
+          fill="none"
           data={data}
           curved={0.6}
-          style={{ fill: "transparent" }}
         />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
-        <SparklinesLine data={data} style={{ stroke: "#d97706" }} />
+        <SparklinesLine data={data} stroke="#d97706" fill="#d97706" />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, RefObject, SVGProps } from "react";
+import { CSSProperties, DOMAttributes, ReactElement, RefObject, SVGProps } from "react";
 
 export type Margin = { top: number; right: number; bottom: number; left: number };
 export type SparklinesMargin =
@@ -44,7 +44,7 @@ export interface DotProps extends SVGProps<SVGCircleElement> {
   r?: number;
   dot?: ReactElement<SVGElement> | ((props: DotProps) => ReactElement<SVGElement>);
   show?: LineDotsVisibility;
-  color?: string
+  color?: string;
 }
 
 export type LineDot =
@@ -53,7 +53,7 @@ export type LineDot =
   | DotProps
   | boolean
   | undefined
-  | null
+  | null;
 
 export type ActiveBar = CSSProperties | boolean;
 
@@ -81,7 +81,6 @@ export interface SparklinesComposedProps<TData> {
   height?: number;
   preserveAspectRatio?: string;
   style?: CSSProperties;
-  color?: string;
   disableBarAdjustment?: boolean;
   label?: string | number;
   children?: any;
@@ -110,26 +109,45 @@ export interface InternalShapeProps<TData> {
 export interface ShapeProps {
   dataKey?: DataKey;
   style?: CSSProperties;
-  color?: string;
+  labelColor?: string;
   name?: string;
 }
 
-export interface LineShapeProps extends ShapeProps {
+export interface LineShapeExtraProps extends ShapeProps {
   dots?: LineDot;
   activeDot?: LineDot;
   curved?: boolean | number;
 }
 
-export interface BarShapeProps extends ShapeProps {
+export interface BarShapeExtraProps extends ShapeProps {
   radius?: SparklinesRadius;
   activeBar?: ActiveBar;
   barWidth?: number;
   maxBarWidth?: number;
 }
 
-export type LineProps<TData> = LineShapeProps & InternalShapeProps<TData>;
+export type LineShapeProps = Omit<PresentationAttributesWithProps<SVGPathElement>, "points" | "name" | "width" | "height"> &
+  LineShapeExtraProps;
 
-export type BarProps<TData> = BarShapeProps & InternalShapeProps<TData>;
+export type BarShapeProps = Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius" | "width" | "height"
+> &
+  BarShapeExtraProps;
+
+export type LineProps<TData> = Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name"
+> &
+  LineShapeProps &
+  InternalShapeProps<TData>;
+
+export type BarProps<TData> = Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius"
+> &
+  BarShapeProps &
+  InternalShapeProps<TData>;
 
 export interface SparklineChildDataEntry<TData> {
   dataKey: DataKey;
@@ -138,21 +156,21 @@ export interface SparklineChildDataEntry<TData> {
   value: number;
   index: number;
   entry: TData;
-  color: string
+  color: string;
 }
 
 export interface SparklineChildData<TData> {
   dataKey: DataKey;
   childData: SparklineChildDataEntry<TData>[];
   points: Points<TData>;
-  color: string
+  color: string;
 }
 
 export interface UseSparklineData<TData> {
   originalData: any[];
   sparklineData: SparklineChildData<TData>[];
   dataKeys: DataKey[];
-  labels: any[]
+  labels: any[];
 }
 
 export interface UseSparklineDataProps {
@@ -166,3 +184,5 @@ export interface UseSparklineDataProps {
   margin?: SparklinesMargin;
   disableBarAdjustment?: boolean;
 }
+
+export type PresentationAttributesWithProps<T> = Omit<SVGProps<T>, keyof DOMAttributes<T>>;

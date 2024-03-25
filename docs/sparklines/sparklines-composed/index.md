@@ -41,20 +41,20 @@ const complexData = [
 
 ```jsx
 <SparklinesComposed data={data} label="Fruits">
-  <Bar color="#ca8a04" name="Oranges" />
-  <Line color="#27ae60" name="Kiwis" />
+  <Bar fill="#ca8a04" name="Oranges" />
+  <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" />
   <Tooltip />
 </SparklinesComposed>
 
 <SparklinesComposed data={data} label="Fruits">
-  <Bar color="#ca8a04" name="Oranges" />
-  <Line color="#27ae60" name="Kiwis" />
+  <Bar fill="#ca8a04" name="Oranges" />
+  <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" />
   <Tooltip />
 </SparklinesComposed>
 
 <SparklinesComposed data={complexData} label="Fruits">
-  <Line color="#27ae60" name="Kiwis" dataKey="b" />
-  <Bar color="#ca8a04" name="Oranges" dataKey="a" />
+  <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" dataKey="b" />
+  <Bar fill="#ca8a04" name="Oranges" dataKey="a" />
   <Tooltip 
     contentStyle={{ background: "black", borderColor: "black" }}
     labelStyle={{ color: "white" }}

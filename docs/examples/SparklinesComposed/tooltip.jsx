@@ -8,22 +8,22 @@ export default function Example() {
     <>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesComposed data={data} label="Fruits">
-          <Bar color="#ca8a04" />
-          <Line color="#27ae60" />
+          <Bar fill="#ca8a04" />
+          <Line stroke="#27ae60" fill="#27ae60" />
           <Tooltip />
         </SparklinesComposed>
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesComposed data={data} label="Fruits">
-          <Line color="#27ae60" name="Kiwis" />
-          <Bar color="#ca8a04" name="Oranges" />
+          <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" />
+          <Bar fill="#ca8a04" name="Oranges" />
           <Tooltip />
         </SparklinesComposed>
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesComposed data={complexData} label="Fruits">
-          <Bar color="#ca8a04" name="Oranges" dataKey="a" />
-          <Line color="#27ae60" name="Kiwis" dataKey="b" />
+          <Bar fill="#ca8a04" name="Oranges" dataKey="a" />
+          <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" dataKey="b" />
           <Tooltip
             contentStyle={{ background: "black", borderColor: "black" }}
             labelStyle={{ color: "white" }}

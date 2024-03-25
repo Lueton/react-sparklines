@@ -29,14 +29,17 @@ SparklinesBar comes with flexible customization options. Build sparklines which 
 />
 
 <SparklinesBar
-  color="#b91c1c"
+  stroke="#d97706"
+  fill="#b91c1c"
+  strokeWidth={1}
   data={data}
-  style={{ strokeWidth: 1, stroke: "#d97706" }}
 />
 
 <SparklinesBar
   data={data}
-  style={{ strokeWidth: 2, stroke: "#059669", fill: "transparent" }}
+  strokeWidth={2}
+  stroke="#059669"
+  fill="transparent"
   radius={{ topLeft: 5, topRight: 5 }}
   maxBarWidth={10}
 />
@@ -50,10 +53,10 @@ SparklinesBar comes with flexible customization options. Build sparklines which 
 
 ## Gradients
 
-It also has gradients! Simply make use of the `style.fill` property to link your gradient.
+It also has gradients! Simply make use of the `fill` property to link your gradient.
 
 :::warning
-When using gradients make sure to also pass the `color` property to provide a usable color for components like `<Tooltip/>`.
+When using gradients without `stroke` make sure to also pass the `labelColor` property to provide a usable color for `<Tooltip/>`.
 :::
 
 <SparklinesBarGradients />
@@ -61,8 +64,7 @@ When using gradients make sure to also pass the `color` property to provide a us
 ```jsx
 <SparklinesBar
   data={data}
-  color={"#7c3aed"}
-  style={{ fill: "url(#my-gradient)" }}
+  fill={"url(#my-gradient)"}
 >
   <defs>
     <linearGradient id="my-gradient" x1="0%" x2="100%" y1="0%" y2="0%">

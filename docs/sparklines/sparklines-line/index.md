@@ -23,37 +23,40 @@ SparklinesLine comes with flexible customization options. Build sparklines which
 
 ```jsx
 <SparklinesLine
-  color="#b91c1c" 
+  stroke="#b91c1c" 
+  fill="#b91c1c"
   data={data} 
   curved 
 />
 
 <SparklinesLine
-  color="#047857"
+  stroke="#047857"
+  fill="#047857"
   data={data}
-  style={{ strokeWidth: 4 }}
+  strokeWidth={4}
   margin={4}
 />
 
 <SparklinesLine
-  color="#1d4ed8"
+  stroke="#1d4ed8"
+  fill="none"
   data={data}
   curved={0.6}
-  style={{ fill: "transparent" }}
 />
 
 <SparklinesLine 
   data={data}
-  style={{ stroke: "#d97706" }} 
+  stroke="#d97706"
+  fill="#d97706"
 />
 ```
 
 ## Gradients
 
-It also has gradients! Simply make use of the `style.fill` property to link your gradient.
+It also has gradients! Simply make use of the `fill` property to link your gradient.
 
 :::warning
-When using gradients make sure to also pass the `color` property to provide a usable color for components like `<Tooltip/>`.
+When using gradients without a `stroke` make sure to also pass the `labelColor` property to provide a usable color for `<Tooltip/>`.
 :::
 
 <SparklinesLineGradients />
@@ -62,7 +65,8 @@ When using gradients make sure to also pass the `color` property to provide a us
 <SparklinesLine
   data={data}
   color={"#7c3aed"}
-  style={{ fill: "url(#my-gradient)", fillOpacity: 0.6 }}
+  fill="url(#my-gradient)"
+  fillOpacity={0.6}
 >
   <defs>
     <linearGradient id="my-gradient" x1="0%" x2="100%" y1="0%" y2="0%">

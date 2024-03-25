@@ -1,77 +1,73 @@
-import { isObject } from "lodash"
+import { filterProps } from "../../utils/react-utils.ts";
+import { BarProps } from "../../utils/types.ts";
+import { getMargin, getRectanglePath } from "../../utils/utils.ts";
 
-import { BarProps } from "../../utils/types.ts"
-import { getMargin, getRectanglePath } from "../../utils/utils.ts"
+export const Bar = <TData,>(props: BarProps<TData>) => {
+  const {
+    margin = 0,
+    height = 0,
+    points,
+    radius = 0,
+    barWidth,
+    maxBarWidth,
+    activeIndex,
+    clipPathId,
+    activeBar ,
+    tooltip,
+  } = props;
 
-export const Bar = <TData,> ({
-  margin = 0,
-  height = 0,
-  style,
-  points,
-  radius = 0,
-  color,
-  barWidth,
-  maxBarWidth,
-  activeIndex,
-  clipPathId,
-  activeBar = {fill: "white"},
-  tooltip
-}: BarProps<TData>) => {
-  if (!points?.length) return null
+  if (!points?.length) return null;
 
-  const enrichedMargin = getMargin(margin)
+  const enrichedMargin = getMargin(margin);
 
-  // @ts-ignore
-  const strokeWidth = 1 * ((style && style.strokeWidth) || 0)
-  const marginWidth = enrichedMargin.left + enrichedMargin.right
+  const marginWidth = enrichedMargin.left + enrichedMargin.right;
 
   const getBarWidth = () => {
     if (barWidth && maxBarWidth) {
-      return Math.min(barWidth, maxBarWidth)
+      return Math.min(barWidth, maxBarWidth);
     } else if (barWidth) {
-      return barWidth
+      return barWidth;
     } else if (maxBarWidth) {
-      return maxBarWidth
+      return maxBarWidth;
     } else {
       return points && points.length >= 2
-        ? Math.max(0, points[1].x - points[0].x - strokeWidth - marginWidth)
-        : 0
+        ? Math.max(0, points[1].x - points[0].x - marginWidth)
+        : 0;
     }
-  }
+  };
 
-  const bw = getBarWidth()
+  const bw = getBarWidth();
   const rectanglePoints = points.map((p) =>
     getRectanglePath(
-      p.x - (bw + strokeWidth) / 2,
+      p.x - bw / 2,
       p.y,
       bw,
       Math.max(0, height - p.y - enrichedMargin.bottom),
       radius,
     ),
-  )
+  );
 
-  const fillStyle = {
-    fill: style?.fill || color || "slategray",
-    fillOpacity: style?.fillOpacity || "1",
-    strokeWidth: strokeWidth,
-    stroke: style?.stroke || "slategray",
-  }
+  const showActiveBar: boolean = !!tooltip && activeBar !== false;
+  const barProps = {
+    stroke: "none",
+    fill: "slategray",
+    ...filterProps(props, false),
+  };
 
-  const activeFillStyle = {
-    ...(isObject(activeBar) ? { ...activeBar } : {}),
-  }
-
-  const showActiveBar: boolean = !!tooltip && !!activeBar;
+  const activeBarProps = {
+    ...barProps,
+    fill: "white",
+    ...filterProps(activeBar, false),
+  };
 
   return (
     <g className="react-sparklines-layer react-sparklines-bar" clipPath={clipPathId}>
       {rectanglePoints.map((p, i) => {
-        if (activeIndex === i && showActiveBar)
-          return <path key={i} d={p} style={{ ...fillStyle, ...activeFillStyle }} />
-        return <path key={i} d={p} style={fillStyle} />
+        if (activeIndex === i && showActiveBar) return <path {...activeBarProps} key={i} d={p} />;
+        return <path {...barProps} key={i} d={p} />;
       })}
     </g>
-  )
-}
+  );
+};
 
 Bar.displayName = "Bar";

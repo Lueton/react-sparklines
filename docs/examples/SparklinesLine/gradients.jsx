@@ -5,8 +5,8 @@ export default function Example() {
   return (
     <SparklinesLine
       data={data}
-      color={"#7c3aed"}
-      style={{ fill: "url(#my-gradient)", fillOpacity: 0.6 }}
+      stroke={"#7c3aed"}
+      fill={"url(#my-gradient)"} fillOpacity={0.6}
     >
       <defs>
         <linearGradient id="my-gradient" x1="0%" x2="100%" y1="0%" y2="0%">

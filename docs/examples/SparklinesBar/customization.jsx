@@ -5,21 +5,24 @@ export default function Example() {
   return (
     <>
       <div style={{ display: "inline-block", padding: "10px" }}>
-        <SparklinesBar color="#be185d" data={data} radius={8} />
+        <SparklinesBar fill="#be185d" data={data} radius={8} />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesBar
-          color="#b91c1c"
+          fill="#b91c1c"
+          stroke="#d97706"
+          strokeWidth={1}
           data={data}
-          style={{ strokeWidth: 1, stroke: "#d97706" }}
         />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesBar
           data={data}
-          style={{ strokeWidth: 2, stroke: "#059669", fill: "transparent" }}
           radius={{ topLeft: 5, topRight: 5 }}
           maxBarWidth={10}
+          strokeWidth={2}
+          stroke="#059669"
+          fill="transparent"
         />
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
