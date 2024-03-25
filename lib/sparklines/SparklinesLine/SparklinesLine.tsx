@@ -1,14 +1,17 @@
-import { Line } from "../../cartesian"
-import { LineShapeProps, SparklinesComposedProps, SparklinesLineProps } from "../../utils/types.ts"
-import { SparklinesComposed } from "../SparklinesComposed"
+import { Line } from "../../cartesian";
+import {
+  LineShapeExtraProps,
+  SparklinesComposedProps,
+  SparklinesLineProps,
+} from "../../utils/types.ts";
+import { SparklinesComposed } from "../SparklinesComposed";
 
-export const SparklinesLine = <TData,> ({
+export const SparklinesLine = <TData,>({
   height,
   max,
   width,
   disableBarAdjustment = true,
   children,
-  color,
   preserveAspectRatio,
   min,
   margin,
@@ -22,6 +25,7 @@ export const SparklinesLine = <TData,> ({
   name,
   label,
   clip,
+  labelColor,
   onMouseMove,
   onMouseEnter,
   onMouseLeave,
@@ -31,12 +35,10 @@ export const SparklinesLine = <TData,> ({
   const composedProps: SparklinesComposedProps<TData> = {
     clip,
     label,
-    color,
     max,
     width,
     disableBarAdjustment,
     data,
-    style,
     height,
     margin,
     limit,
@@ -46,22 +48,23 @@ export const SparklinesLine = <TData,> ({
     onMouseEnter,
     onMouseLeave,
     onClick,
-  }
+  };
 
-  const lineProps: LineShapeProps = {
+  const lineProps: LineShapeExtraProps = {
     name,
     style,
-    color,
     activeDot,
     dots,
     curved,
     dataKey,
-  }
+    labelColor,
+    ...rest,
+  };
 
   return (
-    <SparklinesComposed {...composedProps} {...rest}>
+    <SparklinesComposed {...composedProps}>
       <Line {...lineProps} />
       {children}
     </SparklinesComposed>
-  )
-}
+  );
+};

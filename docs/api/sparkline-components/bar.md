@@ -38,19 +38,6 @@ The width of the bars. It is recommended to use `maxBarWidth` to prevent overflo
 
 The maximum width of the bars. This is the recommended way of sizing bars.
 
-### color
-
-- **Optional**
-- **Type:** `string`
-- **Default:** `defaultColor`
-
-Color of the corresponding bar.\
-The final color of the bar is determined by `style.fill || color || defaultColor`
-
-::: info
-This behavior differs from the `<Line/>` component to enable using gradients while still using a custom color for the tooltip without overriding the `fill` property.
-:::
-
 ### dataKey
 
 - **Optional**
@@ -58,6 +45,28 @@ This behavior differs from the `<Line/>` component to enable using gradients whi
 - **Default:** `"value"`
 
 The key or getter of an object of data.
+
+### fill
+
+- **Optional**
+- **Type:** `string`
+
+The color of the area.
+
+### fillOpacity
+
+- **Optional**
+- **Type:** `string | number`
+
+The opacity of the area.
+
+### labelColor
+
+- **Optional**
+- **Type:** `string`
+
+The color of the Tooltip label. Usually calculated internally but needed when using gradients without a stroke.
+
 
 ### name
 
@@ -75,6 +84,20 @@ of dataKey will be used alternatively.
 
 If set a value, the option is the radius of all or the rounded corners of the bar. If set an object, the option is the
 radius of the provided corners of the bar.
+
+### stroke
+
+- **Optional**
+- **Type:** `string`
+
+The color of the stroke.
+
+### strokeWidth
+
+- **Optional**
+- **Type:** `string | number`
+
+The width of the stroke.
 
 ### style
 

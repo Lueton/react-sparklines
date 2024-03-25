@@ -5,8 +5,7 @@ export default function Example() {
   return (
     <SparklinesBar
       data={data}
-      color={"#ee9ca7"}
-      style={{ fill: "url(#my-gradient)"}}
+      fill="url(#my-gradient)"
     >
       <defs>
         <linearGradient id="my-gradient" x1="0%" x2="100%" y1="0%" y2="0%">

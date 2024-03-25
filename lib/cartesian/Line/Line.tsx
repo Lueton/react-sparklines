@@ -1,6 +1,6 @@
 import { isBoolean, isNil, isObject } from "lodash";
 import isFunction from "lodash/isFunction";
-import { cloneElement, CSSProperties, isValidElement } from "react";
+import { cloneElement, isValidElement } from "react";
 
 import { Dot } from "../../shapes/Dot/Dot.tsx";
 import { filterProps } from "../../utils/react-utils.ts";
@@ -8,20 +8,20 @@ import { DotProps, LineDot, LineDotsVisibility, LineProps } from "../../utils/ty
 import { getMargin } from "../../utils/utils.ts";
 import { getLinePoints } from "./line-utils.tsx";
 
-export const Line = <TData,>({
-  margin = 0,
-  height = 0,
-  dots = false,
-  style,
-  color,
-  points,
-  disableBarAdjustment,
-  activeIndex,
-  curved,
-  activeDot,
-  clipPathId,
-  tooltip,
-}: LineProps<TData>) => {
+export const Line = <TData,>(props: LineProps<TData>) => {
+  const {
+    margin = 0,
+    height = 0,
+    dots = false,
+    points,
+    disableBarAdjustment,
+    activeIndex,
+    curved,
+    activeDot,
+    clipPathId,
+    tooltip,
+  } = props;
+
   if (!points?.length) return null;
 
   const linePoints = getLinePoints<TData>(points, curved);
@@ -37,22 +37,6 @@ export const Line = <TData,>({
   ];
 
   const fillPoints = linePoints.concat(closePolyPoints);
-  const finalColor = color || style?.stroke || "slategray";
-  const lineStyle: CSSProperties = {
-    stroke: finalColor,
-    strokeWidth: style?.strokeWidth || "1",
-    strokeLinejoin: style?.strokeLinejoin || "round",
-    strokeLinecap: style?.strokeLinecap || "round",
-    fill: "none",
-  };
-
-  const fillStyle: CSSProperties = {
-    stroke: color || style?.stroke || "none",
-    strokeWidth: "0",
-    fillOpacity: style?.fillOpacity || ".4",
-    fill: style?.fill || color || style?.stroke || "slategray",
-    pointerEvents: "auto",
-  };
 
   const showDots: boolean = !!dots;
   const showActiveDot: boolean = !!tooltip && activeDot != false && activeIndex != null;
@@ -98,7 +82,7 @@ export const Line = <TData,>({
       const dotProps = {
         key: `dot-${index}`,
         r: 2,
-        stroke: finalColor,
+        stroke: "slategray",
         fill: "#ffffff",
         strokeWidth: 1,
         ...filterProps(dots, false),
@@ -110,6 +94,8 @@ export const Line = <TData,>({
       return renderDot(dots, dotProps);
     });
   };
+
+  const { stroke } = props;
 
   const renderActiveDot = () => {
     if (isNil(activeIndex)) return null;
@@ -123,16 +109,35 @@ export const Line = <TData,>({
       index: activeIndex,
       value: activePoint.value,
       stroke: "#ffffff",
-      fill: finalColor,
+      fill: stroke || "slategray",
       ...filterProps(activeDot, false),
     };
     return renderDot(activeDot, dotProps);
   };
 
+  const fillProps = {
+    fill: "slategray",
+    fillOpacity: ".4",
+    strokeWidth: "0",
+    ...filterProps(props, false),
+    stroke: "none",
+    d: "M" + fillPoints.join(" "),
+    className: "react-sparklines-line-fill",
+  };
+
+  const lineProps = {
+    stroke: "slategray",
+    strokeWidth: "1",
+    ...filterProps(props, false),
+    fill: "none",
+    d: "M" + linePoints.join(" "),
+    className: "react-sparklines-line-line",
+  };
+
   return (
     <g className="react-sparklines-layer react-sparklines-line" clipPath={clipPathId}>
-      <path d={"M" + fillPoints.join(" ")} style={fillStyle} />
-      <path d={"M" + linePoints.join(" ")} style={lineStyle} />
+      <path {...fillProps} />
+      <path {...lineProps} />
       {showDots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
       {showActiveDot && (
         <g className="react-sparklines-layer react-sparklines-active-dot">{renderActiveDot()}</g>

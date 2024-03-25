@@ -53,15 +53,6 @@ like `<Line/>` oder `<Bar/>`.
 If true set, the underlying components will be clipped to the `<svg/>` element. This is usually used when also using
 the `min`, `max` in combination with the `margin` property to prevent overflowing.
 
-### color
-
-- **Optional**
-- **Type:** `string`
-- **Default:** `defaultColor`
-
-Color of the corresponding stroke.\
-The final color of the stroke is determined by `color || style.stroke || defaultColor`
-
 ### data
 
 - **Optional**
@@ -86,12 +77,33 @@ The key or getter of an object of data.
 
 Enables or disables the first and last point position adjustment for bars.
 
+### fill
+
+- **Optional**
+- **Type:** `string`
+
+The color of the area.
+
+### fillOpacity
+
+- **Optional**
+- **Type:** `string | number`
+
+The opacity of the area.
+
 ### label
 
 - **Optional**
 - **Type:** `string | number`
 
 Name of the data. Will be used as headline in `<Tooltip/>`.
+
+### labelColor
+
+- **Optional**
+- **Type:** `string`
+
+The color of the Tooltip label. Usually calculated internally but needed when using gradients without a stroke.
 
 ### limit
 
@@ -147,6 +159,20 @@ Sets the `preserveAspectRatio` property of the `<svg/>` element.
 
 If set a value, the option is the radius of all or the rounded corners of the bar. If set an object, the option is the
 radius of the provided corners of the bar.
+
+### stroke
+
+- **Optional**
+- **Type:** `string`
+
+The color of the stroke.
+
+### strokeWidth
+
+- **Optional**
+- **Type:** `string | number`
+
+The width of the stroke.
 
 ### style
 
