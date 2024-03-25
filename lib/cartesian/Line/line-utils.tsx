@@ -1,10 +1,10 @@
 import { isNumber, isObject } from "lodash";
+import isFunction from "lodash/isFunction";
+import { cloneElement, isValidElement } from "react";
 
+import { Dot } from "../../shapes/Dot/Dot.tsx";
 import { DotProps, LineDot, Point, SparklinesMargin } from "../../utils/types.ts";
 import { getMargin } from "../../utils/utils.ts";
-import { cloneElement, isValidElement } from "react";
-import isFunction from "lodash/isFunction";
-import { Dot } from "../../shapes/Dot/Dot.tsx";
 
 let prev: null | { x: number; y: number };
 const getCurvePoint = (point: { x: number; y: number }, divisor: number) => {
