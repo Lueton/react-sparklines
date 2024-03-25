@@ -10,15 +10,6 @@ outline: deep
 
 ## Properties
 
-### color
-
-- **Optional**
-- **Type:** `string`
-- **Default:** `defaultColor`
-
-Color of the corresponding stroke.\
-The final color of the stroke is determined by `color || style.stroke || defaultColor`
-
 ### curved
 
 - **Optional**
@@ -61,6 +52,27 @@ calculated internally. If object set, the active dot will be drawn which have th
 calculated props and the option. If ReactElement set, the option can be the custom active dot element. If set a function,
 the function will be called to render customized active dot.
 
+### fill
+
+- **Optional**
+- **Type:** `string`
+
+The color of the area.
+
+### fillOpacity
+
+- **Optional**
+- **Type:** `string | number`
+
+The opacity of the area.
+
+### labelColor
+
+- **Optional**
+- **Type:** `string`
+
+The color of the Tooltip label. Usually calculated internally but needed when using gradients without a stroke.
+
 ### name
 
 - **Optional**
@@ -68,6 +80,20 @@ the function will be called to render customized active dot.
 
 The name of data. This option will be used in tooltip to represent a line. If no value was set to this option, the value
 of dataKey will be used alternatively.
+
+### stroke
+
+- **Optional**
+- **Type:** `string`
+
+The color of the stroke.
+
+### strokeWidth
+
+- **Optional**
+- **Type:** `string | number`
+
+The width of the stroke.
 
 ### style
 

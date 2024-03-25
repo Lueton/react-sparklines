@@ -1,7 +1,6 @@
 import { get, isNumber } from "lodash";
-import { ReactElement } from "react";
 
-import { getDataPoints } from "../../utils/data-utils.ts";
+import { getDataPoints, getMainColorByElement } from "../../utils/data-utils.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
 import { Bar, Line } from "./../../cartesian";
 import {
@@ -9,27 +8,6 @@ import {
   UseSparklineData,
   UseSparklineDataProps,
 } from "./../../utils/types.ts";
-
-const getMainColor = (element: ReactElement) => {
-  const { style, color } = element.props;
-  const {
-    type: { displayName },
-  } = element as any;
-
-  switch (displayName) {
-    case "Line":
-      return color || style?.stroke || "slategray";
-    case "Bar":
-      return (
-        color ||
-        (style?.fill && style?.fill !== "transparent") ||
-        (style?.stroke && style?.stroke !== "transparent") ||
-        "slategray"
-      );
-    default:
-      return "slategray";
-  }
-};
 
 export const useSparklineData = <TData,>({
   data,
@@ -54,14 +32,14 @@ export const useSparklineData = <TData,>({
         color: "slategray",
       })),
       dataKeys: sparklineChildren.map(() => "value"),
-      labels: []
+      labels: [],
     };
 
   const isSingleNumericData = isNumber(data[0]);
   const objectifiedData = isSingleNumericData ? data.map((value) => ({ value: value })) : data;
   const dataKeys = sparklineChildren.map((child) => child.props.dataKey || "value");
   const sparklineData: SparklineChildData<TData>[] = sparklineChildren.map((child, childIndex) => {
-    const color = getMainColor(child);
+    const color = child.props.labelColor || getMainColorByElement(child);
     const childPoints = getDataPoints<TData>({
       data: objectifiedData,
       dataKey: dataKeys[childIndex],
@@ -96,12 +74,12 @@ export const useSparklineData = <TData,>({
     };
   });
 
-  const labels = objectifiedData.map((entry) => get(entry, "name"))
+  const labels = objectifiedData.map((entry) => get(entry, "name"));
 
   return {
     originalData: data,
     sparklineData,
     dataKeys,
-    labels
+    labels,
   };
 };
