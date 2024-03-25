@@ -3,7 +3,7 @@ import { get, isNumber } from "lodash";
 import { getDataPoints, getMainColorByElement } from "../../utils/data-utils.ts";
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
-import { Bar, Line } from "./../../cartesian";
+import { Bar, Line } from "../../cartesian";
 import {
   SparklineChildData,
   UseSparklineData,

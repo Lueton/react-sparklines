@@ -21,10 +21,10 @@ drawn curved with the provided divisor.
 ### dataKey
 
 - **Optional**
-- **Type:** `text | number | (entry: TData) => string | number`
+- **Type:** `text | number`
 - **Default:** `"value"`
 
-The key or getter of an object of data.
+The key of an object of data.
 
 ### dots
 

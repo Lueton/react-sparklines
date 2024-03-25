@@ -41,10 +41,10 @@ The maximum width of the bars. This is the recommended way of sizing bars.
 ### dataKey
 
 - **Optional**
-- **Type:** `text | number | (entry: TData) => string | number`
+- **Type:** `text | number`
 - **Default:** `"value"`
 
-The key or getter of an object of data.
+The key of an object of data.
 
 ### fill
 
