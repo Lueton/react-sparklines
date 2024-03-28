@@ -30,6 +30,7 @@ export const SparklinesLine = <TData,>({
   onMouseEnter,
   onMouseLeave,
   onClick,
+  startAtZero,
   ...rest
 }: SparklinesLineProps<TData>) => {
   const composedProps: SparklinesComposedProps<TData> = {
@@ -48,6 +49,7 @@ export const SparklinesLine = <TData,>({
     onMouseEnter,
     onMouseLeave,
     onClick,
+    startAtZero
   };
 
   const lineProps: LineShapeExtraProps = {

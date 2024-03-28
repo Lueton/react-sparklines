@@ -34,6 +34,7 @@ export const getDataPoints = <TData>({
   min,
   disableBarAdjustment = false,
   dataKey,
+  startAtZero,
 }: {
   data: readonly any[];
   limit?: number;
@@ -44,6 +45,7 @@ export const getDataPoints = <TData>({
   margin?: SparklinesMargin;
   disableBarAdjustment?: boolean;
   dataKey?: DataKey;
+  startAtZero?: boolean;
 }): Points<TData> => {
   const dataForSeries = data.map((d) => getValueByDataKey(d, dataKey) || 0);
   return getDataPointsForSeries({
@@ -55,6 +57,7 @@ export const getDataPoints = <TData>({
     max,
     min,
     disableBarAdjustment,
+    startAtZero,
   }).map((d, i) => ({
     ...d,
     entry: data[i],
@@ -67,8 +70,9 @@ const getDataPointsForSeries = ({
   width = 0,
   height = 0,
   margin = 0,
+  startAtZero,
   max = Math.max(...data),
-  min = Math.min(0, ...data),
+  min = startAtZero ? Math.min(0, ...data) : Math.min(...data),
   disableBarAdjustment = false,
 }: {
   data: readonly any[];
@@ -79,6 +83,7 @@ const getDataPointsForSeries = ({
   max?: number;
   margin?: SparklinesMargin;
   disableBarAdjustment?: boolean;
+  startAtZero?: boolean;
 }) => {
   const len = data.length;
 

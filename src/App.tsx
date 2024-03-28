@@ -76,7 +76,7 @@ function App() {
           </SparklinesComposed>
           <SparklinesComposed data={demoData}>
             <Bar fill={"orange"} />
-            <Line stroke="red" fill="red" fillOpacity={".5"}/>
+            <Line stroke="red" fill="red" fillOpacity={".5"} />
           </SparklinesComposed>
           <SparklinesComposed data={demoData}>
             <defs>
@@ -95,7 +95,7 @@ function App() {
             </defs>
             <Bar fill={"url(#my-gradient)"} labelColor={"red"} />
             <Line dots={true} fill={"url(#my-gradient-3)"} fillOpacity={".5"} labelColor={"blue"} />
-            <Tooltip/>
+            <Tooltip />
           </SparklinesComposed>
           <SparklinesBar
             data={demoData}
@@ -125,7 +125,7 @@ function App() {
               name="MyData"
               stroke="#b91c1c"
               fill="#b91c1c"
-               data={demoData}
+              data={demoData}
               curved
               limit={demoData.length}
             >
@@ -138,19 +138,11 @@ function App() {
               style={{ strokeWidth: 4 }}
               margin={4}
             />
-            <SparklinesLine
-              stroke="#1d4ed8"
-              data={demoData}
-              curved={0.6}
-              fill={"transparent"}
-            />
+            <SparklinesLine stroke="#1d4ed8" data={demoData} curved={0.6} fill={"transparent"} />
           </div>
           <h3>Gradient</h3>
           <div className="demo-section">
-            <SparklinesLine
-               data={demoData}
-              fill={"url(#my-gradient)"}
-            >
+            <SparklinesLine data={demoData} fill={"url(#my-gradient)"}>
               <defs>
                 <linearGradient id="my-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
                   <stop offset="0%" stopColor="blue" />
@@ -171,20 +163,14 @@ function App() {
               <SparklinesLine dots={true} data={demoData} />
             </div>
             <p>Customized dots.</p>
-            <SparklinesLine
-              dots={{ style: { fill: "blue" } }}
-              data={demoData}
-            />
+            <SparklinesLine dots={{ style: { fill: "blue" } }} data={demoData} />
             <p>Custom rendered Dots.</p>
             <SparklinesLine
               dots={(props) => <circle {...props} fill="green" r={1} />}
               data={demoData}
             />
             <p>Custom component dots.</p>
-            <SparklinesLine
-              dots={<circle fill="turquoise" />}
-              data={demoData}
-            />
+            <SparklinesLine dots={<circle fill="turquoise" />} data={demoData} />
             <p>Customized dots with custom rendering</p>
             <SparklinesLine
               margin={{ top: 10, bottom: 5, left: 10, right: 20 }}
@@ -192,10 +178,7 @@ function App() {
               data={demoData}
             />
             <p>Customized dots with custom component</p>
-            <SparklinesLine
-              dots={{ fill: "purple", dot: <circle r={5} /> }}
-              data={demoData}
-            />
+            <SparklinesLine dots={{ fill: "purple", dot: <circle r={5} /> }} data={demoData} />
             <p>Custom visibility</p>
             <SparklinesLine
               margin={10}
@@ -210,7 +193,7 @@ function App() {
         <h3>Simple</h3>
         <div className="demo-section">
           <div>
-            <SparklinesBar height={60} width={300} data={demoData} />
+            <SparklinesBar data={demoData} />
           </div>
           <div>
             <SparklinesBar
@@ -240,6 +223,7 @@ function App() {
               data={demoData}
               radius={{ topLeft: 4, topRight: 4 }}
               fill={"url(#my-gradient-1)"}
+              startAtZero={false}
             >
               <defs>
                 <linearGradient id="my-gradient-1" x1="0%" x2="100%" y1="0%" y2="0%">
@@ -256,6 +240,7 @@ function App() {
               fill={"url(#my-gradient-1)"}
               strokeWidth={4}
               stroke={"transparent"}
+              labelColor="slategray"
             >
               <defs>
                 <linearGradient id="my-gradient-1" x1="0%" x2="100%" y1="0%" y2="0%">
@@ -321,7 +306,12 @@ function App() {
               data={composedData}
               margin={{ top: 30, bottom: 60, left: 20, right: 40 }}
             >
-              <Line dataKey="a" stroke={"green"} fill={"green"} dots={{ style: { fill: "green" } }} />
+              <Line
+                dataKey="a"
+                stroke={"green"}
+                fill={"green"}
+                dots={{ style: { fill: "green" } }}
+              />
               <Line
                 dataKey="b"
                 stroke={"blue"}
@@ -346,7 +336,7 @@ function App() {
             >
               <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
               <Line dataKey="b" stroke={"blue"} fill={"blue"} dots />
-              <Tooltip formatter={({value}) => value + "€"} />
+              <Tooltip formatter={({ value }) => value + "€"} />
             </SparklinesComposed>
           </div>
         </div>

@@ -20,6 +20,7 @@ export const useSparklineData = <TData,>({
   width,
   height,
   limit,
+  startAtZero
 }: UseSparklineDataProps): UseSparklineData<TData> => {
   const sparklineChildren = findAllByType(children, [Line, Bar]);
 
@@ -51,6 +52,7 @@ export const useSparklineData = <TData,>({
       width,
       disableBarAdjustment,
       limit,
+      startAtZero
     });
 
     const childData = objectifiedData.map((_entry, dataIndex) => {

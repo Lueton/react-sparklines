@@ -27,6 +27,7 @@ export const SparklinesBar = <TData,>({
   onMouseLeave,
   labelColor,
   onClick,
+  startAtZero,
   ...rest
 }: SparklinesBarProps<TData>) => {
   const composedProps: SparklinesComposedProps<TData> = {
@@ -45,6 +46,7 @@ export const SparklinesBar = <TData,>({
     onMouseEnter,
     onMouseLeave,
     onClick,
+    startAtZero
   };
 
   const barProps: BarShapeProps = {

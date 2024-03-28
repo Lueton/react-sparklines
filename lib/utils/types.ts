@@ -31,12 +31,6 @@ export interface UseInteractivityProps<TData> {
   onClick?: (event: MouseEvent, data: EventData<TData>) => void;
 }
 
-export interface LinePoint {
-  value?: number;
-  x: number;
-  y: number;
-}
-
 export interface DotProps extends SVGProps<SVGCircleElement> {
   className?: string;
   cx?: number;
@@ -85,6 +79,7 @@ export interface SparklinesComposedProps<TData> {
   label?: string | number;
   children?: any;
   clip?: boolean;
+  startAtZero?: boolean;
   onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
   onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
   onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
@@ -183,6 +178,7 @@ export interface UseSparklineDataProps {
   max?: number;
   margin?: SparklinesMargin;
   disableBarAdjustment?: boolean;
+  startAtZero?: boolean
 }
 
 export type PresentationAttributesWithProps<T> = Omit<SVGProps<T>, keyof DOMAttributes<T>>;

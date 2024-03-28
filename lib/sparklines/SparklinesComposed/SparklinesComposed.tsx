@@ -43,6 +43,7 @@ export const SparklinesComposed = <TData,>(
     label,
     disableBarAdjustment,
     clip,
+    startAtZero = true,
     onMouseMove,
     onMouseEnter,
     onMouseLeave,
@@ -64,6 +65,7 @@ export const SparklinesComposed = <TData,>(
     margin,
     height,
     children,
+    startAtZero
   });
 
   const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
