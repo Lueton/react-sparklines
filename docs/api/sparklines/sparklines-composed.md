@@ -90,6 +90,15 @@ Maximum displayed value of the provided data.
 
 Sets the `preserveAspectRatio` property of the `<svg/>` element.
 
+### startAtZero
+
+- **Optional**
+- **Type:** `boolean`
+- **Default:** `true`
+
+Decides if the minimum value is zero. If set to false the minimum value is calculated by the data itself. Using the `min`
+property always overrides this behavior.
+
 ### style
 
 - **Optional**

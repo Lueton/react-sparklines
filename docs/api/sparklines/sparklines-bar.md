@@ -160,6 +160,15 @@ Sets the `preserveAspectRatio` property of the `<svg/>` element.
 If set a value, the option is the radius of all or the rounded corners of the bar. If set an object, the option is the
 radius of the provided corners of the bar.
 
+### startAtZero
+
+- **Optional**
+- **Type:** `boolean`
+- **Default:** `true`
+
+Decides if the minimum value is zero. If set to false the minimum value is calculated by the data itself. Using the `min`
+property always overrides this behavior.
+
 ### stroke
 
 - **Optional**
