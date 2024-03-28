@@ -24,6 +24,13 @@ Custom Tooltip renderer.
 
 Styles applied to the tooltip content.
 
+### formatter
+
+- **Optional**
+- **Type:** `(payload: TooltipPayload) => ReactNode`
+
+Customer value formatter.
+
 ### itemStyle
 
 - **Optional**

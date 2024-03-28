@@ -31,6 +31,7 @@ export interface TooltipProps {
   payload?: Array<TooltipPayload>;
   separator?: string;
   wrapperStyle?: CSSProperties;
+  formatter?: (payload: TooltipPayload) => ReactNode
 }
 
 const renderContent = (content: TooltipContent, props: TooltipProps) => {

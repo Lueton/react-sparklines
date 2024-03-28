@@ -346,7 +346,7 @@ function App() {
             >
               <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
               <Line dataKey="b" stroke={"blue"} fill={"blue"} dots />
-              <Tooltip />
+              <Tooltip formatter={({value}) => value + "€"} />
             </SparklinesComposed>
           </div>
         </div>

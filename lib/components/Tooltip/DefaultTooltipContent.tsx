@@ -1,17 +1,25 @@
-import { isNil, isNumber, isString } from "lodash"
-import { CSSProperties, isValidElement, ReactNode } from "react"
+import { isNil, isNumber, isString } from "lodash";
+import { CSSProperties, isValidElement, ReactNode } from "react";
 
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
-import { TooltipProps } from "./Tooltip.tsx"
+import { TooltipProps } from "./Tooltip.tsx";
 
 const isNumOrStr = (value: unknown): value is number | string =>
-  isNumber(value as number) || isString(value)
+  isNumber(value as number) || isString(value);
 
 export const DefaultTooltipContent = (props: TooltipProps) => {
-  const { payload, label, separator = " : ", contentStyle, itemStyle, labelStyle } = props
+  const {
+    payload,
+    label,
+    separator = " : ",
+    contentStyle,
+    itemStyle,
+    labelStyle,
+    formatter,
+  } = props;
 
-  const hasLabel = !isNil(label)
-  const finalLabel: string | number | ReactNode = hasLabel ? label : ""
+  const hasLabel = !isNil(label);
+  const finalLabel: string | number | ReactNode = hasLabel ? label : "";
 
   const finalContentStyle = {
     margin: 0,
@@ -22,20 +30,20 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
     borderRadius: 5,
     fontSize: 12,
     ...contentStyle,
-  }
+  };
 
   const finalLabelStyle = {
     margin: 0,
     color: "black",
     ...labelStyle,
-  }
+  };
 
   const renderContent = () => {
     if (payload && payload.length) {
-      const listStyle = { padding: 0, margin: 0 }
+      const listStyle = { padding: 0, margin: 0 };
 
       const items = payload.map((entry, i) => {
-        const finalItemStyle : CSSProperties = {
+        const finalItemStyle: CSSProperties = {
           display: "block",
           paddingTop: 4,
           paddingBottom: 4,
@@ -43,11 +51,11 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
           margin: 0,
           lineHeight: "normal",
           ...itemStyle,
-        }
+        };
 
-        const { value, name } = entry
-        const finalValue: ReactNode = value
-        const finalName: ReactNode = name
+        const { value, name } = entry;
+        const finalValue: ReactNode = formatter ? formatter(entry) : value;
+        const finalName: ReactNode = name;
 
         return (
           <li
@@ -63,23 +71,23 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
             ) : null}
             <span className="react-tooltip-tooltip-item-value">{finalValue}</span>
           </li>
-        )
-      })
+        );
+      });
 
       return (
         <ul className="react-tooltip-tooltip-item-list" style={listStyle}>
           {items}
         </ul>
-      )
+      );
     }
 
-    return null
-  }
+    return null;
+  };
 
   return (
     <div className="react-sparklines-default-tooltip-content" style={finalContentStyle}>
       <p style={finalLabelStyle}>{isValidElement(finalLabel) ? finalLabel : `${finalLabel}`}</p>
       {renderContent()}
     </div>
-  )
-}
+  );
+};
