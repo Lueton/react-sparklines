@@ -1,5 +1,6 @@
 import "./App.css";
 import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip } from "../lib";
+import { ReferenceLine } from "../lib/cartesian";
 
 const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
@@ -336,6 +337,9 @@ function App() {
               <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
               <Line dataKey="b" axis={2} stroke={"blue"} fill={"blue"} dots />
               <Tooltip formatter={({ value }) => value + "€"} />
+              <ReferenceLine x={Math.floor(demoData.length / 2)}/>
+              <ReferenceLine y={4} />
+              <ReferenceLine />
             </SparklinesComposed>
           </div>
         </div>
