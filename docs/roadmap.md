@@ -17,6 +17,8 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 ## v1.x.x
 
 - :white_check_mark: Axes
+- Add more components
+  - :white_check_mark: Reference lines
 - General improvements, Bug fixes
 - Improve Documentation
 - Improve typings
