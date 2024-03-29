@@ -6,7 +6,7 @@ import {ReferenceLineSimple} from "../examples/reference-line.js";
 
 ## Basic Example
 
-The `<ReferenceLine/>` component is used to draw line usually used to highlight specific points like mean.
+The `<ReferenceLine/>` component is used to a draw line usually used to highlight specific points like mean.
 
 You could either make use of the `x` (index of data) property to draw a vertical line or the `y` property to draw a
 horizontal line at the given value.
