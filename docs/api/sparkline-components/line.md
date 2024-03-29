@@ -10,6 +10,14 @@ outline: deep
 
 ## Properties
 
+### axis
+
+- **Optional**
+- **Type:** `number | string`
+- **Type:** `0`
+
+Unique id of the axis. Usually used to display multiple data series with independent scaling.
+
 ### curved
 
 - **Optional**
