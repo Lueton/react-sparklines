@@ -22,6 +22,7 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 - General improvements, Bug fixes
 - Improve Documentation
 - Improve typings
+- Improve point calculation/scaling
 
 ## v2.x.x
 
