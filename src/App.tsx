@@ -328,14 +328,13 @@ function App() {
             <SparklinesComposed
               height={500}
               width={900}
-              data={composedData}
+              data={composedData.map((d) => ({ ...d, b: d.b * 1000 }))}
               margin={{ top: 130, bottom: 60, left: 90, right: 40 }}
               label="MyLabel"
               disableBarAdjustment
-              max={7}
             >
               <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
-              <Line dataKey="b" stroke={"blue"} fill={"blue"} dots />
+              <Line dataKey="b" axis={2} stroke={"blue"} fill={"blue"} dots />
               <Tooltip formatter={({ value }) => value + "€"} />
             </SparklinesComposed>
           </div>

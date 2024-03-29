@@ -106,6 +106,7 @@ export interface ShapeProps {
   style?: CSSProperties;
   labelColor?: string;
   name?: string;
+  axis?: string | number
 }
 
 export interface LineShapeExtraProps extends ShapeProps {
@@ -159,13 +160,31 @@ export interface SparklineChildData<TData> {
   childData: SparklineChildDataEntry<TData>[];
   points: Points<TData>;
   color: string;
+  axis: Axis
 }
+
+export interface Axis {
+  id: number | string,
+  xFactor: number,
+  yFactor: number,
+  width: number,
+  height: number,
+  margin: Margin,
+  min: number,
+  max: number,
+  disableBarAdjustment?: boolean;
+  startAtZero?: boolean
+  limit?: number
+}
+
+export type Axes = {[key: string | number] : Axis};
 
 export interface UseSparklineData<TData> {
   originalData: any[];
   sparklineData: SparklineChildData<TData>[];
   dataKeys: DataKey[];
   labels: any[];
+  axes: Axes
 }
 
 export interface UseSparklineDataProps {

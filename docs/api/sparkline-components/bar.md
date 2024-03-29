@@ -24,6 +24,14 @@ will be drawn, and the internally calculated props will be merged with the key v
 passed a ReactElement, the option can be the custom active bar element. If passed a function, the function will be
 called to render a customized active bar.
 
+### axis
+
+- **Optional**
+- **Type:** `number | string`
+- **Type:** `0`
+
+Unique id of the axis. Usually used to display multiple data series with independent scaling.
+
 ### barWidth
 
 - **Optional**

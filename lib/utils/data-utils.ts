@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 
 import { DEFAULT_COLOR } from "./defaults.ts";
-import { DataKey, Points, SparklinesMargin } from "./types.ts";
-import { getMargin, getValueByDataKey } from "./utils.ts";
+import { Axis, DataKey, Points } from "./types.ts";
+import { getValueByDataKey } from "./utils.ts";
 
 export const getMainColorByElement = (element: ReactElement) => {
   const { stroke, fill } = element.props;
@@ -23,81 +23,21 @@ export const getMainColorByElement = (element: ReactElement) => {
   }
 };
 
-//TODO We add 0 to max min to make smallest value not 0
-export const getDataPoints = <TData>({
-  data,
-  limit,
-  width,
-  height,
-  margin,
-  max,
-  min,
-  disableBarAdjustment = false,
-  dataKey,
-  startAtZero,
-}: {
-  data: readonly any[];
-  limit?: number;
-  width: number;
-  height: number;
-  min?: number;
-  max?: number;
-  margin?: SparklinesMargin;
-  disableBarAdjustment?: boolean;
-  dataKey?: DataKey;
-  startAtZero?: boolean;
-}): Points<TData> => {
-  const dataForSeries = data.map((d) => getValueByDataKey(d, dataKey) || 0);
-  return getDataPointsForSeries({
-    data: dataForSeries,
-    limit,
-    width,
-    height,
-    margin,
-    max,
-    min,
-    disableBarAdjustment,
-    startAtZero,
-  }).map((d, i) => ({
-    ...d,
-    entry: data[i],
-  }));
-};
-
-const getDataPointsForSeries = ({
-  data,
-  limit,
-  width = 0,
-  height = 0,
-  margin = 0,
-  startAtZero,
-  max = Math.max(...data),
-  min = startAtZero ? Math.min(0, ...data) : Math.min(...data),
-  disableBarAdjustment = false,
-}: {
-  data: readonly any[];
-  limit?: number;
-  width: number;
-  height: number;
-  min?: number;
-  max?: number;
-  margin?: SparklinesMargin;
-  disableBarAdjustment?: boolean;
-  startAtZero?: boolean;
-}) => {
+export const getPoints =<TData> (data: readonly any[], dataKey : DataKey, axis: Axis) : Points<TData> => {
+  const {xFactor, margin, min, max, disableBarAdjustment, yFactor, limit} = axis;
   const len = data.length;
 
   if (limit && limit < len) {
     data = data.slice(len - limit);
   }
-  const margins = getMargin(margin);
-  const yFactor = (height - (margins.top + margins.bottom)) / (max - min || 2);
-  const xFactor =
-    (width - (margins.left + margins.right)) /
-    ((limit || len) - (len > 1 && disableBarAdjustment ? 1 : 0));
-  return data.map((d, i) => ({
-    x: i * xFactor + margins.left + (disableBarAdjustment ? 0 : xFactor / 2),
-    y: (max === min ? 1 : max - d) * yFactor + margins.top,
+
+  const seriesData = data.map((d) => getValueByDataKey(d, dataKey, 0))
+  return seriesData.map((d, i) => ({
+    x: i * xFactor + margin.left + (disableBarAdjustment ? 0 : xFactor / 2),
+    y: (max === min ? 1 : max - d) * yFactor + margin.top,
     value: d,
+  })).map((d, i) => ({
+    ...d,
+    entry: data[i],
   }));
-};
+}
