@@ -14,13 +14,16 @@ import {
   useRef,
 } from "react";
 
-import { Bar, Line } from "../../cartesian";
+import { Bar, Line, ReferenceLine } from "../../cartesian";
 import { Tooltip } from "../../components";
 import { filterSvgElements, findAllByType, findChildByType } from "../../utils/react-utils.ts";
 import { InternalShapeProps, Points, SparklinesComposedProps } from "../../utils/types.ts";
 import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
 import { useSparklineData } from "./useSparklineData.tsx";
+
+export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine]
+export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar]
 
 function fixedForwardRef<T, P = unknown>(
   render: (props: P, ref: Ref<T>) => ReactNode,
@@ -53,7 +56,8 @@ export const SparklinesComposed = <TData,>(
   forwardedRef: ForwardedRef<SVGRectElement>,
 ) => {
   const tooltip = findChildByType(children, Tooltip);
-  const sparklineChildren = findAllByType(children, [Line, Bar]);
+  const sparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
+  const tooltipChildren = findAllByType(children, ALLOWED_TOOLTIP_CHILDREN);
 
   const sparklineData = useSparklineData<TData>({
     data,
@@ -99,9 +103,9 @@ export const SparklinesComposed = <TData,>(
   };
 
   const renderTooltip = () => {
-    if (!tooltip || !sparklineChildren.length || activeIndex == null) return null;
-    const payload = sparklineChildren.map((child, i) =>
-      getTooltipPayload<TData>(child.props, activeEntry?.[i] || null, sparklineChildren.length),
+    if (!tooltip || !tooltipChildren.length || activeIndex == null) return null;
+    const payload = tooltipChildren.map((child, i) =>
+      getTooltipPayload<TData>(child.props, activeEntry?.[i] || null, tooltipChildren.length),
     );
     const finalLabel = sparklineData.labels[activeIndex] || label;
     return cloneElement(tooltip, { ...tooltip.props, payload, coords, label: finalLabel });
@@ -121,6 +125,7 @@ export const SparklinesComposed = <TData,>(
             width,
             margin,
             points,
+            sparklineData,
             disableBarAdjustment,
             activeIndex,
             tooltip: !!tooltip,

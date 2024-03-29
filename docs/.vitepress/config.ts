@@ -14,7 +14,7 @@ export default defineConfig({
   cleanUrls: true,
   themeConfig: {
     search: {
-      provider: 'local'
+      provider: "local",
     },
     nav: [
       { text: "Home", link: "/" },
@@ -58,6 +58,7 @@ export default defineConfig({
         items: [
           { text: "Line", link: "/sparkline-components/line" },
           { text: "Bar", link: "/sparkline-components/bar" },
+          { text: "ReferenceLine", link: "/sparkline-components/reference-line" },
         ],
       },
       {
@@ -83,6 +84,7 @@ export default defineConfig({
                 text: "Bar",
                 link: "/api/sparkline-components/bar",
               },
+              { text: "ReferenceLine", link: "/api/sparkline-components/reference-line" },
             ],
           },
           {
@@ -95,7 +97,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: "github", link: "https://github.com/Lueton/react-sparklines" },
-      { icon: "npm", link: "https://www.npmjs.com/package/@lueton/react-sparklines" }
+      { icon: "npm", link: "https://www.npmjs.com/package/@lueton/react-sparklines" },
     ],
 
     footer: {

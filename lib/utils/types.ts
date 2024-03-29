@@ -91,6 +91,7 @@ export type SparklinesLineProps<TData> = SparklinesComposedProps<TData> & LineSh
 export type SparklinesBarProps<TData> = SparklinesComposedProps<TData> & BarShapeProps;
 
 export interface InternalShapeProps<TData> {
+  sparklineData?: UseSparklineData<TData>
   points?: Points<TData>;
   width?: number;
   height?: number;
@@ -122,6 +123,11 @@ export interface BarShapeExtraProps extends ShapeProps {
   maxBarWidth?: number;
 }
 
+export interface ReferenceLineExtraProps extends ShapeProps{
+  x?: number | string,
+  y?: number
+}
+
 export type LineShapeProps = Omit<PresentationAttributesWithProps<SVGPathElement>, "points" | "name" | "width" | "height"> &
   LineShapeExtraProps;
 
@@ -143,6 +149,13 @@ export type BarProps<TData> = Omit<
   "points" | "name" | "radius"
 > &
   BarShapeProps &
+  InternalShapeProps<TData>;
+
+export type ReferenceLineProps<TData> = Omit<
+  PresentationAttributesWithProps<SVGLineElement>,
+  "points"
+> &
+  ReferenceLineExtraProps &
   InternalShapeProps<TData>;
 
 export interface SparklineChildDataEntry<TData> {

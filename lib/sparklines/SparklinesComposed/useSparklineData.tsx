@@ -1,6 +1,5 @@
 import { get, isNumber } from "lodash";
 
-import { Bar, Line } from "../../cartesian";
 import { getMainColorByElement, getPoints } from "../../utils/data-utils.ts";
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
@@ -12,6 +11,7 @@ import {
   UseSparklineData,
   UseSparklineDataProps,
 } from "./../../utils/types.ts";
+import { ALLOWED_SPARKLINE_CHILDREN } from "./SparklinesComposed.tsx";
 
 export const useSparklineData = <TData,>({
   data,
@@ -27,7 +27,7 @@ export const useSparklineData = <TData,>({
 }: UseSparklineDataProps): UseSparklineData<TData> => {
   const isSingleNumericData = isNumber(data[0]);
   const objectifiedData = isSingleNumericData ? data.map((value) => ({ value: value })) : data;
-  const sparklineChildren = findAllByType(children, [Line, Bar]);
+  const sparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
 
   const getAxisData = (axisId: string | number): Axis => {
     const len = data.length;
