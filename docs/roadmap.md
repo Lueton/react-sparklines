@@ -27,7 +27,6 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 ## v2.x.x
 
 - Add more components
-  - Reference lines
   - Band
 - Extend and improve configuration options for components
 - Handling null values
