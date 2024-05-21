@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  Point,
-  SparklineChildDataEntry,
-  UseInteractivityProps,
-} from "./../../utils/types.ts";
-
+import { Point, SparklineChildDataEntry, UseInteractivityProps } from "./../../utils/types.ts";
 
 export const useInteractivity = <TData,>({
   ref,
@@ -64,35 +59,33 @@ export const useInteractivity = <TData,>({
     (event: MouseEvent) => {
       if (onMouseMove && activeEntry) onMouseMove(event, { activeIndex, activeEntry });
     },
-    [onMouseMove],
+    [onMouseMove, activeEntry, activeIndex],
   );
 
   const mouseEnter = useCallback(
     (event: MouseEvent) => {
       if (onMouseEnter && activeEntry) onMouseEnter(event, { activeIndex, activeEntry });
     },
-    [onMouseEnter],
+    [onMouseEnter, activeEntry, activeIndex],
   );
 
   const mouseLeave = useCallback(
     (event: MouseEvent) => {
       if (onMouseLeave && activeEntry) onMouseLeave(event, { activeIndex, activeEntry });
     },
-    [onMouseLeave],
+    [onMouseLeave, activeEntry, activeIndex],
   );
 
   const click = useCallback(
     (event: MouseEvent) => {
       if (onClick && activeEntry) onClick(event, { activeIndex, activeEntry });
     },
-    [onClick],
+    [onClick, activeEntry, activeIndex],
   );
 
   useEffect(() => {
     ref.current?.addEventListener("mousemove", calculateCoords);
-    return () => {
-      ref.current?.removeEventListener("mousemove", calculateCoords);
-    };
+    return () => ref.current?.removeEventListener("mousemove", calculateCoords);
   }, [ref, calculateCoords]);
 
   useEffect(() => {
@@ -103,28 +96,28 @@ export const useInteractivity = <TData,>({
   useEffect(() => {
     if (onMouseMove) {
       ref.current?.addEventListener("mousemove", mouseMove);
-      return ref.current?.removeEventListener("mousemove", mouseMove);
+      return () => ref.current?.removeEventListener("mousemove", mouseMove);
     }
   }, [ref, mouseMove]);
 
   useEffect(() => {
     if (onMouseEnter) {
       ref.current?.addEventListener("mouseenter", mouseEnter);
-      return ref.current?.removeEventListener("mouseenter", mouseEnter);
+      return () => ref.current?.removeEventListener("mouseenter", mouseEnter);
     }
   }, [ref, mouseEnter]);
 
   useEffect(() => {
     if (onMouseLeave) {
       ref.current?.addEventListener("mouseleave", mouseLeave);
-      return ref.current?.removeEventListener("mouseleave", mouseLeave);
+      return () => ref.current?.removeEventListener("mouseleave", mouseLeave);
     }
   }, [ref, mouseLeave]);
 
   useEffect(() => {
     if (onClick) {
       ref.current?.addEventListener("click", click);
-      return ref.current?.removeEventListener("click", click);
+      return () => ref.current?.removeEventListener("click", click);
     }
   }, [ref, click]);
 
