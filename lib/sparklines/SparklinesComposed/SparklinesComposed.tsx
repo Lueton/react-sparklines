@@ -6,32 +6,26 @@ import {
   forwardRef,
   isValidElement,
   ReactElement,
-  ReactNode,
-  Ref,
-  RefAttributes,
-  useImperativeHandle,
   useMemo,
-  useRef,
 } from "react";
 
 import { Bar, Line, ReferenceLine } from "../../cartesian";
 import { Tooltip } from "../../components";
-import { filterSvgElements, findAllByType, findChildByType } from "../../utils/react-utils.ts";
+import {
+  filterSvgElements,
+  findAllByType,
+  findChildByType,
+  useForwardedRef,
+} from "../../utils/react-utils.ts";
 import { InternalShapeProps, Points, SparklinesComposedProps } from "../../utils/types.ts";
 import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
 import { useSparklineData } from "./useSparklineData.tsx";
 
-export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine]
-export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar]
+export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine];
+export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar];
 
-function fixedForwardRef<T, P = unknown>(
-  render: (props: P, ref: Ref<T>) => ReactNode,
-): (props: P & RefAttributes<T>) => ReactNode {
-  return forwardRef(render) as any;
-}
-
-export const SparklinesComposed = <TData,>(
+const SparklinesComposedInner = <TData,>(
   {
     data = [],
     width = 240,
@@ -53,7 +47,7 @@ export const SparklinesComposed = <TData,>(
     onClick,
     ...rest
   }: SparklinesComposedProps<TData>,
-  forwardedRef: ForwardedRef<SVGRectElement>,
+  ref: ForwardedRef<SVGRectElement>,
 ) => {
   const tooltip = findChildByType(children, Tooltip);
   const sparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
@@ -69,11 +63,11 @@ export const SparklinesComposed = <TData,>(
     margin,
     height,
     children,
-    startAtZero
+    startAtZero,
   });
 
   const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
-  const ref = useRef<SVGRectElement>(null);
+  const innerRef = useForwardedRef(ref);
   const svgProps = {
     viewBox: `0 0 ${width} ${height}`,
     style,
@@ -82,9 +76,8 @@ export const SparklinesComposed = <TData,>(
     height,
     ...rest,
   };
-  useImperativeHandle(forwardedRef, () => ref.current as SVGRectElement);
-  const { coords, activeIndex, activeEntry } = useInteractivity({
-    ref,
+  const { coords, activeIndex, activeEntry } = useInteractivity<TData>({
+    ref: innerRef,
     data: sparklineData,
     onMouseMove,
     onMouseEnter,
@@ -188,4 +181,4 @@ export const SparklinesComposed = <TData,>(
   );
 };
 
-export const ForwardedSparklinesComposed = fixedForwardRef(SparklinesComposed);
+export const SparklinesComposed = forwardRef(SparklinesComposedInner);

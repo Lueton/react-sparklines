@@ -9,8 +9,8 @@ import {
   FunctionComponent,
   isValidElement,
   ReactElement,
-  ReactNode,
-} from "react"
+  ReactNode, useEffect, useRef,
+} from "react";
 import { isFragment } from "react-is"
 
 import { FilteredSvgElementType } from "./types.ts";
@@ -693,4 +693,19 @@ export const toArray = <T extends ReactNode>(children: T | T[]): T[] => {
   lastResult = result
   lastChildren = children
   return result
+}
+
+export const useForwardedRef = <T,>(ref: React.ForwardedRef<T>) => {
+  const innerRef = useRef<T>(null);
+
+  useEffect(() => {
+    if (!ref) return;
+    if (typeof ref === 'function') {
+      ref(innerRef.current);
+    } else {
+      ref.current = innerRef.current;
+    }
+  });
+
+  return innerRef;
 }

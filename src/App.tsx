@@ -1,6 +1,7 @@
 import "./App.css";
 import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip } from "../lib";
 import { ReferenceLine } from "../lib/cartesian";
+import { createRef } from "react";
 
 const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
@@ -19,11 +20,13 @@ function App() {
       return () => clearInterval(interval)
     }, [data])*/
 
+  const ref = createRef<SVGPathElement>();
+
   return (
     <div>
       <div style={{ padding: 10 }}>
         <div style={{ display: "flex" }}>
-          <SparklinesLine data={demoData} />
+          <SparklinesLine ref={ref} data={demoData} />
           <SparklinesLine
             name="MyData"
             stroke="#b91c1c"
@@ -71,7 +74,7 @@ function App() {
           />
         </div>
         <div style={{ display: "flex" }}>
-          <SparklinesComposed data={demoData}>
+          <SparklinesComposed ref={ref} data={demoData}>
             <Line />
             <Bar />
           </SparklinesComposed>
@@ -195,6 +198,11 @@ function App() {
         <div className="demo-section">
           <div>
             <SparklinesBar data={demoData} />
+          </div>
+          <div>
+            <SparklinesBar data={[1, 5, -3, -8, 4, 7, 2, 8, 3, 4]}>
+              <ReferenceLine y={0} stroke="red"/>
+            </SparklinesBar>
           </div>
           <div>
             <SparklinesBar
@@ -337,7 +345,7 @@ function App() {
               <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
               <Line dataKey="b" axis={2} stroke={"blue"} fill={"blue"} dots />
               <Tooltip formatter={({ value }) => value + "€"} />
-              <ReferenceLine x={Math.floor(demoData.length / 2)}/>
+              <ReferenceLine x={Math.floor(demoData.length / 2)} />
               <ReferenceLine y={4} />
               <ReferenceLine />
             </SparklinesComposed>

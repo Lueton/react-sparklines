@@ -1,1 +1,1 @@
-export {ForwardedSparklinesComposed as SparklinesComposed} from "./SparklinesComposed.tsx"
+export {SparklinesComposed} from "./SparklinesComposed.tsx"
