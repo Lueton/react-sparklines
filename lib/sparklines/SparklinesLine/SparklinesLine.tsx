@@ -1,3 +1,5 @@
+import { ForwardedRef, forwardRef } from "react";
+
 import { Line } from "../../cartesian";
 import {
   LineShapeExtraProps,
@@ -6,34 +8,36 @@ import {
 } from "../../utils/types.ts";
 import { SparklinesComposed } from "../SparklinesComposed";
 
-export const SparklinesLine = <TData,>({
-  height,
-  max,
-  width,
-  disableBarAdjustment = true,
-  children,
-  preserveAspectRatio,
-  min,
-  margin,
-  limit,
-  style,
-  data,
-  dataKey,
-  dots,
-  curved,
-  activeDot,
-  name,
-  label,
-  clip,
-  labelColor,
-  onMouseMove,
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-  startAtZero,
-  ref,
-  ...rest
-}: SparklinesLineProps<TData>) => {
+const SparklinesLineInner = <TData,>(
+  {
+    height,
+    max,
+    width,
+    disableBarAdjustment = true,
+    children,
+    preserveAspectRatio,
+    min,
+    margin,
+    limit,
+    style,
+    data,
+    dataKey,
+    dots,
+    curved,
+    activeDot,
+    name,
+    label,
+    clip,
+    labelColor,
+    onMouseMove,
+    onMouseEnter,
+    onMouseLeave,
+    onClick,
+    startAtZero,
+    ...rest
+  }: SparklinesLineProps<TData>,
+  ref: ForwardedRef<SVGRectElement>,
+) => {
   const composedProps: SparklinesComposedProps<TData> = {
     clip,
     label,
@@ -71,3 +75,7 @@ export const SparklinesLine = <TData,>({
     </SparklinesComposed>
   );
 };
+
+export const SparklinesLine = forwardRef(SparklinesLineInner) as <TData>(
+  props: SparklinesLineProps<TData> & { ref?: ForwardedRef<SVGRectElement> },
+) => ReturnType<typeof SparklinesLineInner>;

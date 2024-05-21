@@ -159,7 +159,7 @@ const SparklinesComposedInner = <TData,>(
     return (
       <rect
         className="react-sparklines-interactive-layer"
-        ref={ref}
+        ref={innerRef}
         height={interactiveHeight}
         width={interactiveWidth}
         style={interactiveStyle}
@@ -181,4 +181,6 @@ const SparklinesComposedInner = <TData,>(
   );
 };
 
-export const SparklinesComposed = forwardRef(SparklinesComposedInner);
+export const SparklinesComposed = forwardRef(SparklinesComposedInner) as <TData>(
+  props: SparklinesComposedProps<TData> & { ref?: ForwardedRef<SVGRectElement> },
+) => ReturnType<typeof SparklinesComposedInner>;

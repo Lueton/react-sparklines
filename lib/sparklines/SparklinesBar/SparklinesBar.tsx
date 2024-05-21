@@ -1,35 +1,40 @@
+import { ForwardedRef, forwardRef } from "react";
+
 import { Bar } from "../../cartesian";
 import { BarShapeProps, SparklinesBarProps, SparklinesComposedProps } from "../../utils/types.ts";
 import { SparklinesComposed } from "../SparklinesComposed";
 
-export const SparklinesBar = <TData,>({
-  height,
-  activeBar,
-  barWidth,
-  maxBarWidth,
-  max,
-  width,
-  disableBarAdjustment,
-  children,
-  radius,
-  preserveAspectRatio,
-  min,
-  margin,
-  limit,
-  style,
-  data,
-  dataKey,
-  clip,
-  name,
-  label,
-  onMouseMove,
-  onMouseEnter,
-  onMouseLeave,
-  labelColor,
-  onClick,
-  startAtZero,
-  ...rest
-}: SparklinesBarProps<TData>) => {
+const SparklinesBarInner = <TData,>(
+  {
+    height,
+    activeBar,
+    barWidth,
+    maxBarWidth,
+    max,
+    width,
+    disableBarAdjustment,
+    children,
+    radius,
+    preserveAspectRatio,
+    min,
+    margin,
+    limit,
+    style,
+    data,
+    dataKey,
+    clip,
+    name,
+    label,
+    onMouseMove,
+    onMouseEnter,
+    onMouseLeave,
+    labelColor,
+    onClick,
+    startAtZero,
+    ...rest
+  }: SparklinesBarProps<TData>,
+  ref: ForwardedRef<SVGRectElement>,
+) => {
   const composedProps: SparklinesComposedProps<TData> = {
     clip,
     label,
@@ -46,7 +51,7 @@ export const SparklinesBar = <TData,>({
     onMouseEnter,
     onMouseLeave,
     onClick,
-    startAtZero
+    startAtZero,
   };
 
   const barProps: BarShapeProps = {
@@ -62,9 +67,13 @@ export const SparklinesBar = <TData,>({
   };
 
   return (
-    <SparklinesComposed {...composedProps}>
+    <SparklinesComposed {...composedProps} ref={ref}>
       <Bar {...barProps} />
       {children}
     </SparklinesComposed>
   );
 };
+
+export const SparklinesBar = forwardRef(SparklinesBarInner) as <TData>(
+  props: SparklinesBarProps<TData> & { ref?: ForwardedRef<SVGRectElement> },
+) => ReturnType<typeof SparklinesBarInner>;
