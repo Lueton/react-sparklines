@@ -66,6 +66,10 @@ export default defineConfig({
         items: [{ text: "Tooltip", link: "/general-components/tooltip" }],
       },
       {
+        text: "Recipes",
+        items:[{text: "Floating UI", link: "/recipes/floating-ui"}]
+      },
+      {
         text: "API",
         items: [
           {
