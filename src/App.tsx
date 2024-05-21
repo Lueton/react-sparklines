@@ -20,7 +20,7 @@ function App() {
       return () => clearInterval(interval)
     }, [data])*/
 
-  const ref = createRef<SVGPathElement>();
+  const ref = createRef<SVGRectElement>();
 
   return (
     <div>
