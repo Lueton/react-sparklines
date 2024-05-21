@@ -1,14 +1,13 @@
-import { resolve } from "node:path"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
-import dts from "vite-plugin-dts"
-import { EsLinter, linterPlugin } from "vite-plugin-linter"
-import tsConfigPaths from "vite-tsconfig-paths"
+import { resolve } from "node:path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
+import { EsLinter, linterPlugin } from "vite-plugin-linter";
+import tsConfigPaths from "vite-tsconfig-paths";
 
-import * as packageJson from "./package.json"
-import { name } from './package.json'
+import { name } from "./package.json";
 
-const formattedName = name.match(/[^/]+$/)?.[0] ?? name
+const formattedName = name.match(/[^/]+$/)?.[0] ?? name;
 
 export default defineConfig((configEnv) => ({
   plugins: [
@@ -20,25 +19,25 @@ export default defineConfig((configEnv) => ({
     }),
     dts({
       include: ["lib"],
-      rollupTypes: true
+      rollupTypes: true,
     }),
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, 'lib/index.ts'),
+      entry: resolve(__dirname, "lib/index.ts"),
       formats: ["es", "umd"],
       name: formattedName,
       fileName: (format) => `react-sparklines.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom', ],
+      external: ["react", "react/jsx-runtime", "react-dom"],
       output: {
         globals: {
-          react: 'React',
-          'react/jsx-runtime': 'react/jsx-runtime',
-          'react-dom': 'ReactDOM',
+          react: "React",
+          "react/jsx-runtime": "react/jsx-runtime",
+          "react-dom": "ReactDOM",
         },
       },
     },
   },
-}))
+}));

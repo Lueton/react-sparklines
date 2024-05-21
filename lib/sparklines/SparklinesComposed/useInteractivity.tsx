@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Point, SparklineChildDataEntry, UseInteractivityProps } from "./../../utils/types.ts";
+import { Point, SparklinesDataEntry, UseInteractivityProps } from "./../../utils/types.ts";
 
 export const useInteractivity = <TData,>({
   ref,
@@ -11,7 +11,7 @@ export const useInteractivity = <TData,>({
   onClick,
 }: UseInteractivityProps<TData>) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [activeEntry, setActiveEntry] = useState<null | SparklineChildDataEntry<TData>[]>(null);
+  const [activeEntry, setActiveEntry] = useState<null | SparklinesDataEntry<TData>[]>(null);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const calculateCoords = useCallback(

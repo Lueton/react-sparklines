@@ -1,6 +1,6 @@
 import { get, isNil, isNumber, isString } from "lodash";
 
-import { DataKey, Margin, ShapeProps, SparklineChildDataEntry, SparklinesMargin, SparklinesRadius } from "./types.ts";
+import { DataKey, Margin, ShapeProps, SparklinesDataEntry, SparklinesMargin, SparklinesRadius } from "./types.ts";
 
 export const getMargin = (margin: number | SparklinesMargin): Margin => {
   return typeof margin === "number"
@@ -99,7 +99,7 @@ export function getValueByDataKey(obj: any, dataKey: DataKey = "value", defaultV
 
 export const getTooltipPayload = <TData>(
   props: ShapeProps,
-  activeEntry: SparklineChildDataEntry<TData> | null,
+  activeEntry: SparklinesDataEntry<TData> | null,
   childrenCount: number,
 ) => {
   const { dataKey = "value", name } = props;

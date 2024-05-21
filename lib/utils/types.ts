@@ -1,4 +1,4 @@
-import { CSSProperties, DOMAttributes, ReactElement, RefObject, SVGProps } from "react";
+import { CSSProperties, DOMAttributes, ReactElement, ReactNode, RefObject, SVGProps } from "react";
 
 export type Margin = { top: number; right: number; bottom: number; left: number };
 export type SparklinesMargin =
@@ -25,10 +25,10 @@ export interface Point<TData> {
 export interface UseInteractivityProps<TData> {
   ref: RefObject<SVGRectElement>;
   data: UseSparklineData<TData>;
-  onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
-  onClick?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseMove?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onMouseLeave?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onMouseEnter?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onClick?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
 }
 
 export interface DotProps extends SVGProps<SVGCircleElement> {
@@ -60,9 +60,9 @@ export type Tooltip<TData> =
 export type Points<TData> = Point<TData>[];
 export type DataKey = string | number;
 
-export interface EventData<TData> {
+export interface SparklinesEventData<TData> {
   activeIndex: number | null;
-  activeEntry: SparklineChildDataEntry<TData>[];
+  activeEntry: SparklinesDataEntry<TData>[];
 }
 
 export interface SparklinesComposedProps<TData> {
@@ -80,10 +80,10 @@ export interface SparklinesComposedProps<TData> {
   children?: any;
   clip?: boolean;
   startAtZero?: boolean;
-  onMouseMove?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseLeave?: (event: MouseEvent, data: EventData<TData>) => void;
-  onMouseEnter?: (event: MouseEvent, data: EventData<TData>) => void;
-  onClick?: (event: MouseEvent, data: EventData<TData>) => void;
+  onMouseMove?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onMouseLeave?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onMouseEnter?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
+  onClick?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;
 }
 
 export type SparklinesLineProps<TData> = SparklinesComposedProps<TData> & LineShapeProps;
@@ -158,7 +158,7 @@ export type ReferenceLineProps<TData> = Omit<
   ReferenceLineExtraProps &
   InternalShapeProps<TData>;
 
-export interface SparklineChildDataEntry<TData> {
+export interface SparklinesDataEntry<TData> {
   dataKey: DataKey;
   x: number;
   y: number;
@@ -170,7 +170,7 @@ export interface SparklineChildDataEntry<TData> {
 
 export interface SparklineChildData<TData> {
   dataKey: DataKey;
-  childData: SparklineChildDataEntry<TData>[];
+  childData: SparklinesDataEntry<TData>[];
   points: Points<TData>;
   color: string;
   axis: Axis
@@ -214,3 +214,25 @@ export interface UseSparklineDataProps {
 }
 
 export type PresentationAttributesWithProps<T> = Omit<SVGProps<T>, keyof DOMAttributes<T>>;
+
+export type TooltipContent = ReactElement | ((props: TooltipProps) => ReactNode) | undefined;
+
+export interface TooltipPayload {
+  name?: DataKey;
+  value?: number;
+  dataKey?: DataKey;
+  color?: string;
+}
+
+export interface TooltipProps {
+  content?: TooltipContent;
+  contentStyle?: CSSProperties;
+  coords?: { x: number; y: number };
+  itemStyle?: CSSProperties;
+  label?: string | number;
+  labelStyle?: CSSProperties;
+  payload?: Array<TooltipPayload>;
+  separator?: string;
+  wrapperStyle?: CSSProperties;
+  formatter?: (payload: TooltipPayload) => ReactNode
+}

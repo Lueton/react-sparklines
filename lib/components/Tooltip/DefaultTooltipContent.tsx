@@ -2,7 +2,7 @@ import { isNil, isNumber, isString } from "lodash";
 import { CSSProperties, isValidElement, ReactNode } from "react";
 
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
-import { TooltipProps } from "./Tooltip.tsx";
+import { TooltipProps } from "../../utils/types.ts";
 
 const isNumOrStr = (value: unknown): value is number | string =>
   isNumber(value as number) || isString(value);

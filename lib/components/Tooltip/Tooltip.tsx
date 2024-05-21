@@ -2,37 +2,12 @@ import isFunction from "lodash/isFunction";
 import {
   cloneElement,
   createElement,
-  CSSProperties,
   isValidElement,
-  ReactElement,
-  ReactNode,
 } from "react";
 
-import { DataKey } from "../../utils/types.ts";
+import { TooltipContent, TooltipProps } from "../../utils/types.ts";
 import { DefaultTooltipContent } from "./DefaultTooltipContent.tsx";
 import { TooltipWrapper } from "./TooltipWrapper.tsx";
-
-export type TooltipContent = ReactElement | ((props: TooltipProps) => ReactNode) | undefined;
-
-export interface TooltipPayload {
-  name?: DataKey;
-  value?: number;
-  dataKey?: DataKey;
-  color?: string;
-}
-
-export interface TooltipProps {
-  content?: TooltipContent;
-  contentStyle?: CSSProperties;
-  coords?: { x: number; y: number };
-  itemStyle?: CSSProperties;
-  label?: string | number;
-  labelStyle?: CSSProperties;
-  payload?: Array<TooltipPayload>;
-  separator?: string;
-  wrapperStyle?: CSSProperties;
-  formatter?: (payload: TooltipPayload) => ReactNode
-}
 
 const renderContent = (content: TooltipContent, props: TooltipProps) => {
   if (isValidElement(content)) return cloneElement(content, props);
