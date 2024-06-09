@@ -2,34 +2,32 @@ import { isBoolean, isNil } from "lodash";
 import isFunction from "lodash/isFunction";
 import { isValidElement } from "react";
 
+import { Area } from "../../shapes/Area/Area.tsx";
+import { Curve } from "../../shapes/Curve/Curve.tsx";
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { LineDot, LineDotsVisibility, LineProps } from "../../utils/types.ts";
-import { getLinePoints, renderDot } from "./line-utils.tsx";
+import { getMargin } from "../../utils/utils.ts";
+import { renderDot } from "./line-utils.tsx";
 
 export const Line = <TData,>(props: LineProps<TData>) => {
   const {
-    margin = 0,
+    margin,
     height = 0,
     dots = false,
-    points,
-    disableBarAdjustment,
+    data,
     activeIndex,
     curved,
     activeDot,
     clipPathId,
     tooltip,
+    zeroBaseline,
+    connectNulls,
   } = props;
 
-  if (!points?.length) return null;
+  if (!data || !data.points.length) return null;
 
-  const { linePoints, fillPoints } = getLinePoints<TData>(
-    points,
-    height,
-    margin,
-    disableBarAdjustment,
-    curved,
-  );
+  const { points } = data;
 
   const getVisibility = (dots: LineDot): LineDotsVisibility => {
     if (isValidElement(dots) || isFunction(dots)) return true;
@@ -51,7 +49,10 @@ export const Line = <TData,>(props: LineProps<TData>) => {
     if (visibility === true) dotIndices = points.map((_p, i) => i);
 
     return dotIndices.map((index) => {
-      const point = points[index];
+      const point = data.coords[index];
+
+      if (!point || data.points[index][1] === null) return null;
+
       const dotProps = {
         key: `dot-${index}`,
         r: 2,
@@ -59,10 +60,10 @@ export const Line = <TData,>(props: LineProps<TData>) => {
         fill: "#ffffff",
         strokeWidth: 1,
         ...filterProps(dots, false),
-        cx: point.x,
-        cy: point.y,
+        cx: point[0],
+        cy: point[1],
         index: index,
-        value: point.value,
+        value: point[1],
       };
       return renderDot(dots, dotProps);
     });
@@ -73,14 +74,17 @@ export const Line = <TData,>(props: LineProps<TData>) => {
   const renderActiveDot = () => {
     if (isNil(activeIndex)) return null;
 
-    const activePoint = points[activeIndex];
+    const activePoint = data.coords[activeIndex];
+
+    if (!activePoint || data.points[activeIndex][1] === null) return null;
+
     const dotProps = {
       key: `active-dot-${activeIndex}`,
       r: 2,
-      cx: activePoint.x,
-      cy: activePoint.y,
+      cx: activePoint[0],
+      cy: activePoint[1],
       index: activeIndex,
-      value: activePoint.value,
+      value: activePoint[1],
       stroke: "#ffffff",
       fill: stroke || DEFAULT_COLOR,
       ...filterProps(activeDot, false),
@@ -94,7 +98,6 @@ export const Line = <TData,>(props: LineProps<TData>) => {
     strokeWidth: "0",
     ...filterProps(props, false),
     stroke: "none",
-    d: "M" + fillPoints.join(" "),
     className: "react-sparklines-line-fill",
   };
 
@@ -103,21 +106,36 @@ export const Line = <TData,>(props: LineProps<TData>) => {
     strokeWidth: "1",
     ...filterProps(props, false),
     fill: "none",
-    d: "M" + linePoints.join(" "),
     className: "react-sparklines-line-line",
   };
 
   const showActiveDot: boolean = !!tooltip && activeDot != false && activeIndex != null;
+  const enrichedMargin = getMargin(margin);
 
   return (
-    <g className="react-sparklines-layer react-sparklines-line" clipPath={clipPathId}>
-      <path {...fillProps} />
-      <path {...lineProps} />
-      {dots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
-      {showActiveDot && (
-        <g className="react-sparklines-layer react-sparklines-active-dot">{renderActiveDot()}</g>
-      )}
-    </g>
+    <>
+      <g className="react-sparklines-layer react-sparklines-line" clipPath={clipPathId}>
+        <Area
+          {...fillProps}
+          data={data}
+          zeroBaseline={zeroBaseline}
+          height={height}
+          margin={enrichedMargin}
+          curve={curved}
+          connectNulls={connectNulls}
+        />
+        <Curve
+          {...lineProps}
+          data={data}
+          curve={curved}
+          connectNulls={connectNulls}
+        />
+        {dots && <g className="react-sparklines-layer react-sparklines-dots">{renderDots()}</g>}
+        {showActiveDot && (
+          <g className="react-sparklines-layer react-sparklines-active-dot">{renderActiveDot()}</g>
+        )}
+      </g>
+    </>
   );
 };
 

@@ -1,50 +1,59 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { Point, SparklinesDataEntry, UseInteractivityProps } from "./../../utils/types.ts";
+import { isChildOfType } from "../../utils/react-utils.ts";
+import { SparklineDataEntry, UseInteractivityProps } from "./../../utils/types.ts";
+import { ALLOWED_TOOLTIP_CHILDREN } from "./SparklinesComposed.tsx";
 
 export const useInteractivity = <TData,>({
   ref,
   data,
+  children,
   onMouseEnter,
   onMouseLeave,
   onMouseMove,
   onClick,
 }: UseInteractivityProps<TData>) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [activeEntry, setActiveEntry] = useState<null | SparklinesDataEntry<TData>[]>(null);
+  const [activeEntry, setActiveEntry] = useState<null | SparklineDataEntry<TData>[]>(null);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const calculateCoords = useCallback(
     (event: MouseEvent) => {
       if (!data.originalData.length) return;
 
-      const sparklineDataPoints = data.sparklineData[0].points;
+      const sparklineCoords = data.sparklines[0].coords;
 
       const mouseX = event.offsetX;
-      const lastItemIndex = sparklineDataPoints.length - 1;
+      const lastItemIndex = sparklineCoords.length - 1;
 
-      let nextDataPoint = sparklineDataPoints.find((entry) => {
-        return entry.x >= mouseX;
+      let nextDataPoint = sparklineCoords.find((entry) => {
+        return entry[0] >= mouseX;
       });
 
       if (!nextDataPoint) {
-        nextDataPoint = sparklineDataPoints[lastItemIndex];
+        nextDataPoint = sparklineCoords[lastItemIndex];
       }
 
-      const previousDataPoint = sparklineDataPoints[sparklineDataPoints.indexOf(nextDataPoint) - 1];
-      let currentDataPoint: Point<TData>;
+      const previousDataPoint = sparklineCoords[sparklineCoords.indexOf(nextDataPoint) - 1];
+      let currentDataPoint;
       let halfway;
 
       if (previousDataPoint) {
-        halfway = previousDataPoint.x + (nextDataPoint.x - previousDataPoint.x) / 2;
+        halfway = previousDataPoint[0] + (nextDataPoint[0] - previousDataPoint[0]) / 2;
         currentDataPoint = mouseX >= halfway ? nextDataPoint : previousDataPoint;
       } else {
         currentDataPoint = nextDataPoint;
       }
 
-      const index = sparklineDataPoints.indexOf(currentDataPoint);
+      const index = sparklineCoords.indexOf(currentDataPoint);
       setActiveIndex(index);
-      setActiveEntry(data.sparklineData.map((d) => d.childData[index]));
+      const newActiveEntries: SparklineDataEntry<TData>[] = [];
+      data.sparklines.forEach((d, i) => {
+        if (isChildOfType(children[i], ALLOWED_TOOLTIP_CHILDREN)) {
+          newActiveEntries.push(d.entries[index]);
+        }
+      });
+      setActiveEntry(newActiveEntries);
       setCoords({ x: event.offsetX, y: event.offsetY });
     },
     [data],

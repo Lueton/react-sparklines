@@ -56,6 +56,23 @@ export function findChildByType<TComponentType extends ComponentType>(
   return result && result[0]
 }
 
+export function isChildOfType<
+  TComponentType extends ComponentType,
+>(
+  child: ReactNode,
+  type: TComponentType | TComponentType[]
+){
+  let types: string[] = []
+
+  if (Array.isArray(type)) {
+    types = type.map((t) => getDisplayName(t))
+  } else {
+    types = [getDisplayName(type)]
+  }
+  const childType = get(child as any, "type.displayName") || get(child as any, "type.name")
+  return types.indexOf(childType) !== -1;
+}
+
 const SVG_TAGS: string[] = [
   "a",
   "altGlyph",

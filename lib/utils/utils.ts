@@ -1,9 +1,18 @@
 import { get, isNil, isNumber, isString } from "lodash";
 
-import { DataKey, Margin, ShapeProps, SparklinesDataEntry, SparklinesMargin, SparklinesRadius } from "./types.ts";
+import { DataKey, Margin, ShapeProps, SparklineDataEntry, SparklinesMargin, SparklinesRadius } from "./types.ts";
 
-export const getMargin = (margin: number | SparklinesMargin): Margin => {
-  return typeof margin === "number"
+export const getMargin = (margin?: number | SparklinesMargin): Margin => {
+  if (isNil(margin)) {
+    return {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    };
+  }
+
+  return isNumber(margin)
     ? {
         top: margin,
         right: margin,
@@ -99,14 +108,14 @@ export function getValueByDataKey(obj: any, dataKey: DataKey = "value", defaultV
 
 export const getTooltipPayload = <TData>(
   props: ShapeProps,
-  activeEntry: SparklinesDataEntry<TData> | null,
+  activeEntry: SparklineDataEntry<TData> | null,
   childrenCount: number,
 ) => {
   const { dataKey = "value", name } = props;
   const finalName = name || (childrenCount > 1 ? dataKey : undefined);
   return {
-    value: activeEntry?.value || 0,
+    value: activeEntry?.y,
     name: finalName,
-    color: activeEntry?.color
+    color: activeEntry?.color,
   };
 };

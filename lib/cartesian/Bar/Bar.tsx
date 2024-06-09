@@ -1,54 +1,32 @@
+import { isNil } from "lodash";
+
+import { Rect } from "../../shapes/Rect/Rect.tsx";
 import { DEFAULT_COLOR, DEFAULT_SECONDARY_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { BarProps } from "../../utils/types.ts";
-import { getMargin, getRectanglePath } from "../../utils/utils.ts";
+import { getMargin } from "../../utils/utils.ts";
 
 export const Bar = <TData,>(props: BarProps<TData>) => {
   const {
-    margin = 0,
     height = 0,
-    points,
-    radius = 0,
+    margin,
+    data,
+    radius,
     barWidth,
     maxBarWidth,
-    activeIndex,
     clipPathId,
-    activeBar ,
+    activeBar,
     tooltip,
+    zeroBaseline,
+    barGap,
+    activeIndex,
   } = props;
 
-  if (!points?.length) return null;
+  if (isNil(data)) return null;
 
-  const enrichedMargin = getMargin(margin);
-
-  const marginWidth = enrichedMargin.left + enrichedMargin.right;
-
-  const getBarWidth = () => {
-    if (barWidth && maxBarWidth) {
-      return Math.min(barWidth, maxBarWidth);
-    } else if (barWidth) {
-      return barWidth;
-    } else if (maxBarWidth) {
-      return maxBarWidth;
-    } else {
-      return points && points.length >= 2
-        ? Math.max(0, points[1].x - points[0].x - marginWidth)
-        : 0;
-    }
-  };
-
-  const bw = getBarWidth();
-  const rectanglePoints = points.map((p) =>
-    getRectanglePath(
-      p.x - bw / 2,
-      p.y,
-      bw,
-      Math.max(0, height - p.y - enrichedMargin.bottom),
-      radius,
-    ),
-  );
-
+  const margins = getMargin(margin);
   const showActiveBar: boolean = !!tooltip && activeBar !== false;
+
   const barProps = {
     stroke: "none",
     fill: DEFAULT_COLOR,
@@ -61,12 +39,27 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
     ...filterProps(activeBar, false),
   };
 
+  const renderBars = () => {
+    return data.points.map((p, i) => (
+      <Rect
+        key={i}
+        {...(activeIndex === i && showActiveBar ? activeBarProps : barProps)}
+        height={height}
+        margin={margins}
+        barWidth={barWidth}
+        maxBarWidth={maxBarWidth}
+        barGap={barGap}
+        zeroBaseline={zeroBaseline}
+        radius={radius}
+        data={data}
+        point={p}
+      />
+    ));
+  };
+
   return (
     <g className="react-sparklines-layer react-sparklines-bar" clipPath={clipPathId}>
-      {rectanglePoints.map((p, i) => {
-        if (activeIndex === i && showActiveBar) return <path {...activeBarProps} key={i} d={p} />;
-        return <path {...barProps} key={i} d={p} />;
-      })}
+      {renderBars()}
     </g>
   );
 };

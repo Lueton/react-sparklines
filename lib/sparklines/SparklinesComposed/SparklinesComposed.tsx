@@ -1,4 +1,5 @@
 import { uniqueId } from "lodash";
+import isFunction from "lodash/isFunction";
 import {
   cloneElement,
   CSSProperties,
@@ -17,10 +18,10 @@ import {
   findChildByType,
   useForwardedRef,
 } from "../../utils/react-utils.ts";
-import { InternalShapeProps, Points, SparklinesComposedProps } from "../../utils/types.ts";
+import { InternalShapeProps, SparklinesComposedProps } from "../../utils/types.ts";
 import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
-import { useSparklineData } from "./useSparklineData.tsx";
+import { useSparklineData } from "./useSparklineData.ts";
 
 export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine];
 export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar];
@@ -38,13 +39,14 @@ const SparklinesComposedInner = <TData,>(
     preserveAspectRatio,
     style,
     label,
-    disableBarAdjustment,
+    withBarAdjustment,
     clip,
     startAtZero = true,
     onMouseMove,
     onMouseEnter,
     onMouseLeave,
     onClick,
+    zeroBaseline,
     ...rest
   }: SparklinesComposedProps<TData>,
   ref: ForwardedRef<SVGRectElement>,
@@ -52,20 +54,20 @@ const SparklinesComposedInner = <TData,>(
   const tooltip = findChildByType(children, Tooltip);
   const sparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
   const tooltipChildren = findAllByType(children, ALLOWED_TOOLTIP_CHILDREN);
-
+  const margins = getMargin(margin);
   const sparklineData = useSparklineData<TData>({
-    data,
+    originalData: data,
     limit,
-    width,
-    disableBarAdjustment,
     max,
     min,
-    margin,
+    margin: margins,
+    width,
     height,
-    children,
+    withBarAdjustment: withBarAdjustment ?? findAllByType(children, Bar).length > 0,
+    zeroBaseline,
     startAtZero,
+    children,
   });
-
   const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
   const innerRef = useForwardedRef(ref);
   const svgProps = {
@@ -79,6 +81,7 @@ const SparklinesComposedInner = <TData,>(
   const { coords, activeIndex, activeEntry } = useInteractivity<TData>({
     ref: innerRef,
     data: sparklineData,
+    children: sparklineChildren,
     onMouseMove,
     onMouseEnter,
     onMouseLeave,
@@ -90,7 +93,7 @@ const SparklinesComposedInner = <TData,>(
     right: marginRight,
     bottom: marginBottom,
     left: marginLeft,
-  } = getMargin(margin);
+  } = margins
   const wrapperProps = {
     style: { position: "relative", height: height, width: width } as CSSProperties,
   };
@@ -100,8 +103,16 @@ const SparklinesComposedInner = <TData,>(
     const payload = tooltipChildren.map((child, i) =>
       getTooltipPayload<TData>(child.props, activeEntry?.[i] || null, tooltipChildren.length),
     );
-    const finalLabel = sparklineData.labels[activeIndex] || label;
-    return cloneElement(tooltip, { ...tooltip.props, payload, coords, label: finalLabel });
+
+    if(payload.every(entry => entry.value === null)){
+      return null;
+    }
+
+    let lbl = sparklineData.labels[activeIndex] || label;
+    if (isFunction(lbl)) {
+      lbl = lbl(payload);
+    }
+    return cloneElement(tooltip, { ...tooltip.props, payload, coords, label: lbl });
   };
 
   const renderChildren = () => {
@@ -112,15 +123,16 @@ const SparklinesComposedInner = <TData,>(
       sparklineChildren.map((child, i) => {
         if (isValidElement(child)) {
           const childProps = child.props;
-          const points: Points<TData> = sparklineData.sparklineData[i].points;
           const internalShapeProps: InternalShapeProps<TData> = {
             height,
             width,
             margin,
-            points,
+            data: sparklineData.sparklines[i],
             sparklineData,
-            disableBarAdjustment,
+            withBarAdjustment,
             activeIndex,
+            startAtZero,
+            zeroBaseline,
             tooltip: !!tooltip,
           };
 

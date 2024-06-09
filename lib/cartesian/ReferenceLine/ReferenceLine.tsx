@@ -1,54 +1,46 @@
 import { isNumber } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
-import { Axis, ReferenceLineProps } from "../../utils/types.ts";
+import { ReferenceLineProps } from "../../utils/types.ts";
 
-export const ReferenceLine = <TData,>(props: ReferenceLineProps<TData>) => {
-  const { x, y, axis = 0, sparklineData, disableBarAdjustment } = props;
-
-  if (!sparklineData || !sparklineData.axes[axis]) return null;
-  const { xFactor, yFactor, margin, limit, max, min }: Axis = sparklineData.axes[axis];
+export const ReferenceLine = <TData,>({ x, y, data, ...rest }: ReferenceLineProps<TData>) => {
+  if (!data) return null;
+  const { axis, entries } = data;
+  const { min, max, getX, getY } = axis;
 
   const getPoints = () => {
     if (isNumber(y)) {
       return {
-        x1: margin.left + (disableBarAdjustment ? 0 : xFactor / 2),
-        y1: (max === min ? 1 : max - y) * yFactor + margin.top,
-        x2:
-          (limit || sparklineData.originalData.length - 1 || 0) * xFactor +
-          margin.left +
-          (disableBarAdjustment ? 0 : xFactor / 2),
-        y2: (max === min ? 1 : max - y) * yFactor + margin.top,
+        x1: getX(0),
+        y1: getY(y),
+        x2: getX(entries.length - 1),
+        y2: getY(y),
       };
     } else if (isNumber(x)) {
       return {
-        x1: x * xFactor + margin.left + (disableBarAdjustment ? 0 : xFactor / 2),
-        y1: (max === min ? 1 : max) * yFactor + margin.top,
-        x2: x * xFactor + margin.left + (disableBarAdjustment ? 0 : xFactor / 2),
-        y2: (max === min ? 1 : min) * yFactor + margin.top,
+        x1: getX(x),
+        y1: getY(min),
+        x2: getX(x),
+        y2: getY(max),
       };
     } else {
       return {
-        x1: margin.left + (disableBarAdjustment ? 0 : xFactor / 2),
-        y1: (max === min ? 1 : max) * yFactor + margin.top,
-        x2:
-          (limit || sparklineData.originalData.length - 1 || 0) * xFactor +
-          margin.left +
-          (disableBarAdjustment ? 0 : xFactor / 2),
-        y2: (max === min ? 1 : max) * yFactor + margin.top,
+        x1: getX(0),
+        y1: getY(0),
+        x2: getX(0),
+        y2: getY(0),
       };
     }
   };
 
   const { x1, y1, x2, y2 } = getPoints();
-
   const lineProps = {
     fill: "none",
     stroke: "#000",
     fillOpacity: 1,
     strokeWidth: 1,
     position: "middle",
-    ...filterProps(props, false),
+    ...filterProps(rest, false),
     x1,
     y1,
     x2,

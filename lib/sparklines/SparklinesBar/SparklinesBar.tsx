@@ -10,9 +10,10 @@ const SparklinesBarInner = <TData,>(
     activeBar,
     barWidth,
     maxBarWidth,
+    barGap,
     max,
     width,
-    disableBarAdjustment,
+    withBarAdjustment,
     children,
     radius,
     preserveAspectRatio,
@@ -31,6 +32,7 @@ const SparklinesBarInner = <TData,>(
     labelColor,
     onClick,
     startAtZero,
+    zeroBaseline,
     ...rest
   }: SparklinesBarProps<TData>,
   ref: ForwardedRef<SVGRectElement>,
@@ -40,7 +42,7 @@ const SparklinesBarInner = <TData,>(
     label,
     max,
     width,
-    disableBarAdjustment,
+    withBarAdjustment,
     data,
     height,
     margin,
@@ -52,6 +54,7 @@ const SparklinesBarInner = <TData,>(
     onMouseLeave,
     onClick,
     startAtZero,
+    zeroBaseline
   };
 
   const barProps: BarShapeProps = {
@@ -63,6 +66,7 @@ const SparklinesBarInner = <TData,>(
     maxBarWidth,
     radius,
     labelColor,
+    barGap,
     ...rest,
   };
 
