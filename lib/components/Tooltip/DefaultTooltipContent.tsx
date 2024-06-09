@@ -17,7 +17,6 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
     labelStyle,
     formatter,
   } = props;
-
   const hasLabel = !isNil(label);
   const finalLabel: string | number | ReactNode = hasLabel ? label : "";
 
@@ -42,37 +41,39 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
     if (payload && payload.length) {
       const listStyle = { padding: 0, margin: 0 };
 
-      const items = payload.map((entry, i) => {
-        const finalItemStyle: CSSProperties = {
-          display: "block",
-          paddingTop: 4,
-          paddingBottom: 4,
-          color: entry.color || DEFAULT_COLOR,
-          margin: 0,
-          lineHeight: "normal",
-          ...itemStyle,
-        };
+      const items = payload
+        .filter((entry) => entry.value !== null)
+        .map((entry, i) => {
+          const finalItemStyle: CSSProperties = {
+            display: "block",
+            paddingTop: 4,
+            paddingBottom: 4,
+            color: entry.color || DEFAULT_COLOR,
+            margin: 0,
+            lineHeight: "normal",
+            ...itemStyle,
+          };
 
-        const { value, name } = entry;
-        const finalValue: ReactNode = formatter ? formatter(entry) : value;
-        const finalName: ReactNode = name;
+          const { value, name } = entry;
+          const finalValue: ReactNode = formatter ? formatter(entry) : value;
+          const finalName: ReactNode = name;
 
-        return (
-          <li
-            className="react-tooltip-tooltip-item"
-            key={`tooltip-item-${i}`}
-            style={finalItemStyle}
-          >
-            {isNumOrStr(finalName) ? (
-              <span className="react-tooltip-tooltip-item-name">{finalName}</span>
-            ) : null}
-            {isNumOrStr(finalName) ? (
-              <span className="react-tooltip-tooltip-item-separator">{separator}</span>
-            ) : null}
-            <span className="react-tooltip-tooltip-item-value">{finalValue}</span>
-          </li>
-        );
-      });
+          return (
+            <li
+              className="react-tooltip-tooltip-item"
+              key={`tooltip-item-${i}`}
+              style={finalItemStyle}
+            >
+              {isNumOrStr(finalName) ? (
+                <span className="react-tooltip-tooltip-item-name">{finalName}</span>
+              ) : null}
+              {isNumOrStr(finalName) ? (
+                <span className="react-tooltip-tooltip-item-separator">{separator}</span>
+              ) : null}
+              <span className="react-tooltip-tooltip-item-value">{finalValue}</span>
+            </li>
+          );
+        });
 
       return (
         <ul className="react-tooltip-tooltip-item-list" style={listStyle}>

@@ -15,7 +15,7 @@ Children of the component. Usually used for `<defs/>` or `<Tooltip/>`.
 
 :::warning
 Even though `<SparklinesLine/>` is using `<SparklinesComposed/>` under the hood it is not recommended to pass children
-like `<Line/>` oder `<Bar/>`.
+like `<Line/>` or `<Bar/>`.
 :::
 
 ### clip
@@ -51,13 +51,12 @@ no `"value"` key available you need the pass a specific `dataKey` to the compone
 
 The key or getter of an object of data.
 
-### disableBarAdjustment
+### withBarAdjustment
 
 - **Optional**
 - **Type:** `boolean`
-- **Default:** `false`
 
-Enables or disables the first and last point position adjustment for bars.
+Enables or disables the first and last point position adjustment for bars, **usually calculated internally**.
 
 ### dots
 
@@ -166,8 +165,15 @@ Sets the `preserveAspectRatio` property of the `<svg/>` element.
 - **Type:** `boolean`
 - **Default:** `true`
 
-Decides if the minimum value is zero. If set to false the minimum value is calculated by the data itself. Using the `min`
-property always overrides this behavior.
+Decides if zero is included to calculate the minimum value. This is useful if you want the lowest positive value not displayed as it would be zero.
+
+### zeroBaseline
+
+- **Optional**
+- **Type:** `boolean`
+
+Decides if the sparkline has a zero baseline. If set to true the sparkline will display values as positive and negative values.
+
 
 ### stroke
 

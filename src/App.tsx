@@ -3,7 +3,7 @@ import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip }
 import { ReferenceLine } from "../lib/cartesian";
 import { createRef } from "react";
 
-const demoData = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+const demoData = [1, 5, -3, 8, null, 7, 0, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
   name: "Label-" + i,
   a: d,
@@ -26,7 +26,7 @@ function App() {
     <div>
       <div style={{ padding: 10 }}>
         <div style={{ display: "flex" }}>
-          <SparklinesLine ref={ref} data={demoData} />
+          <SparklinesLine ref={ref} data={demoData} margin={0} />
           <SparklinesLine
             name="MyData"
             stroke="#b91c1c"
@@ -34,6 +34,7 @@ function App() {
             data={demoData}
             curved
             limit={demoData.length}
+            connectNulls={true}
           >
             <Tooltip />
           </SparklinesLine>
@@ -78,11 +79,11 @@ function App() {
             <Line />
             <Bar />
           </SparklinesComposed>
-          <SparklinesComposed data={demoData}>
+          <SparklinesComposed data={demoData} zeroBaseline={true}>
             <Bar fill={"orange"} />
             <Line stroke="red" fill="red" fillOpacity={".5"} />
           </SparklinesComposed>
-          <SparklinesComposed data={demoData}>
+          <SparklinesComposed data={demoData} zeroBaseline={true}>
             <defs>
               <linearGradient id="my-gradient-2" x1="0%" x2="100%" y1="0%" y2="0%">
                 <stop offset="0%" stopColor="red" />
@@ -170,7 +171,7 @@ function App() {
             <SparklinesLine dots={{ style: { fill: "blue" } }} data={demoData} />
             <p>Custom rendered Dots.</p>
             <SparklinesLine
-              dots={(props) => <circle {...props} fill="green" r={1} />}
+              dots={(props) => <circle {...props} key={props.key} fill="green" r={1} />}
               data={demoData}
             />
             <p>Custom component dots.</p>
@@ -178,7 +179,7 @@ function App() {
             <p>Customized dots with custom rendering</p>
             <SparklinesLine
               margin={{ top: 10, bottom: 5, left: 10, right: 20 }}
-              dots={{ fill: "yellow", dot: (props) => <circle {...props} r={2} /> }}
+              dots={{ fill: "yellow", dot: (props) => <circle {...props} key={props.key} r={2} /> }}
               data={demoData}
             />
             <p>Customized dots with custom component</p>
@@ -201,7 +202,7 @@ function App() {
           </div>
           <div>
             <SparklinesBar data={[1, 5, -3, -8, 4, 7, 2, 8, 3, 4]}>
-              <ReferenceLine y={0} stroke="red"/>
+              <ReferenceLine y={0} stroke="red" />
             </SparklinesBar>
           </div>
           <div>
@@ -276,6 +277,7 @@ function App() {
             <SparklinesComposed data={demoData}>
               <Bar color={"orange"} />
               <Line color="red" fillOpacity={".5"} />
+              <ReferenceLine y={2} stroke={"red"} />
             </SparklinesComposed>
           </div>
           <div>
@@ -337,16 +339,19 @@ function App() {
             <SparklinesComposed
               height={500}
               width={900}
-              data={composedData.map((d) => ({ ...d, b: d.b * 1000 }))}
-              margin={{ top: 130, bottom: 60, left: 90, right: 40 }}
+              data={composedData.map((d) => ({ ...d, b: (d.b || 0) * 1000 }))}
+              margin={{ top: 120, bottom: 80, left: 20, right: 20 }}
               label="MyLabel"
-              disableBarAdjustment
             >
-              <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
-              <Line dataKey="b" axis={2} stroke={"blue"} fill={"blue"} dots />
-              <Tooltip formatter={({ value }) => value + "€"} />
               <ReferenceLine x={Math.floor(demoData.length / 2)} />
               <ReferenceLine y={4} />
+              <Line dataKey="a" stroke={"green"} fill={"green"} dots name="MyData" />
+              <Line dataKey="b" axis={2} stroke={"blue"} fill={"blue"} dots />
+              <Tooltip
+                formatter={(entry) => {
+                  return entry.value + " €";
+                }}
+              />
               <ReferenceLine />
             </SparklinesComposed>
           </div>

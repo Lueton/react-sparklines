@@ -76,3 +76,7 @@ button:focus-visible {
 .demo-section {
     padding: 10px;
 }
+
+svg{
+    border: solid 1px red;
+}

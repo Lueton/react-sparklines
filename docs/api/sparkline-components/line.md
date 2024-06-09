@@ -131,7 +131,7 @@ Index of the active (hovering) data entry, **usually calculated internally**.
 
 Id of the `<clipPath/>` of the `<svg/>`, **usually calculated internally**.
 
-### disableBarAdjustment
+### withBarAdjustment
 
 - **Optional**
 - **Type:** `boolean`

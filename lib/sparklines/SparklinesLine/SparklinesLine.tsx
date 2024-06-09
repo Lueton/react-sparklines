@@ -13,7 +13,7 @@ const SparklinesLineInner = <TData,>(
     height,
     max,
     width,
-    disableBarAdjustment = true,
+    withBarAdjustment,
     children,
     preserveAspectRatio,
     min,
@@ -34,6 +34,8 @@ const SparklinesLineInner = <TData,>(
     onMouseLeave,
     onClick,
     startAtZero,
+    zeroBaseline,
+    connectNulls,
     ...rest
   }: SparklinesLineProps<TData>,
   ref: ForwardedRef<SVGRectElement>,
@@ -43,7 +45,7 @@ const SparklinesLineInner = <TData,>(
     label,
     max,
     width,
-    disableBarAdjustment,
+    withBarAdjustment,
     data,
     height,
     margin,
@@ -55,6 +57,7 @@ const SparklinesLineInner = <TData,>(
     onMouseLeave,
     onClick,
     startAtZero,
+    zeroBaseline,
   };
 
   const lineProps: LineShapeExtraProps = {
@@ -65,6 +68,7 @@ const SparklinesLineInner = <TData,>(
     curved,
     dataKey,
     labelColor,
+    connectNulls,
     ...rest,
   };
 

@@ -17,25 +17,20 @@ While React Sparklines goals are to be as flexible as possible and provide many 
 ## v1.x.x
 
 - :white_check_mark: Axes
-- Add more components
-  - :white_check_mark: Reference lines
-- General improvements, Bug fixes
-- Improve Documentation
-- Improve typings
-- Improve point calculation/scaling
+- :white_check_mark: Add Reference lines
+- :white_check_mark: Improve point calculation/scaling
 
 ## v2.x.x
 
+- :white_check_mark: Handling null values
+- :white_check_mark: More interpolation options
+
 - Add more components
   - Band
-- Extend and improve configuration options for components
-- Handling null values
-- Multi color sparklines
 - Providing a simple way to render custom components
-- More interpolation options
 - Better Tooltip positioning
 
-
-## More ideas
+## Ideas
+- Multi color sparklines
 - Positive / Negative color customization
 - Axis labels

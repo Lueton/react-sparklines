@@ -28,7 +28,7 @@ called to render a customized active bar.
 
 - **Optional**
 - **Type:** `number | string`
-- **Type:** `0`
+- **Default:** `0`
 
 Unique id of the axis. Usually used to display multiple data series with independent scaling.
 
@@ -44,7 +44,14 @@ The width of the bars. It is recommended to use `maxBarWidth` to prevent overflo
 - **Optional**
 - **Type:** `number`
 
-The maximum width of the bars. This is the recommended way of sizing bars.
+The maximum width of the bars. This is the preferred way of sizing bars instead of `barWidth`.
+
+### barGap
+- **Optional**
+- **Type:** `number | string`
+- **Default:** `10%`
+
+Gap between bars which can be a percent value or a fixed value. Depending on the actual space this property might be overwritten by `barWidth` and `maxBarWidth`.
 
 ### dataKey
 
@@ -135,7 +142,7 @@ Index of the active (hovering) data entry, **usually calculated internally**.
 
 Id of the `<clipPath/>` of the `<svg/>`, **usually calculated internally**.
 
-### disableBarAdjustment
+### withBarAdjustment
 
 - **Optional**
 - **Type:** `boolean`
