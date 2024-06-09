@@ -37,13 +37,12 @@ The final color of the stroke is determined by `color || style.stroke || default
 Data of the sparkline. Can be an array of numbers or an array of objects. If the array consists of objects and there is
 no `"value"` key available you need the pass a specific `dataKey` to the component to make the value accessible.
 
-### disableBarAdjustment
+### withBarAdjustment
 
 - **Optional**
 - **Type:** `boolean`
-- **Default:** `false`
 
-Enables or disables the first and last point position adjustment for bars.
+Enables or disables the first and last point position adjustment for bars, **usually calculated internally**.
 
 ### label
 

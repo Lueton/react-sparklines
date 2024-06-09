@@ -69,13 +69,12 @@ no `"value"` key available you need the pass a specific `dataKey` to the compone
 
 The key or getter of an object of data.
 
-### disableBarAdjustment
+### withBarAdjustment
 
 - **Optional**
 - **Type:** `boolean`
-- **Default:** `true`
 
-Enables or disables the first and last point position adjustment for bars.
+Enables or disables the first and last point position adjustment for bars, **usually calculated internally**.
 
 ### fill
 
