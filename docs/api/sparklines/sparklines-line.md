@@ -15,7 +15,7 @@ Children of the component. Usually used for `<defs/>` or `<Tooltip/>`.
 
 :::warning
 Even though `<SparklinesLine/>` is using `<SparklinesComposed/>` under the hood it is not recommended to pass children
-like `<Line/>` oder `<Bar/>`.
+like `<Line/>` or `<Bar/>`.
 :::
 
 ### clip
