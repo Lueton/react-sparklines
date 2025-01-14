@@ -31,7 +31,7 @@ export interface Point<TData> {
 }
 
 export interface UseInteractivityProps<TData> {
-  ref: RefObject<SVGRectElement>;
+  ref: RefObject<SVGRectElement | null>;
   data: UseSparklineData<TData>;
   children: any;
   onMouseMove?: (event: MouseEvent, data: SparklinesEventData<TData>) => void;

@@ -1,75 +1,76 @@
-import { get, isNil, isObject, isString } from "lodash"
-import isFunction from "lodash/isFunction"
+import { get, isNil, isObject, isString } from "lodash";
+import isFunction from "lodash/isFunction";
 import {
   Children,
   Component,
   ComponentProps,
   ComponentType,
   DetailedReactHTMLElement,
+  ForwardedRef,
   FunctionComponent,
   isValidElement,
   ReactElement,
-  ReactNode, useEffect, useRef,
+  ReactNode,
+  useEffect,
+  useRef,
 } from "react";
-import { isFragment } from "react-is"
+import { isFragment } from "react-is";
 
 import { FilteredSvgElementType } from "./types.ts";
 
 export const getDisplayName = (Comp: ComponentType | string) => {
   if (typeof Comp === "string") {
-    return Comp
+    return Comp;
   }
   if (!Comp) {
-    return ""
+    return "";
   }
-  return Comp.displayName || Comp.name || "Component"
-}
+  return Comp.displayName || Comp.name || "Component";
+};
 
 export function findAllByType<
   TComponentType extends ComponentType,
   TDetailedElement = DetailedReactHTMLElement<ComponentProps<TComponentType>, HTMLElement>,
 >(children: ReactNode, type: TComponentType | TComponentType[]): TDetailedElement[] {
-  const result: TDetailedElement[] = []
-  let types: string[] = []
+  const result: TDetailedElement[] = [];
+  let types: string[] = [];
 
   if (Array.isArray(type)) {
-    types = type.map((t) => getDisplayName(t))
+    types = type.map((t) => getDisplayName(t));
   } else {
-    types = [getDisplayName(type)]
+    types = [getDisplayName(type)];
   }
   toArray(children).forEach((child) => {
-    const childType = get(child as any, "type.displayName") || get(child as any, "type.name")
+    const childType = get(child as any, "type.displayName") || get(child as any, "type.name");
     if (types.indexOf(childType) !== -1) {
-      result.push(child as TDetailedElement)
+      result.push(child as TDetailedElement);
     }
-  })
+  });
 
-  return result
+  return result;
 }
 
 export function findChildByType<TComponentType extends ComponentType>(
   children: ReactNode[],
   type: TComponentType | TComponentType[],
 ) {
-  const result = findAllByType(children, type)
+  const result = findAllByType(children, type);
 
-  return result && result[0]
+  return result && result[0];
 }
 
-export function isChildOfType<
-  TComponentType extends ComponentType,
->(
+export function isChildOfType<TComponentType extends ComponentType>(
   child: ReactNode,
-  type: TComponentType | TComponentType[]
-){
-  let types: string[] = []
+  type: TComponentType | TComponentType[],
+) {
+  let types: string[] = [];
 
   if (Array.isArray(type)) {
-    types = type.map((t) => getDisplayName(t))
+    types = type.map((t) => getDisplayName(t));
   } else {
-    types = [getDisplayName(type)]
+    types = [getDisplayName(type)];
   }
-  const childType = get(child as any, "type.displayName") || get(child as any, "type.name")
+  const childType = get(child as any, "type.displayName") || get(child as any, "type.name");
   return types.indexOf(childType) !== -1;
 }
 
@@ -153,17 +154,17 @@ const SVG_TAGS: string[] = [
   "use",
   "view",
   "vkern",
-]
+];
 
 export const isSvgElement = (child: any) =>
-  child && child.type && isString(child.type) && SVG_TAGS.indexOf(child.type) >= 0
-const PolyElementKeys = ["points", "pathLength"]
-const SVGContainerPropKeys = ["viewBox", "children"]
+  child && child.type && isString(child.type) && SVG_TAGS.indexOf(child.type) >= 0;
+const PolyElementKeys = ["points", "pathLength"];
+const SVGContainerPropKeys = ["viewBox", "children"];
 export const FilteredElementKeyMap: Record<FilteredSvgElementType, string[]> = {
   svg: SVGContainerPropKeys,
   polygon: PolyElementKeys,
   polyline: PolyElementKeys,
-}
+};
 
 export const SVGElementPropKeys = [
   "aria-activedescendant",
@@ -468,7 +469,7 @@ export const SVGElementPropKeys = [
   "ref",
   "key",
   "angle",
-]
+];
 
 export const EventKeys = [
   "dangerouslySetInnerHTML",
@@ -632,7 +633,7 @@ export const EventKeys = [
   "onAnimationIterationCapture",
   "onTransitionEnd",
   "onTransitionEndCapture",
-]
+];
 
 export const isValidSpreadableProp = (
   property: unknown,
@@ -640,27 +641,29 @@ export const isValidSpreadableProp = (
   includeEvents?: boolean,
   svgElementType?: FilteredSvgElementType,
 ) => {
-  const matchingElementTypeKeys = svgElementType ? FilteredElementKeyMap[svgElementType] ?? [] : []
+  const matchingElementTypeKeys = svgElementType
+    ? (FilteredElementKeyMap[svgElementType] ?? [])
+    : [];
 
   return (
     (!isFunction(property) &&
       ((svgElementType && matchingElementTypeKeys.includes(key)) ||
         SVGElementPropKeys.includes(key))) ||
     (includeEvents && EventKeys.includes(key))
-  )
-}
+  );
+};
 
 export const filterSvgElements = (children: ReactElement[]): ReactElement[] => {
-  const svgElements = [] as ReactElement[]
+  const svgElements = [] as ReactElement[];
 
   toArray(children).forEach((entry: ReactElement) => {
     if (isSvgElement(entry)) {
-      svgElements.push(entry)
+      svgElements.push(entry);
     }
-  })
+  });
 
-  return svgElements
-}
+  return svgElements;
+};
 
 export const filterProps = (
   props: Record<string, any> | Component | FunctionComponent | boolean | unknown,
@@ -668,56 +671,57 @@ export const filterProps = (
   svgElementType?: FilteredSvgElementType,
 ) => {
   if (!props || typeof props === "function" || typeof props === "boolean") {
-    return null
+    return null;
   }
 
-  let inputProps = props as Record<string, any>
+  let inputProps = props as Record<string, any>;
 
   if (isValidElement(props)) {
-    inputProps = props.props as Record<string, any>
+    inputProps = props.props as Record<string, any>;
   }
 
   if (!isObject(inputProps)) {
-    return null
+    return null;
   }
 
-  const out: Record<string, any> = {}
+  const out: Record<string, any> = {};
 
   Object.keys(inputProps).forEach((key) => {
     if (isValidSpreadableProp(inputProps?.[key], key, includeEvents, svgElementType)) {
-      out[key] = inputProps[key]
+      out[key] = inputProps[key];
     }
-  })
+  });
 
-  return out
-}
+  return out;
+};
 
-let lastChildren: ReactNode | null = null
-let lastResult: ReactNode[] | null = null
+let lastChildren: ReactNode | null = null;
+let lastResult: ReactNode[] | null = null;
 export const toArray = <T extends ReactNode>(children: T | T[]): T[] => {
   if (children === lastChildren && Array.isArray(lastResult)) {
-    return lastResult as T[]
+    return lastResult as T[];
   }
-  let result: T[] = []
+  let result: T[] = [];
   Children.forEach<T>(children, (child) => {
-    if (isNil(child)) return
+    if (isNil(child)) return;
     if (isFragment(child)) {
-      result = result.concat(toArray(child.props.children))
+      // @ts-ignore due to current issue with react-is
+      result = result.concat(toArray(child.props.children));
     } else {
-      result.push(child)
+      result.push(child);
     }
-  })
-  lastResult = result
-  lastChildren = children
-  return result
-}
+  });
+  lastResult = result;
+  lastChildren = children;
+  return result;
+};
 
-export const useForwardedRef = <T,>(ref: React.ForwardedRef<T>) => {
+export const useForwardedRef = <T>(ref: ForwardedRef<T>) => {
   const innerRef = useRef<T>(null);
 
   useEffect(() => {
     if (!ref) return;
-    if (typeof ref === 'function') {
+    if (typeof ref === "function") {
       ref(innerRef.current);
     } else {
       ref.current = innerRef.current;
@@ -725,4 +729,4 @@ export const useForwardedRef = <T,>(ref: React.ForwardedRef<T>) => {
   });
 
   return innerRef;
-}
+};

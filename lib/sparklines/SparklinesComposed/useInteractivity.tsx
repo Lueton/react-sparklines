@@ -93,40 +93,40 @@ export const useInteractivity = <TData,>({
   );
 
   useEffect(() => {
-    ref.current?.addEventListener("mousemove", calculateCoords);
-    return () => ref.current?.removeEventListener("mousemove", calculateCoords);
+    ref?.current?.addEventListener("mousemove", calculateCoords);
+    return () => ref?.current?.removeEventListener("mousemove", calculateCoords);
   }, [ref, calculateCoords]);
 
   useEffect(() => {
-    ref.current?.addEventListener("mouseleave", resetCoords);
-    return () => ref.current?.removeEventListener("mouseleave", resetCoords);
+    ref?.current?.addEventListener("mouseleave", resetCoords);
+    return () => ref?.current?.removeEventListener("mouseleave", resetCoords);
   }, [ref]);
 
   useEffect(() => {
     if (onMouseMove) {
-      ref.current?.addEventListener("mousemove", mouseMove);
-      return () => ref.current?.removeEventListener("mousemove", mouseMove);
+      ref?.current?.addEventListener("mousemove", mouseMove);
+      return () => ref?.current?.removeEventListener("mousemove", mouseMove);
     }
   }, [ref, mouseMove]);
 
   useEffect(() => {
     if (onMouseEnter) {
-      ref.current?.addEventListener("mouseenter", mouseEnter);
-      return () => ref.current?.removeEventListener("mouseenter", mouseEnter);
+      ref?.current?.addEventListener("mouseenter", mouseEnter);
+      return () => ref?.current?.removeEventListener("mouseenter", mouseEnter);
     }
   }, [ref, mouseEnter]);
 
   useEffect(() => {
     if (onMouseLeave) {
-      ref.current?.addEventListener("mouseleave", mouseLeave);
-      return () => ref.current?.removeEventListener("mouseleave", mouseLeave);
+      ref?.current?.addEventListener("mouseleave", mouseLeave);
+      return () => ref?.current?.removeEventListener("mouseleave", mouseLeave);
     }
   }, [ref, mouseLeave]);
 
   useEffect(() => {
     if (onClick) {
-      ref.current?.addEventListener("click", click);
-      return () => ref.current?.removeEventListener("click", click);
+      ref?.current?.addEventListener("click", click);
+      return () => ref?.current?.removeEventListener("click", click);
     }
   }, [ref, click]);
 

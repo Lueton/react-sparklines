@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
+import { ReactElement, SVGProps } from "react";
 
 import { DEFAULT_COLOR } from "./defaults.ts";
 
-export const getMainColorByElement = (element: ReactElement) => {
+export const getMainColorByElement = (element: ReactElement<SVGProps<any>>) => {
   const { stroke, fill } = element.props;
   const {
     type: { displayName },

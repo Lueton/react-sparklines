@@ -1,6 +1,7 @@
-import { defineConfig } from "vitepress";
-import { version } from "../../package.json";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vitepress";
+
+import { version } from "../../package.json";
 
 export default defineConfig({
   vite: {

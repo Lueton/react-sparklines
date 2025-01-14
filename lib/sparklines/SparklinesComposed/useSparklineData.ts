@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { get, isNil, isNumber } from "lodash";
+import { ReactElement } from "react";
 
 import { getMainColorByElement } from "../../utils/data-utils.ts";
 import { findAllByType } from "../../utils/react-utils.ts";
@@ -8,6 +9,7 @@ import {
   Axis,
   DataKey,
   Margin,
+  ShapeProps,
   SparklineData,
   SparklineDataEntry,
   UseSparklineData,
@@ -15,7 +17,6 @@ import {
 } from "../../utils/types.ts";
 import { getValueByDataKey } from "../../utils/utils.ts";
 import { ALLOWED_SPARKLINE_CHILDREN } from "./SparklinesComposed.tsx";
-
 
 const getObjectifiedData = <TData>(data: TData[]) => {
   const isNumericData = data.some((v) => isNumber(v));
@@ -95,7 +96,7 @@ const getAxis = (
 };
 
 const getSparklineChildData = <TData>(
-  child: any,
+  child: ReactElement<ShapeProps>,
   originalData: TData[],
   data: any[],
   axes: Axes,
@@ -144,7 +145,17 @@ export const useSparklineData = <TData>({
 }: UseSparklineDataProps): UseSparklineData<TData> => {
   const limitedData = isNil(limit) ? originalData : originalData.slice(originalData.length - limit);
 
+  /*  const validSparklineChildren: DetailedReactHTMLElement<
+    ComponentProps<
+      | (<TData>(props: LineProps<TData>) => null | JSX.Element)
+      | (<TData>(props: BarProps<TData>) => null | JSX.Element)
+      | (<TData>({ x, y, data, ...rest }: ReferenceLineProps<TData>) => null | JSX.Element)
+    >,
+    HTMLElement
+  >[] = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);*/
+
   const validSparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
+
   const dataKeys = getDataKeys(validSparklineChildren);
 
   const data = getObjectifiedData<TData>(limitedData);

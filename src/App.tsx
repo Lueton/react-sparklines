@@ -1,7 +1,9 @@
 import "./App.css";
+
+import { createRef } from "react";
+
 import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip } from "../lib";
 import { ReferenceLine } from "../lib/cartesian";
-import { createRef } from "react";
 
 const demoData = [1, 5, -3, 8, null, 7, 0, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
