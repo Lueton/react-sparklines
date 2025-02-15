@@ -1,5 +1,5 @@
 <script setup>
-import {SparklinesBarExample, SparklinesBarCustomization, SparklinesBarGradients, SparklinesBarTooltip} from "../../examples/sparklines-bar.js";
+import {SparklinesBarExample, SparklinesBarPositiveAndNegative, SparklinesBarCustomization, SparklinesBarGradients, SparklinesBarTooltip} from "../../examples/sparklines-bar.js";
 </script>
 
 # SparklinesBar
@@ -48,6 +48,40 @@ SparklinesBar comes with flexible customization options. Build sparklines which 
   data={data}
   maxBarWidth={4}
   radius={4}
+/>
+```
+
+## Positive and Negative
+
+You can simply overwrite your default styling for positive and negative values.
+
+<SparklinesBarPositiveAndNegative />
+
+
+```jsx
+<SparklinesBar
+  data={data}
+  fill={"yellow"}
+  positive={{
+    fill: "green",
+  }}
+  negative={{
+    fill: "red",
+  }}
+/>
+
+<SparklinesBar
+  data={data}
+  zeroBaseline={true}
+  radius={10}
+  positive={{
+    fill: "green",
+    radius: { topLeft: 5, topRight: 5 }
+  }}
+  negative={{
+    fill: "red",
+    radius: { bottomLeft: 5, bottomRight: 5 }
+  }}
 />
 ```
 

@@ -47,11 +47,13 @@ The width of the bars. It is recommended to use `maxBarWidth` to prevent overflo
 The maximum width of the bars. This is the preferred way of sizing bars instead of `barWidth`.
 
 ### barGap
+
 - **Optional**
 - **Type:** `number | string`
 - **Default:** `10%`
 
-Gap between bars which can be a percent value or a fixed value. Depending on the actual space this property might be overwritten by `barWidth` and `maxBarWidth`.
+Gap between bars which can be a percent value or a fixed value. Depending on the actual space this property might be
+overwritten by `barWidth` and `maxBarWidth`.
 
 ### dataKey
 
@@ -82,14 +84,33 @@ The opacity of the area.
 
 The color of the Tooltip label. Usually calculated internally but needed when using gradients without a stroke.
 
-
 ### name
 
 - **Optional**
 - **Type:** `string`
 
-The name of data. This option will be used in tooltip to represent a line. If no value was set to this option, the value
+The name of data. This option will be used in tooltip to represent a bar. If no value was set to this option, the value
 of dataKey will be used alternatively.
+
+### positive
+
+- **Optional**
+- **Type:** `Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius" | "width" | "height"> & {radius? : SparklinesRadius}`
+
+With this you can basically overwrite your styling (e.g. stroke, fill, etc.) of the Bar element if the given y value is
+positive.
+
+### negative
+
+- **Optional**
+- **Type:** `Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius" | "width" | "height"> & {radius? : SparklinesRadius}`
+
+With this you can basically overwrite your styling (e.g. stroke, fill, etc.) of the Bar element if the given y value is
+negative.
 
 ### radius
 

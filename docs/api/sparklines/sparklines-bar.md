@@ -153,6 +153,26 @@ Maximum displayed value of the provided data.
 The name of data. This option will be used in tooltip to represent a line. If no value was set to this option, the value
 of dataKey will be used alternatively.
 
+### positive
+
+- **Optional**
+- **Type:** `Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius" | "width" | "height"> & {radius? : SparklinesRadius}`
+
+With this you can basically overwrite your styling (e.g. stroke, fill, etc.) of the Bar element if the given y value is
+positive.
+
+### negative
+
+- **Optional**
+- **Type:** `Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "radius" | "width" | "height"> & {radius? : SparklinesRadius}`
+
+With this you can basically overwrite your styling (e.g. stroke, fill, etc.) of the Bar element if the given y value is
+negative.
+
 ### preserveAspectRatio
 
 - **Optional**
