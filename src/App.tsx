@@ -228,6 +228,35 @@ function App() {
             />
           </div>
         </div>
+        <h3>Positive and negative Props</h3>
+        <div className="demo-section">
+          <div>
+            <SparklinesBar
+              data={[5, 2, -1, -3, -4, 2, 0, -2, 3, 4]}
+              positive={{
+                fill: "green",
+              }}
+              negative={{
+                fill: "red",
+              }}
+            />
+          </div>
+          <div>
+            <SparklinesBar
+              data={[5, 2, -1, -3, -4, 2, 0, -2, 3, 4]}
+              zeroBaseline={true}
+              radius={10}
+              positive={{
+                fill: "green",
+                radius: { topLeft: 5, topRight: 5 },
+              }}
+              negative={{
+                fill: "red",
+                radius: { bottomLeft: 5, bottomRight: 5 },
+              }}
+            />
+          </div>
+        </div>
         <h3>Gradient</h3>
         <div className="demo-section">
           <div>

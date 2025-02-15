@@ -11,7 +11,6 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
     height = 0,
     margin,
     data,
-    radius,
     barWidth,
     maxBarWidth,
     clipPathId,
@@ -20,6 +19,8 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
     zeroBaseline,
     barGap,
     activeIndex,
+    positive,
+    negative
   } = props;
 
   if (isNil(data)) return null;
@@ -40,21 +41,36 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
   };
 
   const renderBars = () => {
-    return data.points.map((p, i) => (
-      <Rect
-        key={i}
-        {...(activeIndex === i && showActiveBar ? activeBarProps : barProps)}
-        height={height}
-        margin={margins}
-        barWidth={barWidth}
-        maxBarWidth={maxBarWidth}
-        barGap={barGap}
-        zeroBaseline={zeroBaseline}
-        radius={radius}
-        data={data}
-        point={p}
-      />
-    ));
+    return data.points.map((p, i) => {
+      let rectProps;
+
+      if(activeIndex === i && showActiveBar){
+        rectProps = activeBarProps
+      }else{
+        rectProps = barProps
+      }
+
+      if(positive && p[1] != null && p[1] > 0){
+        rectProps = {...rectProps, ...positive}
+      }else if(negative && p[1] != null && p[1] < 0){
+        rectProps = {...rectProps, ...negative}
+      }
+
+      return (
+        <Rect
+          key={i}
+          {...rectProps}
+          height={height}
+          margin={margins}
+          barWidth={barWidth}
+          maxBarWidth={maxBarWidth}
+          barGap={barGap}
+          zeroBaseline={zeroBaseline}
+          data={data}
+          point={p}
+        />
+      );
+    });
   };
 
   return (

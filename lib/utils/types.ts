@@ -135,6 +135,14 @@ export interface BarShapeExtraProps extends ShapeProps {
   barWidth?: number;
   maxBarWidth?: number;
   barGap?: number | string;
+  positive? : Omit<
+    PresentationAttributesWithProps<SVGPathElement>,
+    "points" | "name" | "radius" | "width" | "height"
+  > & {radius? : SparklinesRadius},
+  negative? : Omit<
+    PresentationAttributesWithProps<SVGPathElement>,
+    "points" | "name" | "radius" | "width" | "height"
+  > & {radius? : SparklinesRadius}
 }
 
 export interface ReferenceLineExtraProps extends ShapeProps {

@@ -33,6 +33,8 @@ const SparklinesBarInner = <TData,>(
     onClick,
     startAtZero,
     zeroBaseline,
+    positive,
+    negative,
     ...rest
   }: SparklinesBarProps<TData>,
   ref: ForwardedRef<SVGRectElement>,
@@ -54,7 +56,7 @@ const SparklinesBarInner = <TData,>(
     onMouseLeave,
     onClick,
     startAtZero,
-    zeroBaseline
+    zeroBaseline,
   };
 
   const barProps: BarShapeProps = {
@@ -67,6 +69,8 @@ const SparklinesBarInner = <TData,>(
     radius,
     labelColor,
     barGap,
+    positive,
+    negative,
     ...rest,
   };
 
