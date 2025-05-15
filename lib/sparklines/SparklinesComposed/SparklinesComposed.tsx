@@ -140,7 +140,7 @@ const SparklinesComposedInner = <TData,>(
             ...childProps,
             ...internalShapeProps,
             key: i,
-            clipPathId: `url(${clipId})`,
+            clipPathId: `url(#${clipId})`,
           });
         }
         return null;
