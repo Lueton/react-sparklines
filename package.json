@@ -24,11 +24,11 @@
   ],
   "exports": {
     ".": {
-      "import" : {
+      "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/react-sparklines.es.js"
       },
-      "require" : {
+      "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/react-sparklines.umd.js"
       }
