@@ -10,7 +10,7 @@ import {
   useMemo,
 } from "react";
 
-import { Bar, Line, ReferenceLine } from "../../cartesian";
+import { Band, Bar, Line, ReferenceLine } from "../../cartesian";
 import { Tooltip } from "../../components";
 import {
   filterSvgElements,
@@ -23,8 +23,8 @@ import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
 import { useSparklineData } from "./useSparklineData.ts";
 
-export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine];
-export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar];
+export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine, Band];
+export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar, Band];
 
 const SparklinesComposedInner = <TData,>(
   {

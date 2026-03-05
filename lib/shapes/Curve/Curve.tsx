@@ -1,19 +1,28 @@
 import * as d3 from "d3";
-import { isNil, isNumber } from "lodash";
+import { isArray, isNil, isNumber } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
 import { CurveProps } from "../../utils/types.ts";
 
-export const Curve = <TData,>({ curve, connectNulls, data, ...rest }: CurveProps<TData>) => {
+export const Curve = <TData,>({
+  curve,
+  connectNulls,
+  data,
+  reverse,
+  ...rest
+}: CurveProps<TData>) => {
   if (!data) return null;
   const { axis, points, pointsDefined } = data;
   const { getX, getY } = axis;
-  const defined = ([x, y]: [number | null, number | null]) => isNumber(x) && isNumber(y);
+  const defined = ([x, y]: [number | null, number | number[] | null]) => isNumber(x) && (isNumber(y) || isArray(y));
   const curveBaseFun = d3
-    .line<[number, number | null]>()
+    .line<[number, number | number[] | null]>()
     .defined(defined)
     .x((d) => getX(d[0]))
-    .y((d) => getY(d[1]));
+    .y((d) => {
+      const y = getY(d[1]);
+      return isArray(y) ? y[reverse ? 0 : 1] : y;
+    });
   const svgProps = {
     ...filterProps(rest, false),
   };

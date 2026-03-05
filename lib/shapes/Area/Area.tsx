@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { isNil, isNumber } from "lodash";
+import { isArray, isNil, isNumber } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
 import { AreaProps } from "../../utils/types.ts";
@@ -18,19 +18,22 @@ export const Area = <TData,>({
   const { axis, points, pointsDefined } = data;
   const { getX, getY, yAxis } = axis;
   const { domain, range } = yAxis;
-  const defined = ([x, y]: [number | null, number | null]) => isNumber(x) && isNumber(y);
+  const defined = ([x, y]: [number | null, number | null | number[]]) =>
+    isNumber(x) && (isNumber(y) || isArray(y));
   const yScale = d3.scaleLinear(domain, range);
-  const coords: [number, number | null][] = points;
+  const coords: [number, number | null | number[]][] = points;
   const coordsDefined = pointsDefined;
   const svgProps = {
     ...filterProps(rest, false),
   };
   const areaBaseFun = d3
-    .area<[number, number | null]>()
+    .area<[number, number | null | number[]]>()
     .defined(defined)
     .x((d) => getX(d[0]))
-    .y1((d) => getY(d[1]))
-    .y0(() => (zeroBaseline ? yScale(0) : height - margin.bottom));
+    .y1((d) => isArray(getY(d[1])) ? (getY(d[1]) as number[])[1] : getY(d[1]) as number)
+    .y0((d) =>
+      isArray(getY(d[1])) ? (getY(d[1]) as number[])[0] : zeroBaseline ? yScale(0) : height - margin.bottom,
+    );
 
   let areaFun;
   if (isNil(curve)) {

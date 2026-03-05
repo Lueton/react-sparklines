@@ -100,6 +100,8 @@ export type SparklinesLineProps<TData> = SparklinesComposedProps<TData> & LineSh
 
 export type SparklinesBarProps<TData> = SparklinesComposedProps<TData> & BarShapeProps;
 
+export type SparklinesBandProps<TData> = SparklinesComposedProps<TData> & BandShapeProps;
+
 export interface InternalShapeProps<TData> {
   sparklineData?: UseSparklineData<TData>;
   data?: SparklineData<TData>;
@@ -135,19 +137,26 @@ export interface BarShapeExtraProps extends ShapeProps {
   barWidth?: number;
   maxBarWidth?: number;
   barGap?: number | string;
-  positive? : Omit<
+  positive?: Omit<
     PresentationAttributesWithProps<SVGPathElement>,
     "points" | "name" | "radius" | "width" | "height"
-  > & {radius? : SparklinesRadius},
-  negative? : Omit<
+  > & { radius?: SparklinesRadius };
+  negative?: Omit<
     PresentationAttributesWithProps<SVGPathElement>,
     "points" | "name" | "radius" | "width" | "height"
-  > & {radius? : SparklinesRadius}
+  > & { radius?: SparklinesRadius };
 }
 
 export interface ReferenceLineExtraProps extends ShapeProps {
   x?: number | string;
   y?: number;
+}
+
+export interface BandShapeExtraProps extends ShapeProps {
+  dots?: LineDot;
+  activeDot?: LineDot;
+  curved?: boolean | number;
+  connectNulls?: boolean;
 }
 
 export type LineShapeProps = Omit<
@@ -161,6 +170,12 @@ export type BarShapeProps = Omit<
   "points" | "name" | "radius" | "width" | "height"
 > &
   BarShapeExtraProps;
+
+export type BandShapeProps = Omit<
+  PresentationAttributesWithProps<SVGPathElement>,
+  "points" | "name" | "width" | "height"
+> &
+  BandShapeExtraProps;
 
 export type Line<TData> = FC<LineProps<TData>>;
 export type Bar<TData> = FC<BarProps<TData>>;
@@ -185,6 +200,10 @@ export type ReferenceLineProps<TData> = Omit<
   "points"
 > &
   ReferenceLineExtraProps &
+  InternalShapeProps<TData>;
+
+export type BandProps<TData> = Omit<PresentationAttributesWithProps<SVGPathElement>, "points"> &
+  BandShapeExtraProps &
   InternalShapeProps<TData>;
 
 export interface SparklinesDataEntry<TData> {
@@ -232,8 +251,8 @@ export interface Axis {
     range: number[];
   };
   getX: (x: number) => number;
-  getY: (y: number | null) => number;
-  getPoint: (point: [number, number | null]) => [number, number];
+  getY: (y: number | null | number[]) => number | number[];
+  getPoint: (point: [number, number | null | number[]]) => [number, number | number[]];
 }
 
 export type Axes = { [key: string | number]: Axis };
@@ -242,7 +261,7 @@ export interface SparklineDataEntry<TData> {
   label: any;
   dataKey: DataKey;
   x: number;
-  y: number | null;
+  y: number | null | number[];
   index: number;
   original: TData;
   color: string;
@@ -253,10 +272,10 @@ export interface SparklineData<TData> {
   color: string;
   axis: Axis;
   entries: SparklineDataEntry<TData>[];
-  values: (number | null)[];
-  points: [number, number | null][];
-  pointsDefined: [number, number][];
-  coords: [number, number][];
+  values: (number | number [] | null)[];
+  points: [number, number | null | number[]][];
+  pointsDefined: [number, number | number[]][];
+  coords: [number, number | number[]][];
 }
 
 export interface UseSparklineData<TData> {
@@ -286,7 +305,7 @@ export type TooltipContent = ReactElement | ((props: TooltipProps) => ReactNode)
 
 export interface TooltipPayload {
   name?: DataKey;
-  value?: number | null;
+  value?: number | null | number[];
   dataKey?: DataKey;
   color?: string;
 }
@@ -308,6 +327,7 @@ export interface CurveProps<TData> {
   curve?: boolean | number;
   connectNulls?: boolean;
   data?: SparklineData<TData>;
+  reverse?: boolean;
 }
 
 export interface AreaProps<TData> {

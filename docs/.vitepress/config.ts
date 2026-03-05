@@ -25,6 +25,7 @@ export default defineConfig({
         items: [
           { text: "SparklinesLine", link: "/sparklines/sparklines-line" },
           { text: "SparklinesBar", link: "/sparklines/sparklines-bar" },
+          { text: "SparklinesBand", link: "/sparklines/sparklines-band" },
           { text: "SparklinesComposed", link: "/sparklines/sparklines-composed" },
         ],
       },
@@ -51,6 +52,7 @@ export default defineConfig({
         items: [
           { text: "SparklinesLine", link: "/sparklines/sparklines-line/" },
           { text: "SparklinesBar", link: "/sparklines/sparklines-bar/" },
+          { text: "SparklinesBand", link: "/sparklines/sparklines-band/" },
           { text: "SparklinesComposed", link: "/sparklines/sparklines-composed/" },
         ],
       },
@@ -60,6 +62,7 @@ export default defineConfig({
           { text: "Line", link: "/sparkline-components/line" },
           { text: "Bar", link: "/sparkline-components/bar" },
           { text: "ReferenceLine", link: "/sparkline-components/reference-line" },
+          { text: "Band", link: "/sparkline-components/band" },
         ],
       },
       {
@@ -78,6 +81,7 @@ export default defineConfig({
             items: [
               { text: "SparklinesLine", link: "/api/sparklines/sparklines-line" },
               { text: "SparklinesBar", link: "/api/sparklines/sparklines-bar" },
+              { text: "SparklinesBand", link: "/api/sparklines/sparklines-band" },
               { text: "SparklinesComposed", link: "/api/sparklines/sparklines-composed" },
             ],
           },
@@ -90,6 +94,7 @@ export default defineConfig({
                 link: "/api/sparkline-components/bar",
               },
               { text: "ReferenceLine", link: "/api/sparkline-components/reference-line" },
+              { text: "Band", link: "/api/sparkline-components/band" },
             ],
           },
           {

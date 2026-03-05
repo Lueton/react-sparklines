@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { get, isNil, isNumber } from "lodash";
+import { get, isArray, isNil, isNumber } from "lodash";
 import { ReactElement } from "react";
 
 import { getMainColorByElement } from "../../utils/data-utils.ts";
@@ -15,12 +15,12 @@ import {
   UseSparklineData,
   UseSparklineDataProps,
 } from "../../utils/types.ts";
-import { getValueByDataKey } from "../../utils/utils.ts";
+import { getValuesByDataKey } from "../../utils/utils.ts";
 import { ALLOWED_SPARKLINE_CHILDREN } from "./SparklinesComposed.tsx";
 
 const getObjectifiedData = <TData>(data: TData[]) => {
-  const isNumericData = data.some((v) => isNumber(v));
-  return isNumericData ? data.map((value) => ({ value: value })) : data;
+  const isNonMultiData = data.some((v) => isNumber(v) || isArray(v));
+  return isNonMultiData ? data.map((value) => ({ value: value })) : data;
 };
 
 const getDataKeys = (children: any[]) => {
@@ -31,13 +31,24 @@ const getCombinedChildrenData = (axisId: string | number, children: any[], data:
   const combinedChildrenData: number[] = [];
   children.forEach((child) => {
     const { axis = 0, dataKey = "value" } = child.props;
-    if (axis === axisId)
-      combinedChildrenData.push(...data.map((d) => getValueByDataKey(d, dataKey, 0)));
+    if (axis === axisId) {
+      const cData = data.map((d) => getValuesByDataKey(d, dataKey, [0]));
+      cData.forEach((d) => {
+        if (isArray(d)) {
+          combinedChildrenData.push(...d);
+        } else {
+          combinedChildrenData.push(d);
+        }
+      });
+    }
   });
   return combinedChildrenData;
 };
 
-const filterEmptyY = (point: [number, number | null]): point is [number, number] => {
+const filterEmptyY = (
+  point: [number, number | null | number[]],
+): point is [number, number | number[]] => {
+  if (isArray(point[1])) return isNumber(point[1][0]) && isNumber(point[1][1]);
   return isNumber(point[1]);
 };
 
@@ -71,8 +82,9 @@ const getAxis = (
   const getX = withBarAdjustment
     ? (x: number) => (xScaleWithBarAdjustment(x) || 0) + xScaleWithBarAdjustment.bandwidth() / 2
     : (x: number) => xScale(x);
-  const getY = (y: number | null) => yScale(y || 0);
-  const getPoint = (point: [number, number | null]): [number, number] => [
+  const getY = (y: number | null | number[]) =>
+    isArray(y) ? [yScale(y[0] || 0), yScale(y[1] || 0)] : yScale(y || 0);
+  const getPoint = (point: [number, number | null | number[]]): [number, number | number[]] => [
     getX(point[0]),
     getY(point[1]),
   ];
@@ -113,10 +125,10 @@ const getSparklineChildData = <TData>(
     x: index,
     y: get(data[index], dataKey),
   }));
-  const values: (number | null)[] = entries.map((entry) => entry.y);
-  const points: [number, number | null][] = entries.map((entry) => [entry.x, entry.y]);
-  const pointsDefined: [number, number][] = points.filter(filterEmptyY);
-  const coords: [number, number][] = points.map((point) => axis.getPoint(point));
+  const values: (number | number[] | null)[] = entries.map((entry) => entry.y);
+  const points: [number, number | null | number[]][] = entries.map((entry) => [entry.x, entry.y]);
+  const pointsDefined: [number, number | number[]][] = points.filter(filterEmptyY);
+  const coords: [number, number | number[]][] = points.map((point) => axis.getPoint(point));
 
   return {
     color,

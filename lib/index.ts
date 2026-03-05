@@ -1,10 +1,12 @@
-export { Bar, Line, ReferenceLine } from "./cartesian";
+export { Band,Bar, Line, ReferenceLine } from "./cartesian";
 export { Tooltip } from "./components";
-export { SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines";
+export { SparklinesBand,SparklinesBar, SparklinesComposed, SparklinesLine } from "./sparklines";
 export type {
+  BandProps,
   BarProps,
   LineProps,
   ReferenceLineProps,
+  SparklinesBandProps,
   SparklinesBarProps,
   SparklinesComposedProps,
   SparklinesDataEntry,

@@ -2,19 +2,30 @@ import "./App.css";
 
 import { createRef } from "react";
 
-import { Bar, Line, SparklinesBar, SparklinesComposed, SparklinesLine, Tooltip } from "../lib";
-import { ReferenceLine } from "../lib/cartesian";
+import {
+  Band,
+  Bar,
+  Line,
+  ReferenceLine,
+  SparklinesBand,
+  SparklinesBar,
+  SparklinesComposed,
+  SparklinesLine,
+  Tooltip,
+} from "../lib";
+import { isArray } from "lodash";
 
 const demoData = [1, 5, -3, 8, null, 7, 0, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
   name: "Label-" + i,
   a: d,
   b: demoData[demoData.length - 1 - i],
+  c: [d !== null ? d - 2 : null, d !== null ? d + 2 : null],
 }));
 
 function App() {
   /*  const [data, setData] = useState([...demoData])
-  
+
     useEffect(() => {
       const interval = setInterval(() => {
         setData([...data, Math.floor(Math.random() * 10)])
@@ -384,6 +395,56 @@ function App() {
                 }}
               />
               <ReferenceLine />
+            </SparklinesComposed>
+          </div>
+        </div>
+        <h3>Band</h3>
+        <div className="demo-section">
+          <SparklinesBand
+            data={composedData}
+            dataKey={"c"}
+            height={500}
+            width={900}
+            fill={"red"}
+            curved
+            dots
+          />
+        </div>
+        <div className="demo-section">
+          <SparklinesBand
+            fill="green"
+            stroke="yellow"
+            strokeWidth="5"
+            height={500}
+            width={900}
+            data={[
+              [-1, 3],
+              [3, 7],
+              [-5, -1],
+              [6, 10],
+              [null, null],
+              [5, 9],
+              [-2, 2],
+              [6, 10],
+              [1, 5],
+              [2, 6],
+            ]}
+          >
+            <Tooltip/>
+          </SparklinesBand>
+        </div>
+        <div className="demo-section">
+          <div>
+            <SparklinesComposed data={composedData} height={500} width={900}>
+              <Line color="red" connectNulls dataKey="a" fillOpacity={".5"} curved dots />
+              <Band dataKey="c" fill={"red"} curved dots />
+              <Tooltip
+                formatter={(entry) => {
+                  return isArray(entry.value)
+                    ? "[" + entry.value[0] + ";" + entry.value[1] + "]"
+                    : entry.value;
+                }}
+              />
             </SparklinesComposed>
           </div>
         </div>

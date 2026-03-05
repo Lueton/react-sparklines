@@ -4,7 +4,7 @@ import { Rect } from "../../shapes/Rect/Rect.tsx";
 import { DEFAULT_COLOR, DEFAULT_SECONDARY_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { BarProps } from "../../utils/types.ts";
-import { getMargin } from "../../utils/utils.ts";
+import { getMargin, getPointsWithoutYRange } from "../../utils/utils.ts";
 
 export const Bar = <TData,>(props: BarProps<TData>) => {
   const {
@@ -41,7 +41,7 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
   };
 
   const renderBars = () => {
-    return data.points.map((p, i) => {
+    return getPointsWithoutYRange(data.points).map((p, i) => {
       let rectProps;
 
       if(activeIndex === i && showActiveBar){

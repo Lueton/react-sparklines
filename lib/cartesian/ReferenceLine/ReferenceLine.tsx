@@ -1,4 +1,4 @@
-import { isNumber } from "lodash";
+import { isArray, isNumber } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
 import { ReferenceLineProps } from "../../utils/types.ts";
@@ -42,9 +42,9 @@ export const ReferenceLine = <TData,>({ x, y, data, ...rest }: ReferenceLineProp
     position: "middle",
     ...filterProps(rest, false),
     x1,
-    y1,
+    y1: isArray(y1) ? y1[0] : y1,
     x2,
-    y2,
+    y2: isArray(y2) ? y2[0] : y2,
   };
 
   return <line {...lineProps} />;

@@ -1,6 +1,13 @@
-import { get, isNil, isNumber, isString } from "lodash";
+import { get, isArray, isNil, isNumber, isString } from "lodash";
 
-import { DataKey, Margin, ShapeProps, SparklineDataEntry, SparklinesMargin, SparklinesRadius } from "./types.ts";
+import {
+  DataKey,
+  Margin,
+  ShapeProps,
+  SparklineDataEntry,
+  SparklinesMargin,
+  SparklinesRadius,
+} from "./types.ts";
 
 export const getMargin = (margin?: number | SparklinesMargin): Margin => {
   if (isNil(margin)) {
@@ -94,13 +101,21 @@ export const getRectanglePath = (
   return path;
 };
 
-export function getValueByDataKey(obj: any, dataKey: DataKey = "value", defaultValue?: any) {
+export function getValuesByDataKey(
+  obj: any,
+  dataKey: DataKey = "value",
+  defaultValue: number[],
+): any[] {
   if (isNil(obj) || isNil(dataKey)) {
     return defaultValue;
   }
 
   if (isNumber(dataKey) || isString(dataKey)) {
-    return get(obj, dataKey, defaultValue);
+    const d = get(obj, dataKey, defaultValue);
+
+    if (isNumber(d)) return [d];
+    if (isArray(d)) return [...d];
+    return [];
   }
 
   return defaultValue;
@@ -118,4 +133,10 @@ export const getTooltipPayload = <TData>(
     name: finalName,
     color: activeEntry?.color,
   };
+};
+
+export const getPointsWithoutYRange = (
+  points: [number, number | number[] | null][],
+): [number, number | null][] => {
+  return points.map((point) => [point[0], isArray(point[1]) ? point[1][0] : point[1]]);
 };
