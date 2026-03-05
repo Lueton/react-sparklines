@@ -1,5 +1,3 @@
-import { isNil } from "lodash";
-
 import { Rect } from "../../shapes/Rect/Rect.tsx";
 import { DEFAULT_COLOR, DEFAULT_SECONDARY_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
@@ -23,7 +21,7 @@ export const Bar = <TData,>(props: BarProps<TData>) => {
     negative
   } = props;
 
-  if (isNil(data)) return null;
+  if (data == null) return null;
 
   const margins = getMargin(margin);
   const showActiveBar: boolean = !!tooltip && activeBar !== false;

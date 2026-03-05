@@ -1,15 +1,14 @@
 import * as d3 from "d3";
-import { isNil, isNumber, isString } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
 import { RectProps } from "../../utils/types.ts";
 import { getRectanglePath } from "../../utils/utils.ts";
 
 const isPercent = (value: string | number): value is `${number}%` =>
-  isString(value) && value.indexOf("%") === value.length - 1;
+  typeof value === "string" && value.indexOf("%") === value.length - 1;
 
 const getPercentValue = (percent: number | string, bandSize: number, defaultValue = 0) => {
-  if (!isNumber(percent as number) && !isString(percent)) {
+  if (typeof percent !== "number" && typeof percent !== "string") {
     return defaultValue;
   }
 
@@ -56,14 +55,14 @@ export const Rect = <TData,>({
   const suggestedWidth = xScale.bandwidth() - realBarGap;
 
   let realBarWidth: number;
-  if (!isNil(barWidth)) {
+  if (barWidth != null) {
     realBarWidth = Math.min(barWidth, xScale.bandwidth());
   } else {
-    realBarWidth = isNumber(maxBarWidth) ? Math.min(suggestedWidth, maxBarWidth) : suggestedWidth;
+    realBarWidth = typeof maxBarWidth === "number" ? Math.min(suggestedWidth, maxBarWidth) : suggestedWidth;
   }
 
   const [x, y] = point;
-  if (isNil(y)) return null;
+  if (y == null) return null;
   const rectPath = getRectanglePath(
     (xScale(x) || 0) + (xScale.bandwidth() / 2 - realBarWidth / 2),
     zeroBaseline ? yScale(Math.max(0, y)) : yScale(y),

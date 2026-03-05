@@ -1,5 +1,3 @@
-import { isBoolean, isNil } from "lodash";
-import isFunction from "lodash/isFunction";
 import { isValidElement } from "react";
 
 import { Area } from "../../shapes/Area/Area.tsx";
@@ -30,10 +28,10 @@ export const Line = <TData,>(props: LineProps<TData>) => {
   const { points } = data;
 
   const getVisibility = (dots: LineDot): LineDotsVisibility => {
-    if (isValidElement(dots) || isFunction(dots)) return true;
-    if (isBoolean(dots)) return dots;
-    if (!isNil(dots?.show)) return dots.show;
-    if (!isNil(dots?.dot)) return true;
+    if (isValidElement(dots) || typeof dots === "function") return true;
+    if (typeof dots === "boolean") return dots;
+    if (dots?.show != null) return dots.show;
+    if (dots?.dot != null) return true;
     return Boolean(dots);
   };
 
@@ -72,7 +70,7 @@ export const Line = <TData,>(props: LineProps<TData>) => {
   const { stroke } = props;
 
   const renderActiveDot = () => {
-    if (isNil(activeIndex)) return null;
+    if (activeIndex == null) return null;
 
     const activePoint = data.coords[activeIndex];
 

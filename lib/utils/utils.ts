@@ -1,5 +1,3 @@
-import { get, isArray, isNil, isNumber, isString } from "lodash";
-
 import {
   DataKey,
   Margin,
@@ -10,7 +8,7 @@ import {
 } from "./types.ts";
 
 export const getMargin = (margin?: number | SparklinesMargin): Margin => {
-  if (isNil(margin)) {
+  if (margin == null) {
     return {
       top: 0,
       right: 0,
@@ -19,7 +17,7 @@ export const getMargin = (margin?: number | SparklinesMargin): Margin => {
     };
   }
 
-  return isNumber(margin)
+  return typeof margin === "number"
     ? {
         top: margin,
         right: margin,
@@ -106,15 +104,15 @@ export function getValuesByDataKey(
   dataKey: DataKey = "value",
   defaultValue: number[],
 ): any[] {
-  if (isNil(obj) || isNil(dataKey)) {
+  if (obj == null || dataKey == null) {
     return defaultValue;
   }
 
-  if (isNumber(dataKey) || isString(dataKey)) {
-    const d = get(obj, dataKey, defaultValue);
+  if (typeof dataKey === "number" || typeof dataKey === "string") {
+    const d = (obj as any)[dataKey] ?? defaultValue;
 
-    if (isNumber(d)) return [d];
-    if (isArray(d)) return [...d];
+    if (typeof d === "number") return [d];
+    if (Array.isArray(d)) return [...d];
     return [];
   }
 
@@ -138,5 +136,5 @@ export const getTooltipPayload = <TData>(
 export const getPointsWithoutYRange = (
   points: [number, number | number[] | null][],
 ): [number, number | null][] => {
-  return points.map((point) => [point[0], isArray(point[1]) ? point[1][0] : point[1]]);
+  return points.map((point) => [point[0], Array.isArray(point[1]) ? point[1][0] : point[1]]);
 };

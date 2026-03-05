@@ -1,5 +1,3 @@
-import { uniqueId } from "lodash";
-import isFunction from "lodash/isFunction";
 import {
   cloneElement,
   CSSProperties,
@@ -26,6 +24,8 @@ import { useSparklineData } from "./useSparklineData.ts";
 
 export const ALLOWED_SPARKLINE_CHILDREN = [Line, Bar, ReferenceLine, Band];
 export const ALLOWED_TOOLTIP_CHILDREN = [Line, Bar, Band];
+
+let _clipIdCounter = 0;
 
 const SparklinesComposedInner = <TData,>(
   {
@@ -75,7 +75,7 @@ const SparklinesComposedInner = <TData,>(
     startAtZero,
     children,
   });
-  const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
+  const clipId = useMemo(() => `react-sparklines${++_clipIdCounter}-clip`, []);
   const innerRef = useForwardedRef(ref);
   const svgProps = {
     viewBox: `0 0 ${effectiveWidth} ${height}`,
@@ -121,7 +121,7 @@ const SparklinesComposedInner = <TData,>(
     }
 
     let lbl = sparklineData.labels[activeIndex] || label;
-    if (isFunction(lbl)) {
+    if (typeof lbl === "function") {
       lbl = lbl(payload);
     }
     return cloneElement(tooltip, { ...tooltip.props, payload, coords, label: lbl });

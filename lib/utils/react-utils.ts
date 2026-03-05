@@ -1,5 +1,3 @@
-import { get, isNil, isObject, isString } from "lodash";
-import isFunction from "lodash/isFunction";
 import {
   Children,
   Component,
@@ -41,7 +39,7 @@ export function findAllByType<
     types = [getDisplayName(type)];
   }
   toArray(children).forEach((child) => {
-    const childType = get(child as any, "type.displayName") || get(child as any, "type.name");
+    const childType = (child as any)?.type?.displayName || (child as any)?.type?.name;
     if (types.indexOf(childType) !== -1) {
       result.push(child as TDetailedElement);
     }
@@ -70,7 +68,7 @@ export function isChildOfType<TComponentType extends ComponentType>(
   } else {
     types = [getDisplayName(type)];
   }
-  const childType = get(child as any, "type.displayName") || get(child as any, "type.name");
+  const childType = (child as any)?.type?.displayName || (child as any)?.type?.name;
   return types.indexOf(childType) !== -1;
 }
 
@@ -157,7 +155,7 @@ const SVG_TAGS: string[] = [
 ];
 
 export const isSvgElement = (child: any) =>
-  child && child.type && isString(child.type) && SVG_TAGS.indexOf(child.type) >= 0;
+  child && child.type && typeof child.type === "string" && SVG_TAGS.indexOf(child.type) >= 0;
 const PolyElementKeys = ["points", "pathLength"];
 const SVGContainerPropKeys = ["viewBox", "children"];
 export const FilteredElementKeyMap: Record<FilteredSvgElementType, string[]> = {
@@ -646,7 +644,7 @@ export const isValidSpreadableProp = (
     : [];
 
   return (
-    (!isFunction(property) &&
+    (typeof property !== "function" &&
       ((svgElementType && matchingElementTypeKeys.includes(key)) ||
         SVGElementPropKeys.includes(key))) ||
     (includeEvents && EventKeys.includes(key))
@@ -680,7 +678,7 @@ export const filterProps = (
     inputProps = props.props as Record<string, any>;
   }
 
-  if (!isObject(inputProps)) {
+  if (typeof inputProps !== "object" || inputProps === null) {
     return null;
   }
 
@@ -703,7 +701,7 @@ export const toArray = <T extends ReactNode>(children: T | T[]): T[] => {
   }
   let result: T[] = [];
   Children.forEach<T>(children, (child) => {
-    if (isNil(child)) return;
+    if (child == null) return;
     if (isFragment(child)) {
       // @ts-ignore due to current issue with react-is
       result = result.concat(toArray(child.props.children));

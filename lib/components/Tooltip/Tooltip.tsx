@@ -1,4 +1,3 @@
-import isFunction from "lodash/isFunction";
 import {
   cloneElement,
   createElement,
@@ -11,7 +10,7 @@ import { TooltipWrapper } from "./TooltipWrapper.tsx";
 
 const renderContent = (content: TooltipContent, props: TooltipProps) => {
   if (isValidElement(content)) return cloneElement(content, props);
-  if (isFunction(content)) return createElement(content, props);
+  if (typeof content === "function") return createElement(content, props);
   return <DefaultTooltipContent {...props} />;
 };
 

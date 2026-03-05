@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { get, isArray, isNil, isNumber } from "lodash";
 import { ReactElement } from "react";
 
 import { getMainColorByElement } from "../../utils/data-utils.ts";
@@ -19,7 +18,7 @@ import { getValuesByDataKey } from "../../utils/utils.ts";
 import { ALLOWED_SPARKLINE_CHILDREN } from "./SparklinesComposed.tsx";
 
 const getObjectifiedData = <TData>(data: TData[]) => {
-  const isNonMultiData = data.some((v) => isNumber(v) || isArray(v));
+  const isNonMultiData = data.some((v) => typeof v === "number" || Array.isArray(v));
   return isNonMultiData ? data.map((value) => ({ value: value })) : data;
 };
 
@@ -34,7 +33,7 @@ const getCombinedChildrenData = (axisId: string | number, children: any[], data:
     if (axis === axisId) {
       const cData = data.map((d) => getValuesByDataKey(d, dataKey, [0]));
       cData.forEach((d) => {
-        if (isArray(d)) {
+        if (Array.isArray(d)) {
           combinedChildrenData.push(...d);
         } else {
           combinedChildrenData.push(d);
@@ -48,8 +47,8 @@ const getCombinedChildrenData = (axisId: string | number, children: any[], data:
 const filterEmptyY = (
   point: [number, number | null | number[]],
 ): point is [number, number | number[]] => {
-  if (isArray(point[1])) return isNumber(point[1][0]) && isNumber(point[1][1]);
-  return isNumber(point[1]);
+  if (Array.isArray(point[1])) return typeof point[1][0] === "number" && typeof point[1][1] === "number";
+  return typeof point[1] === "number";
 };
 
 const getAxis = (
@@ -83,7 +82,7 @@ const getAxis = (
     ? (x: number) => (xScaleWithBarAdjustment(x) || 0) + xScaleWithBarAdjustment.bandwidth() / 2
     : (x: number) => xScale(x);
   const getY = (y: number | null | number[]) =>
-    isArray(y) ? [yScale(y[0] || 0), yScale(y[1] || 0)] : yScale(y || 0);
+    Array.isArray(y) ? [yScale(y[0] || 0), yScale(y[1] || 0)] : yScale(y || 0);
   const getPoint = (point: [number, number | null | number[]]): [number, number | number[]] => [
     getX(point[0]),
     getY(point[1]),
@@ -121,9 +120,9 @@ const getSparklineChildData = <TData>(
     index,
     color,
     dataKey,
-    label: get(data[index], "name"),
+    label: (data[index] as any)?.name,
     x: index,
-    y: get(data[index], dataKey),
+    y: (data[index] as any)?.[dataKey],
   }));
   const values: (number | number[] | null)[] = entries.map((entry) => entry.y);
   const points: [number, number | null | number[]][] = entries.map((entry) => [entry.x, entry.y]);
@@ -155,7 +154,7 @@ export const useSparklineData = <TData>({
   zeroBaseline,
   limit,
 }: UseSparklineDataProps): UseSparklineData<TData> => {
-  const limitedData = isNil(limit) ? originalData : originalData.slice(originalData.length - limit);
+  const limitedData = limit == null ? originalData : originalData.slice(originalData.length - limit);
 
   /*  const validSparklineChildren: DetailedReactHTMLElement<
     ComponentProps<
@@ -172,7 +171,7 @@ export const useSparklineData = <TData>({
 
   const data = getObjectifiedData<TData>(limitedData);
 
-  const labels = limitedData.map((entry) => get(entry, "name"));
+  const labels = limitedData.map((entry) => (entry as any)?.name);
 
   const axesIds = validSparklineChildren.map((child) => child.props.axis || 0);
   const axes: Axes = axesIds

@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { isArray, isNil, isNumber } from "lodash";
 
 import { filterProps } from "../../utils/react-utils.ts";
 import { CurveProps } from "../../utils/types.ts";
@@ -14,23 +13,23 @@ export const Curve = <TData,>({
   if (!data) return null;
   const { axis, points, pointsDefined } = data;
   const { getX, getY } = axis;
-  const defined = ([x, y]: [number | null, number | number[] | null]) => isNumber(x) && (isNumber(y) || isArray(y));
+  const defined = ([x, y]: [number | null, number | number[] | null]) => typeof x === "number" && (typeof y === "number" || Array.isArray(y));
   const curveBaseFun = d3
     .line<[number, number | number[] | null]>()
     .defined(defined)
     .x((d) => getX(d[0]))
     .y((d) => {
       const y = getY(d[1]);
-      return isArray(y) ? y[reverse ? 0 : 1] : y;
+      return Array.isArray(y) ? y[reverse ? 0 : 1] : y;
     });
   const svgProps = {
     ...filterProps(rest, false),
   };
 
   let curveFun;
-  if (isNil(curve)) {
+  if (curve == null) {
     curveFun = curveBaseFun.curve(d3.curveLinear);
-  } else if (isNumber(curve)) {
+  } else if (typeof curve === "number") {
     curveFun = curveBaseFun.curve(d3.curveCatmullRom.alpha(curve));
   } else {
     curveFun = curveBaseFun.curve(d3.curveMonotoneX);

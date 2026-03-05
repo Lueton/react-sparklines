@@ -28,3 +28,4 @@ docs/.vitepress/dist
 docs/.vitepress/cache
 
 .env
+.claude

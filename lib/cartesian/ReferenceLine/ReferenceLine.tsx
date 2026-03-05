@@ -1,5 +1,3 @@
-import { isArray, isNumber } from "lodash";
-
 import { filterProps } from "../../utils/react-utils.ts";
 import { ReferenceLineProps } from "../../utils/types.ts";
 
@@ -9,14 +7,14 @@ export const ReferenceLine = <TData,>({ x, y, data, ...rest }: ReferenceLineProp
   const { min, max, getX, getY } = axis;
 
   const getPoints = () => {
-    if (isNumber(y)) {
+    if (typeof y === "number") {
       return {
         x1: getX(0),
         y1: getY(y),
         x2: getX(entries.length - 1),
         y2: getY(y),
       };
-    } else if (isNumber(x)) {
+    } else if (typeof x === "number") {
       return {
         x1: getX(x),
         y1: getY(min),
@@ -42,9 +40,9 @@ export const ReferenceLine = <TData,>({ x, y, data, ...rest }: ReferenceLineProp
     position: "middle",
     ...filterProps(rest, false),
     x1,
-    y1: isArray(y1) ? y1[0] : y1,
+    y1: Array.isArray(y1) ? y1[0] : y1,
     x2,
-    y2: isArray(y2) ? y2[0] : y2,
+    y2: Array.isArray(y2) ? y2[0] : y2,
   };
 
   return <line {...lineProps} />;

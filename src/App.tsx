@@ -13,7 +13,6 @@ import {
   SparklinesLine,
   Tooltip,
 } from "../lib";
-import { isArray } from "lodash";
 
 const demoData = [1, 5, -3, 8, null, 7, 0, 8, 3, 4];
 const composedData = demoData.map((d, i) => ({
@@ -440,7 +439,7 @@ function App() {
               <Band dataKey="c" fill={"red"} curved dots />
               <Tooltip
                 formatter={(entry) => {
-                  return isArray(entry.value)
+                  return Array.isArray(entry.value)
                     ? "[" + entry.value[0] + ";" + entry.value[1] + "]"
                     : entry.value;
                 }}

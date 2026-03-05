@@ -1,5 +1,3 @@
-import { isArray, isBoolean, isNil } from "lodash";
-import isFunction from "lodash/isFunction";
 import { isValidElement } from "react";
 
 import { Area } from "../../shapes/Area/Area.tsx";
@@ -29,10 +27,10 @@ export const Band = <TData,>(props: BandProps<TData>) => {
   const { points } = data;
 
   const getVisibility = (dots: LineDot): LineDotsVisibility => {
-    if (isValidElement(dots) || isFunction(dots)) return true;
-    if (isBoolean(dots)) return dots;
-    if (!isNil(dots?.show)) return dots.show;
-    if (!isNil(dots?.dot)) return true;
+    if (isValidElement(dots) || typeof dots === "function") return true;
+    if (typeof dots === "boolean") return dots;
+    if (dots?.show != null) return dots.show;
+    if (dots?.dot != null) return true;
     return Boolean(dots);
   };
 
@@ -50,7 +48,7 @@ export const Band = <TData,>(props: BandProps<TData>) => {
     return dotIndices.map((index) => {
       const point = data.coords[index];
       if (!point || data.points[index][1] === null) return null;
-      if(isArray(data.points[index][1]) && data.points[index][1][y] === null) return null;
+      if(Array.isArray(data.points[index][1]) && data.points[index][1][y] === null) return null;
 
       const dotProps = {
         key: `dot-${index}`,
@@ -60,9 +58,9 @@ export const Band = <TData,>(props: BandProps<TData>) => {
         strokeWidth: 1,
         ...filterProps(dots, false),
         cx: point[0],
-        cy: isArray(point[1]) ? point[1][y] : point[1],
+        cy: Array.isArray(point[1]) ? point[1][y] : point[1],
         index: index,
-        value: isArray(point[1]) ? point[1][y] : point[1],
+        value: Array.isArray(point[1]) ? point[1][y] : point[1],
       };
       return renderDot(dots, dotProps);
     });
@@ -71,20 +69,20 @@ export const Band = <TData,>(props: BandProps<TData>) => {
   const { stroke } = props;
 
   const renderActiveDot = (y: number) => {
-    if (isNil(activeIndex)) return null;
+    if (activeIndex == null) return null;
 
     const activePoint = data.coords[activeIndex];
 
     if (!activePoint || data.points[activeIndex][1] === null) return null;
-    if(isArray(data.points[activeIndex][1]) && data.points[activeIndex][1][y] === null) return null;
+    if(Array.isArray(data.points[activeIndex][1]) && data.points[activeIndex][1][y] === null) return null;
 
     const dotProps = {
       key: `active-dot-${activeIndex}`,
       r: 2,
       cx: activePoint[0],
-      cy: isArray(activePoint[1]) ? activePoint[1][y] : activePoint[1],
+      cy: Array.isArray(activePoint[1]) ? activePoint[1][y] : activePoint[1],
       index: activeIndex,
-      value: isArray(activePoint[1]) ? activePoint[1][y] : activePoint[1],
+      value: Array.isArray(activePoint[1]) ? activePoint[1][y] : activePoint[1],
       stroke: "#ffffff",
       fill: stroke || DEFAULT_COLOR,
       ...filterProps(activeDot, false),

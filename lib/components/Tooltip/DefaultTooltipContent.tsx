@@ -1,11 +1,10 @@
-import { isNil, isNumber, isString } from "lodash";
 import { CSSProperties, isValidElement, ReactNode } from "react";
 
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { TooltipProps } from "../../utils/types.ts";
 
 const isNumOrStr = (value: unknown): value is number | string =>
-  isNumber(value as number) || isString(value);
+  typeof value === "number" || typeof value === "string";
 
 export const DefaultTooltipContent = (props: TooltipProps) => {
   const {
@@ -17,7 +16,7 @@ export const DefaultTooltipContent = (props: TooltipProps) => {
     labelStyle,
     formatter,
   } = props;
-  const hasLabel = !isNil(label);
+  const hasLabel = label != null;
   const finalLabel: string | number | ReactNode = hasLabel ? label : "";
 
   const finalContentStyle = {

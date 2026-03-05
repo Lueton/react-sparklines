@@ -1,5 +1,3 @@
-import { isObject } from "lodash";
-import isFunction from "lodash/isFunction";
 import { cloneElement, isValidElement } from "react";
 
 import { Dot } from "../../shapes/Dot/Dot.tsx";
@@ -9,11 +7,11 @@ export const renderDot = (option: LineDot, props: any) => {
   let dotItem;
   if (isValidElement(option)) {
     dotItem = cloneElement(option, props);
-  } else if (isFunction(option)) {
+  } else if (typeof option === "function") {
     dotItem = option(props);
-  } else if (isObject(option) && isValidElement(option.dot)) {
+  } else if (typeof option === "object" && option !== null && isValidElement(option.dot)) {
     dotItem = cloneElement(option.dot, props);
-  } else if (isObject(option) && isFunction(option.dot)) {
+  } else if (typeof option === "object" && option !== null && typeof option.dot === "function") {
     dotItem = option.dot(props);
   } else {
     const className = option ? (option as DotProps).className : "";
