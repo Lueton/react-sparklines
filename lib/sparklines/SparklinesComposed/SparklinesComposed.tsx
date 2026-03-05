@@ -19,6 +19,7 @@ import {
   useForwardedRef,
 } from "../../utils/react-utils.ts";
 import { InternalShapeProps, SparklinesComposedProps } from "../../utils/types.ts";
+import { useContainerWidth } from "../../utils/useContainerWidth.ts";
 import { getMargin, getTooltipPayload } from "../../utils/utils.ts";
 import { useInteractivity } from "./useInteractivity.tsx";
 import { useSparklineData } from "./useSparklineData.ts";
@@ -37,6 +38,7 @@ const SparklinesComposedInner = <TData,>(
     min,
     limit,
     preserveAspectRatio,
+    responsive = false,
     style,
     label,
     withBarAdjustment,
@@ -55,13 +57,18 @@ const SparklinesComposedInner = <TData,>(
   const sparklineChildren = findAllByType(children, ALLOWED_SPARKLINE_CHILDREN);
   const tooltipChildren = findAllByType(children, ALLOWED_TOOLTIP_CHILDREN);
   const margins = getMargin(margin);
+  const { containerRef, width: measuredWidth, isReady } = useContainerWidth({
+    enabled: responsive,
+    defaultWidth: width,
+  });
+  const effectiveWidth = responsive ? measuredWidth : width;
   const sparklineData = useSparklineData<TData>({
     originalData: data,
     limit,
     max,
     min,
     margin: margins,
-    width,
+    width: effectiveWidth,
     height,
     withBarAdjustment: withBarAdjustment ?? findAllByType(children, Bar).length > 0,
     zeroBaseline,
@@ -71,10 +78,10 @@ const SparklinesComposedInner = <TData,>(
   const clipId = useMemo(() => uniqueId("react-sparklines") + "-clip", []);
   const innerRef = useForwardedRef(ref);
   const svgProps = {
-    viewBox: `0 0 ${width} ${height}`,
+    viewBox: `0 0 ${effectiveWidth} ${height}`,
     style,
     preserveAspectRatio,
-    width,
+    width: effectiveWidth,
     height,
     ...rest,
   };
@@ -95,7 +102,12 @@ const SparklinesComposedInner = <TData,>(
     left: marginLeft,
   } = margins
   const wrapperProps = {
-    style: { position: "relative", height: height, width: width } as CSSProperties,
+    style: {
+      position: "relative",
+      height: height,
+      width: responsive ? "100%" : effectiveWidth,
+      visibility: isReady ? "visible" : "hidden",
+    } as CSSProperties,
   };
 
   const renderTooltip = () => {
@@ -125,7 +137,7 @@ const SparklinesComposedInner = <TData,>(
           const childProps = child.props;
           const internalShapeProps: InternalShapeProps<TData> = {
             height,
-            width,
+            width: effectiveWidth,
             margin,
             data: sparklineData.sparklines[i],
             sparklineData,
@@ -149,7 +161,7 @@ const SparklinesComposedInner = <TData,>(
   };
 
   const renderClip = () => {
-    const clipWidth: number = width - (clip ? marginLeft - marginRight : 0);
+    const clipWidth: number = effectiveWidth - (clip ? marginLeft - marginRight : 0);
     const clipHeight: number = height - (clip ? marginTop - marginBottom : 0);
     const x: number = clip ? marginLeft : 0;
     const y: number = clip ? marginTop : 0;
@@ -164,7 +176,7 @@ const SparklinesComposedInner = <TData,>(
   };
 
   const renderInteractiveLayer = () => {
-    const interactiveWidth: number = width - marginLeft - marginRight;
+    const interactiveWidth: number = effectiveWidth - marginLeft - marginRight;
     const interactiveHeight: number = height - marginTop - marginBottom;
     const interactiveStyle: CSSProperties = { fill: "transparent", strokeWidth: 0 };
 
@@ -182,7 +194,7 @@ const SparklinesComposedInner = <TData,>(
   };
 
   return (
-    <div className="react-sparklines-wrapper" {...wrapperProps}>
+    <div className="react-sparklines-wrapper" ref={containerRef} {...wrapperProps}>
       <svg className="react-sparklines-surface" {...svgProps}>
         {renderClip()}
         {renderChildren()}

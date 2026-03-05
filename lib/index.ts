@@ -15,3 +15,4 @@ export type {
   TooltipPayload,
   TooltipProps,
 } from "./utils/types";
+export { useContainerWidth } from "./utils/useContainerWidth";

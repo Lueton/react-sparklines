@@ -3,12 +3,12 @@ import isFunction from "lodash/isFunction";
 import { isValidElement } from "react";
 
 import { Area } from "../../shapes/Area/Area.tsx";
+import { Curve } from "../../shapes/Curve/Curve.tsx";
 import { DEFAULT_COLOR } from "../../utils/defaults.ts";
 import { filterProps } from "../../utils/react-utils.ts";
 import { BandProps, LineDot, LineDotsVisibility } from "../../utils/types.ts";
 import { getMargin } from "../../utils/utils.ts";
 import { renderDot } from "../Line/line-utils.tsx";
-import { Curve } from "../../shapes/Curve/Curve.tsx";
 
 export const Band = <TData,>(props: BandProps<TData>) => {
   const {

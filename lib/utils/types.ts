@@ -83,6 +83,7 @@ export interface SparklinesComposedProps<TData> {
   width?: number;
   height?: number;
   preserveAspectRatio?: string;
+  responsive?: boolean;
   style?: CSSProperties;
   withBarAdjustment?: boolean;
   label?: ReactNode;
