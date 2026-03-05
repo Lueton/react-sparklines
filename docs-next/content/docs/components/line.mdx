@@ -1,0 +1,105 @@
+---
+title: Line
+description: Line component for use inside SparklinesComposed
+---
+
+import { Callout } from "fumadocs-ui/components/callout";
+import Simple from "@/components/examples/Line/Simple";
+import Curved from "@/components/examples/Line/Curved";
+import Styling from "@/components/examples/Line/Styling";
+import Dots from "@/components/examples/Line/Dots";
+import Fill from "@/components/examples/Line/Fill";
+import ActiveDot from "@/components/examples/Line/ActiveDot";
+
+The `<Line/>` component is used inside [`<SparklinesComposed/>`](/docs/sparklines-composed) to render a line series.
+
+## Usage
+
+<Simple />
+
+```jsx
+import { SparklinesComposed, Line } from "@lueton/react-sparklines";
+
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+
+<SparklinesComposed data={data}>
+  <Line />
+</SparklinesComposed>
+```
+
+## Curved Lines
+
+Use the `curved` prop to render smooth curves instead of straight lines.
+
+<Curved />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Line curved />
+</SparklinesComposed>
+
+// Control the curve tension with a number
+<SparklinesComposed data={data}>
+  <Line curved={0.6} />
+</SparklinesComposed>
+```
+
+## Custom Styling
+
+<Styling />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Line stroke="#047857" fill="#047857" strokeWidth={3} />
+</SparklinesComposed>
+```
+
+## Dots
+
+Display data point indicators using the `dots` prop.
+
+<Dots />
+
+```jsx
+// Simple dots
+<SparklinesComposed data={data}>
+  <Line dots />
+</SparklinesComposed>
+
+// Styled dots
+<SparklinesComposed data={data}>
+  <Line dots={{ style: { fill: "#f59e0b" } }} />
+</SparklinesComposed>
+
+// Custom dot shape
+<SparklinesComposed data={data}>
+  <Line dots={(props) => <circle {...props} fill="#047857" r={6} />} />
+</SparklinesComposed>
+```
+
+## Active Dot
+
+The `activeDot` prop controls the dot shown on hover when using a `<Tooltip/>`.
+
+<ActiveDot />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Line activeDot={{ fill: "red", r: 6 }} />
+  <Tooltip />
+</SparklinesComposed>
+```
+
+## Fill (Area)
+
+Use the `fill` prop to render an area beneath the line.
+
+<Fill />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Line fill="#3b82f6" stroke="#3b82f6" />
+</SparklinesComposed>
+```
+
+For the full list of properties, see the [Line API](/docs/api/sparkline-components/line).

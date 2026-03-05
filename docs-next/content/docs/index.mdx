@@ -1,0 +1,56 @@
+---
+title: Introduction
+description: A composable sparkline charting library for React, built on D3.
+---
+
+# React Sparklines
+
+`@lueton/react-sparklines` is a lightweight, composable sparkline charting library for React. It renders inline SVG charts that are fully typed with TypeScript and powered by D3 under the hood.
+
+## Features
+
+- **Composable** — Combine `<Line />`, `<Bar />`, `<Band />`, and `<ReferenceLine />` inside a single chart
+- **Convenience components** — Use `<SparklinesLine />`, `<SparklinesBar />`, or `<SparklinesBand />` for one-liner charts
+- **Tooltips** — Built-in tooltip support with customizable content
+- **Responsive** — Charts automatically resize to fit their container
+- **Typed data** — Generic `<TData>` support for typed data objects with `dataKey` accessors
+- **Lightweight** — ~30 kB gzipped, minimal dependencies
+- **Wide React support** — Works with React 16.8 through 19
+
+## Quick Example
+
+```tsx
+import { SparklinesLine } from "@lueton/react-sparklines";
+
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+
+export default function App() {
+  return <SparklinesLine data={data} />;
+}
+```
+
+For composed charts with multiple series:
+
+```tsx
+import { SparklinesComposed, Line, Bar } from "@lueton/react-sparklines";
+
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+
+export default function App() {
+  return (
+    <SparklinesComposed data={data}>
+      <Bar />
+      <Line />
+    </SparklinesComposed>
+  );
+}
+```
+
+## Next Steps
+
+<Cards>
+  <Card title="Installation" description="Install the package with npm, pnpm, or yarn." href="/docs/installation" />
+  <Card title="Quickstart" description="Build your first sparkline in minutes." href="/docs/quick-start" />
+  <Card title="SparklinesComposed" description="Learn how to compose multiple chart elements." href="/docs/sparklines-composed" />
+  <Card title="Tooltip" description="Add interactive tooltips to your charts." href="/docs/tooltip" />
+</Cards>

@@ -1,0 +1,97 @@
+---
+title: Bar
+description: Bar component for use inside SparklinesComposed
+---
+
+import Simple from "@/components/examples/Bar/Simple";
+import RoundedCorners from "@/components/examples/Bar/RoundedCorners";
+import BarSizing from "@/components/examples/Bar/BarSizing";
+import PositiveNegative from "@/components/examples/Bar/PositiveNegative";
+import Styling from "@/components/examples/Bar/Styling";
+
+The `<Bar/>` component is used inside [`<SparklinesComposed/>`](/docs/sparklines-composed) to render bar series.
+
+## Usage
+
+<Simple />
+
+```jsx
+import { SparklinesComposed, Bar } from "@lueton/react-sparklines";
+
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+
+<SparklinesComposed data={data}>
+  <Bar />
+</SparklinesComposed>
+```
+
+## Rounded Corners
+
+Use `radius` to add rounded corners to bars.
+
+<RoundedCorners />
+
+```jsx
+// All corners
+<SparklinesComposed data={data}>
+  <Bar radius={8} />
+</SparklinesComposed>
+
+// Specific corners
+<SparklinesComposed data={data}>
+  <Bar radius={{ topLeft: 5, topRight: 5 }} />
+</SparklinesComposed>
+```
+
+## Bar Sizing
+
+Control bar width with `maxBarWidth` or `barWidth`.
+
+<BarSizing />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Bar maxBarWidth={10} />
+</SparklinesComposed>
+
+<SparklinesComposed data={data}>
+  <Bar maxBarWidth={4} radius={4} />
+</SparklinesComposed>
+```
+
+## Positive / Negative Styling
+
+Override styling based on value sign.
+
+<PositiveNegative />
+
+```jsx
+<SparklinesComposed data={[5, 2, -1, -3, -4, 2, 0, -2, 3, 4]}>
+  <Bar
+    positive={{ fill: "green", radius: { topLeft: 5, topRight: 5 } }}
+    negative={{ fill: "red", radius: { bottomLeft: 5, bottomRight: 5 } }}
+  />
+</SparklinesComposed>
+```
+
+## Custom Styling
+
+<Styling />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Bar fill="#be185d" stroke="#d97706" strokeWidth={1} />
+</SparklinesComposed>
+
+<SparklinesComposed data={data}>
+  <Bar
+    radius={{ topLeft: 5, topRight: 5 }}
+    maxBarWidth={10}
+    strokeWidth={2}
+    stroke="#059669"
+    fill="transparent"
+  />
+</SparklinesComposed>
+```
+
+For the full list of properties, see the [Bar API](/docs/api/sparkline-components/bar).

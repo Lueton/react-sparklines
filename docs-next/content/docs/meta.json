@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "---Getting Started---",
+    "installation",
+    "quick-start",
+    "---Guide---",
+    "sparklines-line",
+    "sparklines-bar",
+    "sparklines-band",
+    "sparklines-composed",
+    "---Components---",
+    "components",
+    "tooltip",
+    "---Recipes---",
+    "floating-ui",
+    "---API---",
+    "sparklines",
+    "sparkline-components",
+    "general-components",
+    "---",
+    "roadmap"
+  ]
+}

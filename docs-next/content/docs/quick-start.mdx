@@ -1,0 +1,73 @@
+---
+title: Quickstart
+description: Learn the basics of React Sparkline components.
+---
+
+import SparklinesLineExample from "@/components/examples/SparklinesLine/Simple";
+import SparklinesBarExample from "@/components/examples/SparklinesBar/Simple";
+import SparklinesBandExample  from "@/components/examples/SparklinesBand/Simple";
+import SparklinesComposedExample from "@/components/examples/SparklinesComposed/Simple";
+
+Learn the basics of working with React Sparklines components.
+
+After the [installation](/docs/installation), you can import any React Sparklines component and start playing around. Ready
+to build your first Sparkline?
+
+## Simple Sparkline
+
+Display a simple Sparkline by using the [`<SparklinesLine/>`](/docs/sparklines-line) Component.
+
+<SparklinesLineExample />
+
+```jsx
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+<SparklinesLine data={data} />
+```
+
+---
+
+## Sparkline with Bars
+
+Display a simple Sparkline with Bars by using the [`<SparklinesBar/>`](/docs/sparklines-bar) Component.
+
+<SparklinesBarExample />
+
+```jsx
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+<SparklinesBar data={data} />
+```
+
+---
+
+## Sparkline with Band
+
+Display a simple Sparkline with Bands by using the [`<SparklinesBand/>`](/docs/sparklines-band) Component.
+
+<SparklinesBandExample />
+
+```jsx
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+<SparklinesBand data={data} />
+```
+
+## Sparkline with Line and Bar
+
+Display a simple Sparkline with Line and Bars by using the [`<SparklinesComposed/>`](/docs/sparklines-composed)
+Component.
+
+<SparklinesComposedExample />
+
+```jsx
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+<SparklinesComposed data={data}>
+  <Line />
+  <Bar />
+</SparklinesComposed>
+
+const complexData = data.map((v, i) => ({ a: v, b: data[data.length - i - 1] }));
+<SparklinesComposed data={complexData}>
+  <Bar dataKey="a" />
+  <Line dataKey="b" />
+</SparklinesComposed>
+```
+

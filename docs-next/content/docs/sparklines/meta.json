@@ -1,0 +1,9 @@
+{
+  "title": "Sparklines",
+  "pages": [
+    "sparklines-line",
+    "sparklines-bar",
+    "sparklines-band",
+    "sparklines-composed"
+  ]
+}

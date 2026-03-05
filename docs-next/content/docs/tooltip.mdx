@@ -1,0 +1,104 @@
+---
+title: Tooltip
+description: Tooltip component for sparkline charts
+---
+
+import TooltipLineExample from "@/components/examples/SparklinesLine/TooltipExample";
+import TooltipBarExample from "@/components/examples/SparklinesBar/TooltipExample";
+import TooltipComposedExample from "@/components/examples/SparklinesComposed/TooltipExample";
+
+The `<Tooltip/>` component adds interactive tooltips to your sparklines.
+
+## Basic Usage
+
+Add a `<Tooltip/>` as a child of any sparkline component.
+
+<TooltipLineExample />
+
+```jsx
+import { SparklinesLine, Tooltip } from "@lueton/react-sparklines";
+
+const data = [1, 5, 3, 8, 4, 7, 2, 8, 3, 4];
+
+<SparklinesLine data={data}>
+  <Tooltip />
+</SparklinesLine>
+```
+
+## With SparklinesBar
+
+<TooltipBarExample />
+
+```jsx
+<SparklinesBar data={data}>
+  <Tooltip />
+</SparklinesBar>
+```
+
+## With SparklinesComposed
+
+<TooltipComposedExample />
+
+```jsx
+<SparklinesComposed data={complexData} label="Fruits">
+  <Bar fill="#ca8a04" name="Oranges" dataKey="a" />
+  <Line stroke="#27ae60" fill="#27ae60" name="Kiwis" dataKey="b" />
+  <Tooltip
+    contentStyle={{ background: "black", borderColor: "black" }}
+    labelStyle={{ color: "white" }}
+  />
+</SparklinesComposed>
+```
+
+## Custom Content
+
+Use the `content` prop to render a fully custom tooltip.
+
+```jsx
+<SparklinesLine data={data}>
+  <Tooltip content={(props) => (
+    <div style={{ background: "white", padding: 8, border: "1px solid #ccc" }}>
+      Value: {props.payload?.[0]?.value}
+    </div>
+  )} />
+</SparklinesLine>
+```
+
+## Custom Formatter
+
+Use the `formatter` prop to customize how individual values are displayed.
+
+```jsx
+<SparklinesLine data={data}>
+  <Tooltip formatter={(payload) => `$${payload.value.toFixed(2)}`} />
+</SparklinesLine>
+```
+
+## Styling
+
+The tooltip supports `contentStyle`, `labelStyle`, `itemStyle`, and `wrapperStyle` props for customization.
+
+```jsx
+<SparklinesLine data={data}>
+  <Tooltip
+    contentStyle={{ background: "#1a1a2e", borderColor: "#16213e" }}
+    labelStyle={{ color: "#e94560" }}
+    itemStyle={{ color: "#0f3460" }}
+  />
+</SparklinesLine>
+```
+
+## Discussion
+
+Tooltips are a complicated part of chart libraries because they must provide a wide range of flexibility to fulfill the
+users needs.
+This is the reason why the current goal is to provide a simple solution for [Tooltips](/docs/general-components/tooltip)
+out of the box which might not meet all requirements.
+But in addition to that there is (or at least should) be a handy way to make custom tooltips possible.
+
+As far as I know the current state-of-the-art tooltip library is [Floating UI](https://floating-ui.com/).
+I was considering adding it as native solution but since Floating UI did not reach v1 so far and React
+Sparklines aims to be as lightweight as possible the idea has been discarded for now. However, there is
+a [minimal example](/docs/recipes/floating-ui) of how to use Floating UI to create Tooltips in React Sparklines.
+
+For the full list of properties, see the [Tooltip API](/docs/general-components/tooltip).

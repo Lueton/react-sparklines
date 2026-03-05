@@ -1,0 +1,76 @@
+---
+title: Band
+description: Band component for use inside SparklinesComposed
+---
+
+import Simple from "@/components/examples/Band/Simple";
+import Curved from "@/components/examples/Band/Curved";
+import Styling from "@/components/examples/Band/Styling";
+import Dots from "@/components/examples/Band/Dots";
+
+The `<Band/>` component is used inside [`<SparklinesComposed/>`](/docs/sparklines-composed) to render a range band (two-value data).
+
+## Usage
+
+<Simple />
+
+```jsx
+import { SparklinesComposed, Band } from "@lueton/react-sparklines";
+
+const data = [
+  [-1, 3],
+  [3, 7],
+  [-5, -1],
+  [6, 10],
+  [null, null],
+  [5, 9],
+  [-2, 2],
+  [6, 10],
+  [1, 5],
+  [2, 6],
+];
+
+<SparklinesComposed data={data}>
+  <Band />
+</SparklinesComposed>
+```
+
+## Curved Band
+
+Use the `curved` prop for smooth curves.
+
+<Curved />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Band curved />
+</SparklinesComposed>
+```
+
+## Custom Styling
+
+<Styling />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Band stroke="#b91c1c" fill="#b91c1c" />
+</SparklinesComposed>
+
+<SparklinesComposed data={data}>
+  <Band stroke="#047857" fill="#047857" strokeWidth={3} curved />
+</SparklinesComposed>
+```
+
+## Dots
+
+Display data point indicators on band edges.
+
+<Dots />
+
+```jsx
+<SparklinesComposed data={data}>
+  <Band dots />
+</SparklinesComposed>
+```
+
+For the full list of properties, see the [Band API](/docs/sparkline-components/band).
