@@ -7,6 +7,7 @@ const config = {
   serverExternalPackages: ["@takumi-rs/image-response"],
   reactStrictMode: true,
   output: "export",
+  basePath: "/react-sparklines",
   async rewrites() {
     return [
       {
