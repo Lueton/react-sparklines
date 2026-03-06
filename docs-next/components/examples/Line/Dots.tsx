@@ -17,7 +17,7 @@ export default function Dots() {
       </div>
       <div style={{ display: "inline-block", padding: "10px" }}>
         <SparklinesComposed data={data}>
-          <Line dots={(props) => <circle {...props} fill="#047857" r={6} />} margin={6} />
+          <Line dots={(props) => <circle {...(props as any)} fill="#047857" r={6} />} margin={6} />
         </SparklinesComposed>
       </div>
     </>

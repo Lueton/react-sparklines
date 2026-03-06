@@ -6,7 +6,7 @@ const withMDX = createMDX();
 const config = {
   serverExternalPackages: ["@takumi-rs/image-response"],
   reactStrictMode: true,
-  //output: "export",
+  output: "export",
   async rewrites() {
     return [
       {
